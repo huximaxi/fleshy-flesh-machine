@@ -1,0 +1,107 @@
+<svg width="720" height="380" viewBox="0 0 720 380" xmlns="http://www.w3.org/2000/svg" font-family="Arial, sans-serif">
+  <rect width="720" height="380" fill="#0d0d1a" rx="10"/>
+  <text x="360" y="26" text-anchor="middle" font-size="15" fill="#ffffff" font-weight="bold" letter-spacing="1">AFFECT MAP — Machine Parameters → Engineered States</text>
+  <text x="360" y="44" text-anchor="middle" font-size="10" fill="#888888">Settings are presets, not guarantees — individual neurology, mindset, and context modulate all outcomes</text>
+
+  <!-- Column headers -->
+  <text x="150" y="68" text-anchor="middle" font-size="10" fill="#aaaacc" font-weight="bold">PRESET NAME</text>
+  <text x="260" y="68" text-anchor="middle" font-size="10" fill="#aaaacc" font-weight="bold">DISK RPM</text>
+  <text x="340" y="68" text-anchor="middle" font-size="10" fill="#aaaacc" font-weight="bold">STROBE</text>
+  <text x="415" y="68" text-anchor="middle" font-size="10" fill="#aaaacc" font-weight="bold">SPOT COLOR</text>
+  <text x="490" y="68" text-anchor="middle" font-size="10" fill="#aaaacc" font-weight="bold">AUDIO BPM</text>
+  <text x="570" y="68" text-anchor="middle" font-size="10" fill="#aaaacc" font-weight="bold">TARGET STATE</text>
+  <text x="662" y="68" text-anchor="middle" font-size="10" fill="#aaaacc" font-weight="bold">NEURAL BAND</text>
+
+  <!-- Separator line -->
+  <line x1="20" y1="74" x2="700" y2="74" stroke="#333355" stroke-width="1"/>
+
+  <!-- Row data -->
+  <!-- Row 1: Alpha Bloom -->
+  <rect x="20" y="79" width="680" height="38" fill="#0a1a0a" rx="3"/>
+  <circle cx="32" cy="98" r="6" fill="#44ff88"/>
+  <text x="150" y="101" text-anchor="middle" font-size="11" fill="#44ff88" font-weight="bold">Alpha Bloom</text>
+  <text x="260" y="97" text-anchor="middle" font-size="10" fill="#cccccc">8–12 RPM</text>
+  <text x="260" y="110" text-anchor="middle" font-size="9" fill="#888888">↑ 4-arm spiral</text>
+  <text x="340" y="101" text-anchor="middle" font-size="10" fill="#cccccc">0.5 Hz pulse</text>
+  <text x="415" y="101" text-anchor="middle" font-size="10" fill="#88ffaa">Soft green/teal</text>
+  <text x="490" y="101" text-anchor="middle" font-size="10" fill="#cccccc">80–100 BPM</text>
+  <text x="570" y="97" text-anchor="middle" font-size="10" fill="#44ff88" font-weight="bold">Flow / Open Awareness</text>
+  <text x="570" y="110" text-anchor="middle" font-size="9" fill="#557755">Calm, receptive, present</text>
+  <rect x="628" y="83" width="68" height="28" fill="#0d3d1a" rx="3"/>
+  <text x="662" y="101" text-anchor="middle" font-size="10" fill="#44ff88" font-weight="bold">α Alpha</text>
+
+  <!-- Row 2: Theta Dive -->
+  <rect x="20" y="121" width="680" height="38" fill="#100a1a" rx="3"/>
+  <circle cx="32" cy="140" r="6" fill="#bb66ff"/>
+  <text x="150" y="143" text-anchor="middle" font-size="11" fill="#bb66ff" font-weight="bold">Theta Dive</text>
+  <text x="260" y="139" text-anchor="middle" font-size="10" fill="#cccccc">5–7 RPM</text>
+  <text x="260" y="152" text-anchor="middle" font-size="9" fill="#888888">↑ 4-arm + 3-arm</text>
+  <text x="340" y="143" text-anchor="middle" font-size="10" fill="#cccccc">0.3 Hz deep</text>
+  <text x="415" y="143" text-anchor="middle" font-size="10" fill="#cc88ff">Deep violet/indigo</text>
+  <text x="490" y="143" text-anchor="middle" font-size="10" fill="#cccccc">60–75 BPM</text>
+  <text x="570" y="139" text-anchor="middle" font-size="10" fill="#bb66ff" font-weight="bold">Hypnagogic / Creative</text>
+  <text x="570" y="152" text-anchor="middle" font-size="9" fill="#775588">Dream-like imagery, insight</text>
+  <rect x="628" y="125" width="68" height="28" fill="#1a0a2d" rx="3"/>
+  <text x="662" y="143" text-anchor="middle" font-size="10" fill="#bb66ff" font-weight="bold">θ Theta</text>
+
+  <!-- Row 3: Oceanic -->
+  <rect x="20" y="163" width="680" height="38" fill="#0a0a1a" rx="3"/>
+  <circle cx="32" cy="182" r="6" fill="#2288ff"/>
+  <text x="150" y="185" text-anchor="middle" font-size="11" fill="#5599ff" font-weight="bold">Oceanic</text>
+  <text x="260" y="181" text-anchor="middle" font-size="10" fill="#cccccc">3–5 RPM</text>
+  <text x="260" y="194" text-anchor="middle" font-size="9" fill="#888888">↑ all 3 disks</text>
+  <text x="340" y="185" text-anchor="middle" font-size="10" fill="#cccccc">0.1–0.2 Hz slow</text>
+  <text x="415" y="185" text-anchor="middle" font-size="10" fill="#88aaff">Deep blue, shifting</text>
+  <text x="490" y="185" text-anchor="middle" font-size="10" fill="#cccccc">50–65 BPM</text>
+  <text x="570" y="181" text-anchor="middle" font-size="10" fill="#5599ff" font-weight="bold">Boundary Dissolution</text>
+  <text x="570" y="194" text-anchor="middle" font-size="9" fill="#445577">Ego softening, unity sense</text>
+  <rect x="628" y="167" width="68" height="28" fill="#0a0a2d" rx="3"/>
+  <text x="662" y="185" text-anchor="middle" font-size="10" fill="#5599ff" font-weight="bold">θ/δ Border</text>
+
+  <!-- Row 4: Gamma Flash -->
+  <rect x="20" y="205" width="680" height="38" fill="#1a0a0a" rx="3"/>
+  <circle cx="32" cy="224" r="6" fill="#ff3333"/>
+  <text x="150" y="227" text-anchor="middle" font-size="11" fill="#ff4444" font-weight="bold">Gamma Flash</text>
+  <text x="260" y="223" text-anchor="middle" font-size="10" fill="#cccccc">10–14 RPM</text>
+  <text x="260" y="236" text-anchor="middle" font-size="9" fill="#888888">↑ spectral LED disk</text>
+  <text x="340" y="227" text-anchor="middle" font-size="10" fill="#cccccc">2–4 Hz visible</text>
+  <text x="415" y="227" text-anchor="middle" font-size="10" fill="#ff8888">White flash / red</text>
+  <text x="490" y="227" text-anchor="middle" font-size="10" fill="#cccccc">130–150 BPM</text>
+  <text x="570" y="223" text-anchor="middle" font-size="10" fill="#ff4444" font-weight="bold">Insight / Peak Presence</text>
+  <text x="570" y="236" text-anchor="middle" font-size="9" fill="#774444">High clarity, perceptual binding</text>
+  <rect x="628" y="209" width="68" height="28" fill="#2d0a0a" rx="3"/>
+  <text x="662" y="227" text-anchor="middle" font-size="10" fill="#ff4444" font-weight="bold">γ Gamma</text>
+
+  <!-- Row 5: Integration -->
+  <rect x="20" y="247" width="680" height="38" fill="#0d1a0d" rx="3"/>
+  <circle cx="32" cy="266" r="6" fill="#ffcc00"/>
+  <text x="150" y="269" text-anchor="middle" font-size="11" fill="#ffdd44" font-weight="bold">Integration</text>
+  <text x="260" y="265" text-anchor="middle" font-size="10" fill="#cccccc">6–9 RPM</text>
+  <text x="260" y="278" text-anchor="middle" font-size="9" fill="#888888">↑ slow moiré</text>
+  <text x="340" y="269" text-anchor="middle" font-size="10" fill="#cccccc">Off / minimal</text>
+  <text x="415" y="269" text-anchor="middle" font-size="10" fill="#ffee88">Warm amber/gold</text>
+  <text x="490" y="269" text-anchor="middle" font-size="10" fill="#cccccc">70–90 BPM</text>
+  <text x="570" y="265" text-anchor="middle" font-size="10" fill="#ffdd44" font-weight="bold">Memory Consolidation</text>
+  <text x="570" y="278" text-anchor="middle" font-size="9" fill="#887744">α–θ blend, θ–γ coupling</text>
+  <rect x="628" y="251" width="68" height="28" fill="#1a1a00" rx="3"/>
+  <text x="662" y="269" text-anchor="middle" font-size="10" fill="#ffdd44" font-weight="bold">α + θ + γ</text>
+
+  <!-- Row 6: VJ Mode -->
+  <rect x="20" y="289" width="680" height="38" fill="#1a1a1a" rx="3"/>
+  <circle cx="32" cy="308" r="6" fill="#ffffff"/>
+  <text x="150" y="311" text-anchor="middle" font-size="11" fill="#dddddd" font-weight="bold">VJ/DJ Script</text>
+  <text x="260" y="307" text-anchor="middle" font-size="10" fill="#aaaaaa">Custom JSON</text>
+  <text x="260" y="320" text-anchor="middle" font-size="9" fill="#666666">↑ WiFi upload</text>
+  <text x="340" y="311" text-anchor="middle" font-size="10" fill="#aaaaaa">Scripted</text>
+  <text x="415" y="311" text-anchor="middle" font-size="10" fill="#aaaaaa">Scripted RGBW</text>
+  <text x="490" y="311" text-anchor="middle" font-size="10" fill="#aaaaaa">BPM-synced</text>
+  <text x="570" y="307" text-anchor="middle" font-size="10" fill="#dddddd" font-weight="bold">Operator-Defined</text>
+  <text x="570" y="320" text-anchor="middle" font-size="9" fill="#666666">Full parameter control via AP</text>
+  <rect x="628" y="293" width="68" height="28" fill="#1a1a1a" stroke="#444444" stroke-width="1" rx="3"/>
+  <text x="662" y="311" text-anchor="middle" font-size="10" fill="#aaaaaa">Any</text>
+
+  <!-- Bottom scientific note -->
+  <rect x="20" y="340" width="680" height="30" fill="#0a0a15" rx="4"/>
+  <text x="360" y="353" text-anchor="middle" font-size="9" fill="#556688">Scientific basis: Carhart-Harris REBUS model · QRI Neural Annealing (Johnson 2019) · 40 Hz AV gamma entrainment (Zheng et al. 2022) · Monroe Institute Hemi-Sync frequency mapping</text>
+  <text x="360" y="366" text-anchor="middle" font-size="9" fill="#445577">All presets configurable via physical knobs (Bourns PEC11D encoders) or WiFi web interface (ESP32 access point) · Open-source JSON preset format on GitHub</text>
+</svg>

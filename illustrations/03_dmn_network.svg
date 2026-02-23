@@ -1,0 +1,112 @@
+<svg width="720" height="320" viewBox="0 0 720 320" xmlns="http://www.w3.org/2000/svg" font-family="Arial, sans-serif">
+  <rect width="720" height="320" fill="#0d0d1a" rx="10"/>
+  <text x="360" y="26" text-anchor="middle" font-size="15" fill="#ffffff" font-weight="bold" letter-spacing="1">DEFAULT MODE NETWORK — The Ego Architecture</text>
+  <text x="360" y="44" text-anchor="middle" font-size="10" fill="#888888">DMN suppression under psilocybin (and AV entrainment) opens the neuroplasticity window for reconditioning</text>
+
+  <!-- Brain silhouette (left hemisphere lateral view) -->
+  <g transform="translate(120,170)">
+    <!-- Brain outline -->
+    <path d="M -90,50 C -110,30 -115,-10 -105,-40 C -95,-70 -70,-90 -40,-100 C -10,-110 25,-108 55,-95 C 80,-84 100,-62 105,-35 C 112,0 100,35 80,55 C 55,75 25,85 0,88 C -25,90 -60,80 -90,50 Z" fill="#1a1a2e" stroke="#334466" stroke-width="2"/>
+    <!-- Gyri suggestions -->
+    <path d="M -70,-20 C -50,-30 -20,-25 10,-20 C 35,-15 60,-5 70,10" fill="none" stroke="#223355" stroke-width="3" stroke-linecap="round"/>
+    <path d="M -60,20 C -35,10 0,15 30,20 C 55,25 80,35 85,48" fill="none" stroke="#223355" stroke-width="2.5" stroke-linecap="round"/>
+    <path d="M -80,-55 C -55,-65 -20,-60 15,-50 C 45,-40 70,-22 80,-5" fill="none" stroke="#223355" stroke-width="2.5" stroke-linecap="round"/>
+
+    <!-- NORMAL STATE — DMN active (pulsing red nodes) -->
+    <!-- mPFC - medial prefrontal cortex -->
+    <circle cx="-20" cy="-45" r="14" fill="#cc2222" opacity="0.9"/>
+    <circle cx="-20" cy="-45" r="18" fill="#cc2222" opacity="0.2"/>
+    <text x="-20" y="-41" text-anchor="middle" font-size="8" fill="white" font-weight="bold">mPFC</text>
+
+    <!-- PCC - posterior cingulate -->
+    <circle cx="35" cy="10" r="13" fill="#cc2222" opacity="0.9"/>
+    <circle cx="35" cy="10" r="17" fill="#cc2222" opacity="0.2"/>
+    <text x="35" y="14" text-anchor="middle" font-size="8" fill="white" font-weight="bold">PCC</text>
+
+    <!-- Hippocampus -->
+    <circle cx="50" cy="45" r="11" fill="#cc2222" opacity="0.9"/>
+    <circle cx="50" cy="45" r="15" fill="#cc2222" opacity="0.2"/>
+    <text x="50" y="49" text-anchor="middle" font-size="7" fill="white" font-weight="bold">HIPP</text>
+
+    <!-- IPL - inferior parietal -->
+    <circle cx="-5" cy="-10" r="12" fill="#cc2222" opacity="0.85"/>
+    <circle cx="-5" cy="-10" r="16" fill="#cc2222" opacity="0.2"/>
+    <text x="-5" y="-6" text-anchor="middle" font-size="7" fill="white" font-weight="bold">IPL</text>
+
+    <!-- Connection lines -->
+    <line x1="-20" y1="-31" x2="-5" y2="-22" stroke="#cc2222" stroke-width="2" opacity="0.6" stroke-dasharray="4,2"/>
+    <line x1="-5" y1="2" x2="35" y2="10" stroke="#cc2222" stroke-width="2" opacity="0.6" stroke-dasharray="4,2"/>
+    <line x1="35" y1="23" x2="50" y2="34" stroke="#cc2222" stroke-width="2" opacity="0.6" stroke-dasharray="4,2"/>
+    <line x1="-20" y1="-31" x2="35" y2="-2" stroke="#cc2222" stroke-width="1.5" opacity="0.4" stroke-dasharray="4,3"/>
+  </g>
+  <text x="120" y="270" text-anchor="middle" font-size="11" fill="#ff5555" font-weight="bold">NORMAL STATE</text>
+  <text x="120" y="284" text-anchor="middle" font-size="9" fill="#886666">DMN active: self-referential</text>
+  <text x="120" y="297" text-anchor="middle" font-size="9" fill="#886666">thought, rumination, rigid beliefs</text>
+
+  <!-- Arrow -->
+  <g transform="translate(240,155)">
+    <text x="0" y="-10" text-anchor="middle" font-size="9" fill="#888888">Psilocybin /</text>
+    <text x="0" y="2" text-anchor="middle" font-size="9" fill="#888888">AV Entrainment</text>
+    <line x1="-35" y1="18" x2="35" y2="18" stroke="#555577" stroke-width="2"/>
+    <polygon points="35,13 45,18 35,23" fill="#555577"/>
+    <text x="0" y="36" text-anchor="middle" font-size="9" fill="#7777aa">REBUS model:</text>
+    <text x="0" y="48" text-anchor="middle" font-size="9" fill="#7777aa">precision priors relax</text>
+  </g>
+
+  <!-- SUPPRESSED STATE -->
+  <g transform="translate(430,170)">
+    <!-- Brain outline -->
+    <path d="M -90,50 C -110,30 -115,-10 -105,-40 C -95,-70 -70,-90 -40,-100 C -10,-110 25,-108 55,-95 C 80,-84 100,-62 105,-35 C 112,0 100,35 80,55 C 55,75 25,85 0,88 C -25,90 -60,80 -90,50 Z" fill="#111a11" stroke="#226633" stroke-width="2"/>
+    <!-- Gyri -->
+    <path d="M -70,-20 C -50,-30 -20,-25 10,-20 C 35,-15 60,-5 70,10" fill="none" stroke="#1a3322" stroke-width="3" stroke-linecap="round"/>
+    <path d="M -60,20 C -35,10 0,15 30,20 C 55,25 80,35 85,48" fill="none" stroke="#1a3322" stroke-width="2.5" stroke-linecap="round"/>
+    <path d="M -80,-55 C -55,-65 -20,-60 15,-50 C 45,-40 70,-22 80,-5" fill="none" stroke="#1a3322" stroke-width="2.5" stroke-linecap="round"/>
+
+    <!-- Suppressed DMN nodes (dim) -->
+    <circle cx="-20" cy="-45" r="8" fill="#333333" opacity="0.6"/>
+    <text x="-20" y="-41" text-anchor="middle" font-size="7" fill="#666666">mPFC</text>
+    <circle cx="35" cy="10" r="7" fill="#333333" opacity="0.6"/>
+    <text x="35" y="14" text-anchor="middle" font-size="7" fill="#666666">PCC</text>
+    <circle cx="50" cy="45" r="6" fill="#333333" opacity="0.6"/>
+    <text x="50" y="49" text-anchor="middle" font-size="6" fill="#666666">HIPP</text>
+    <circle cx="-5" cy="-10" r="7" fill="#333333" opacity="0.6"/>
+
+    <!-- NEW active areas — global integration -->
+    <circle cx="-60" cy="-60" r="12" fill="#22aa44" opacity="0.85"/>
+    <circle cx="-60" cy="-60" r="17" fill="#22aa44" opacity="0.2"/>
+    <text x="-60" y="-56" text-anchor="middle" font-size="7" fill="white" font-weight="bold">V1/V2</text>
+
+    <circle cx="75" cy="-25" r="11" fill="#22aa44" opacity="0.85"/>
+    <circle cx="75" cy="-25" r="15" fill="#22aa44" opacity="0.2"/>
+    <text x="75" y="-21" text-anchor="middle" font-size="7" fill="white" font-weight="bold">TPJ</text>
+
+    <circle cx="-70" cy="20" r="10" fill="#2288ff" opacity="0.85"/>
+    <circle cx="-70" cy="20" r="14" fill="#2288ff" opacity="0.2"/>
+    <text x="-70" y="24" text-anchor="middle" font-size="7" fill="white" font-weight="bold">INS</text>
+
+    <!-- Cross-network connections (new global) -->
+    <line x1="-60" y1="-48" x2="-5" y2="-10" stroke="#33cc66" stroke-width="1.5" opacity="0.5"/>
+    <line x1="75" y1="-14" x2="35" y2="10" stroke="#33cc66" stroke-width="1.5" opacity="0.5"/>
+    <line x1="-70" y1="10" x2="-5" y2="-2" stroke="#3388ff" stroke-width="1.5" opacity="0.5"/>
+    <line x1="-60" y1="-48" x2="75" y2="-14" stroke="#44ff88" stroke-width="1" opacity="0.3" stroke-dasharray="3,3"/>
+
+    <!-- Neural Annealing window marker -->
+    <rect x="-100" y="-112" width="210" height="16" fill="#003322" rx="3" opacity="0.8"/>
+    <text x="5" y="-100" text-anchor="middle" font-size="8" fill="#44ff88">✦ NEUROPLASTICITY WINDOW OPEN ✦</text>
+  </g>
+
+  <text x="430" y="270" text-anchor="middle" font-size="11" fill="#44ff88" font-weight="bold">ENTRAINED STATE</text>
+  <text x="430" y="284" text-anchor="middle" font-size="9" fill="#557755">DMN suppressed · global integration</text>
+  <text x="430" y="297" text-anchor="middle" font-size="9" fill="#557755">rises · beliefs become revisable</text>
+
+  <!-- Right side legend -->
+  <circle cx="650" cy="120" r="7" fill="#cc2222"/>
+  <text x="662" y="124" font-size="9" fill="#cc6666">DMN hub (normal)</text>
+  <circle cx="650" cy="140" r="7" fill="#22aa44"/>
+  <text x="662" y="144" font-size="9" fill="#44ff88">Newly active (sensory/interoceptive)</text>
+  <circle cx="650" cy="160" r="7" fill="#2288ff"/>
+  <text x="662" y="164" font-size="9" fill="#5599ff">Insula (body awareness)</text>
+
+  <!-- Bottom note -->
+  <text x="360" y="310" text-anchor="middle" font-size="9" fill="#555577">Carhart-Harris et al. (2017, 2022) · Cohen's d = 2.2–2.3 for depression reduction post-DMN suppression · Johnson et al. (2020): music shapes what consolidates</text>
+</svg>

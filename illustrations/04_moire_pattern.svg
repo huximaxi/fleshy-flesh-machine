@@ -1,0 +1,59 @@
+<svg width="720" height="300" viewBox="0 0 720 300" xmlns="http://www.w3.org/2000/svg" font-family="Arial, sans-serif">
+  <rect width="720" height="300" fill="#0d0d1a" rx="10"/>
+  <text x="360" y="26" text-anchor="middle" font-size="15" fill="#ffffff" font-weight="bold" letter-spacing="1">MULTI-DISK MOIRÉ INTERFERENCE — Emergent Complexity by Design</text>
+  <text x="360" y="44" text-anchor="middle" font-size="10" fill="#888888">Each disk is clean (D ≈ 1.4) · their counter-rotation creates emergent patterns (D ≈ 1.6) without added hardware</text>
+
+  <!-- DISK 1 (4-arm spiral) -->
+  <g transform="translate(130,170)">
+    <circle r="95" fill="#0d0d22" stroke="#223344" stroke-width="1.5"/>
+    <!-- 4-arm Archimedean spiral approximation -->
+    <path d="M0,0 C0,-12 8,-18 14,-12 C20,-5 18,8 10,15 C2,22 -12,20 -18,10 C-26,-4 -18,-24 -4,-32 C12,-42 36,-34 44,-14 C54,8 44,38 22,50 C-2,64 -34,54 -46,28 C-60,-2 -48,-38 -20,-52 C10,-68 48,-54 62,-22 C78,14 62,56 28,72 C-8,90 -52,72 -68,34" fill="none" stroke="#4477ff" stroke-width="1.5" opacity="0.8"/>
+    <path d="M0,0 C-12,0 -18,8 -12,14 C-5,20 8,18 15,10 C22,2 20,-12 10,-18 C-4,-26 -24,-18 -32,-4 C-42,12 -34,36 -14,44 C8,54 38,44 50,22 C64,-2 54,-34 28,-46 C-2,-60 -38,-48 -52,-20 C-68,10 -54,48 -22,62 C14,78 56,62 72,28 C90,-8 72,-52 34,-68" fill="none" stroke="#6699ff" stroke-width="1.2" opacity="0.6"/>
+    <!-- Extra arms at 90deg offset -->
+    <path d="M0,0 C12,0 18,-8 12,-14 C5,-20 -8,-18 -15,-10 C-22,-2 -20,12 -10,18 C4,26 24,18 32,4 C42,-12 34,-36 14,-44 C-8,-54 -38,-44 -50,-22 C-64,2 -54,34 -28,46 C2,60 38,48 52,20 C68,-14 54,-56 22,-70" fill="none" stroke="#99aaff" stroke-width="1" opacity="0.5"/>
+    <text x="0" y="110" text-anchor="middle" font-size="10" fill="#5588ff" font-weight="bold">DISK 1</text>
+    <text x="0" y="122" text-anchor="middle" font-size="9" fill="#445577">4-arm spiral · CW · 5 RPM</text>
+  </g>
+
+  <!-- Plus sign -->
+  <text x="240" y="178" text-anchor="middle" font-size="28" fill="#444466">+</text>
+
+  <!-- DISK 2 (3-arm spiral, different density) -->
+  <g transform="translate(360,170)">
+    <circle r="95" fill="#0d0d22" stroke="#332244" stroke-width="1.5"/>
+    <path d="M0,0 C0,14 -10,20 -16,12 C-22,4 -18,-10 -10,-18 C-2,-26 14,-24 22,-12 C32,2 26,26 10,36 C-8,48 -36,42 -50,20 C-66,-6 -56,-40 -28,-56 C2,-74 42,-62 58,-28 C76,10 62,54 24,70 C-16,88 -64,72 -82,28 C-102,-20 -84,-72 -36,-90 C16,-110 72,-88 90,-36" fill="none" stroke="#cc44aa" stroke-width="1.5" opacity="0.8"/>
+    <path d="M0,0 C14,0 20,10 12,16 C4,22 -10,18 -18,10 C-26,2 -24,-14 -12,-22 C2,-32 26,-26 36,-10 C48,8 42,36 20,50 C-6,66 -40,56 -56,28 C-74,-2 -62,-42 -28,-58 C10,-76 54,-62 70,-24 C88,16 72,64 28,82 C-16,102 -72,84 -90,36" fill="none" stroke="#dd66bb" stroke-width="1.2" opacity="0.6"/>
+    <path d="M0,0 C-14,0 -20,-10 -12,-16 C-4,-22 10,-18 18,-10 C26,-2 24,14 12,22 C-2,32 -26,26 -36,10 C-48,-8 -42,-36 -20,-50 C6,-66 40,-56 56,-28 C74,2 62,42 28,58 C-10,76 -54,62 -70,24 C-88,-16 -72,-64 -28,-82" fill="none" stroke="#ee88cc" stroke-width="1" opacity="0.5"/>
+    <text x="0" y="110" text-anchor="middle" font-size="10" fill="#cc44aa" font-weight="bold">DISK 2</text>
+    <text x="0" y="122" text-anchor="middle" font-size="9" fill="#774466">3-arm spiral · CCW · 5.35 RPM</text>
+  </g>
+
+  <!-- Equals sign -->
+  <text x="480" y="178" text-anchor="middle" font-size="28" fill="#444466">=</text>
+
+  <!-- RESULT: Moire Pattern -->
+  <g transform="translate(610,170)">
+    <circle r="95" fill="#0d0d22" stroke="#334433" stroke-width="1.5"/>
+    <!-- Simulated moire - overlapping spirals at slight offset -->
+    <path d="M0,0 C0,-12 8,-18 14,-12 C20,-5 18,8 10,15 C2,22 -12,20 -18,10 C-26,-4 -18,-24 -4,-32 C12,-42 36,-34 44,-14 C54,8 44,38 22,50 C-2,64 -34,54 -46,28 C-60,-2 -48,-38 -20,-52 C10,-68 48,-54 62,-22 C78,14 62,56 28,72 C-8,90 -52,72 -68,34" fill="none" stroke="#44aaff" stroke-width="1.2" opacity="0.7"/>
+    <path d="M0,0 C0,14 -10,20 -16,12 C-22,4 -18,-10 -10,-18 C-2,-26 14,-24 22,-12 C32,2 26,26 10,36 C-8,48 -36,42 -50,20 C-66,-6 -56,-40 -28,-56 C2,-74 42,-62 58,-28 C76,10 62,54 24,70 C-16,88 -64,72 -82,28 C-102,-20 -84,-72 -36,-90" fill="none" stroke="#ff44cc" stroke-width="1.2" opacity="0.7"/>
+    <!-- Emergent interference bands -->
+    <ellipse cx="-20" cy="-20" rx="25" ry="35" fill="none" stroke="#88ffaa" stroke-width="1.5" opacity="0.5" transform="rotate(30,-20,-20)"/>
+    <ellipse cx="30" cy="15" rx="20" ry="30" fill="none" stroke="#88ffaa" stroke-width="1.5" opacity="0.5" transform="rotate(-20,30,15)"/>
+    <ellipse cx="-10" cy="40" rx="22" ry="28" fill="none" stroke="#ffff44" stroke-width="1" opacity="0.4" transform="rotate(60,-10,40)"/>
+    <!-- Glow dots at interference nodes -->
+    <circle cx="-15" cy="5" r="4" fill="#aaffcc" opacity="0.7"/>
+    <circle cx="25" cy="-30" r="3" fill="#ffcc44" opacity="0.7"/>
+    <circle cx="10" cy="55" r="3" fill="#ff88ff" opacity="0.6"/>
+    <circle cx="-55" cy="10" r="3" fill="#44ffff" opacity="0.6"/>
+    <!-- Fractal dimension label -->
+    <rect x="-70" y="-112" width="140" height="14" fill="#003322" rx="3" opacity="0.9"/>
+    <text x="0" y="-100" text-anchor="middle" font-size="8" fill="#44ff88">D ≈ 1.6 · Emergent</text>
+    <text x="0" y="110" text-anchor="middle" font-size="10" fill="#44ff88" font-weight="bold">EMERGENT FIELD</text>
+    <text x="0" y="122" text-anchor="middle" font-size="9" fill="#446655">Moiré interference · dynamic</text>
+  </g>
+
+  <!-- Bottom annotation -->
+  <rect x="20" y="265" width="680" height="24" fill="#111122" rx="4"/>
+  <text x="360" y="281" text-anchor="middle" font-size="9" fill="#667799">Fractal dimension research (Richard Taylor): D = 1.4 per disk is optimal for fascination · Counter-rotation at ±7% speed difference produces moiré that shifts at ~0.35 Hz · keeps raw strobe rate in safe zone while generating rich perceptual complexity</text>
+</svg>

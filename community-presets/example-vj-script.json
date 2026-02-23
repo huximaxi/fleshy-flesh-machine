@@ -1,0 +1,72 @@
+{
+  "_comment": "Example VJ/DJ preset script for Flashy Flesh. Upload via WiFi AP at 192.168.4.1",
+  "name": "dawn_sequence",
+  "description": "Slow oceanic opening → theta dive → alpha integration. Designed for sunrise set.",
+  "author": "flashy-flesh-community",
+  "duration_s": 600,
+  "bpm_sync": true,
+  "keyframes": [
+    {
+      "t": 0,
+      "disk1_rpm": 2.5,
+      "disk2_rpm": -2.7,
+      "disk3_rpm": 0.8,
+      "strobe_hz": 0.1,
+      "strobe_intensity": 0.3,
+      "spot_rgb": [10, 0, 40],
+      "audio_bpm_target": 55,
+      "transition_curve": "ease_in_out"
+    },
+    {
+      "t": 120,
+      "disk1_rpm": 5.5,
+      "disk2_rpm": -5.85,
+      "disk3_rpm": 1.5,
+      "strobe_hz": 0.3,
+      "strobe_intensity": 0.6,
+      "spot_rgb": [30, 0, 90],
+      "audio_bpm_target": 68,
+      "transition_curve": "ease_in_out"
+    },
+    {
+      "t": 300,
+      "disk1_rpm": 8.0,
+      "disk2_rpm": -8.5,
+      "disk3_rpm": 2.0,
+      "strobe_hz": 0.6,
+      "strobe_intensity": 0.8,
+      "spot_rgb": [0, 80, 120],
+      "audio_bpm_target": 85,
+      "transition_curve": "linear"
+    },
+    {
+      "t": 480,
+      "disk1_rpm": 6.0,
+      "disk2_rpm": -6.35,
+      "disk3_rpm": 1.8,
+      "strobe_hz": 0.0,
+      "strobe_intensity": 0.0,
+      "spot_rgb": [80, 50, 10],
+      "audio_bpm_target": 75,
+      "transition_curve": "ease_out",
+      "_note": "Integration phase — strobe off, warm amber"
+    },
+    {
+      "t": 570,
+      "disk1_rpm": 2.0,
+      "disk2_rpm": -2.1,
+      "disk3_rpm": 0.5,
+      "strobe_hz": 0.0,
+      "strobe_intensity": 0.0,
+      "spot_rgb": [60, 30, 5],
+      "led_brightness": 0.3,
+      "transition_curve": "ease_out",
+      "_note": "Fade out"
+    }
+  ],
+  "safety": {
+    "max_strobe_hz": 4.0,
+    "auto_cutoff_s": 660,
+    "emergency_fade_s": 5
+  }
+}

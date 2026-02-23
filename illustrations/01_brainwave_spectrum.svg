@@ -1,0 +1,70 @@
+<svg width="720" height="260" viewBox="0 0 720 260" xmlns="http://www.w3.org/2000/svg" font-family="Arial, sans-serif">
+  <rect width="720" height="260" fill="#0d0d1a" rx="10"/>
+  <text x="360" y="28" text-anchor="middle" font-size="15" fill="#ffffff" font-weight="bold" letter-spacing="1">NEURAL FREQUENCY BANDS &amp; TARGET STATES</text>
+  <text x="360" y="46" text-anchor="middle" font-size="10" fill="#888888">Effective visual frequency = (RPM ÷ 60) × spiral arms</text>
+
+  <!-- Delta -->
+  <rect x="30" y="60" width="85" height="110" fill="#1a2a6c" rx="6"/>
+  <rect x="30" y="60" width="85" height="4" fill="#3355dd" rx="2"/>
+  <text x="72" y="90" text-anchor="middle" font-size="22" fill="#5577ff">δ</text>
+  <text x="72" y="108" text-anchor="middle" font-size="12" fill="#7799ff" font-weight="bold">Delta</text>
+  <text x="72" y="122" text-anchor="middle" font-size="10" fill="#aaaacc">0.5 – 4 Hz</text>
+  <text x="72" y="138" text-anchor="middle" font-size="9" fill="#667799">Deep sleep</text>
+  <text x="72" y="150" text-anchor="middle" font-size="9" fill="#667799">Unconscious</text>
+  <rect x="42" y="162" width="60" height="1" fill="#334466"/>
+  <text x="72" y="177" text-anchor="middle" font-size="9" fill="#445566">Not targeted</text>
+
+  <!-- Theta -->
+  <rect x="125" y="55" width="100" height="115" fill="#2d1b69" rx="6"/>
+  <rect x="125" y="55" width="100" height="4" fill="#9933ff" rx="2"/>
+  <text x="175" y="85" text-anchor="middle" font-size="22" fill="#bb66ff">θ</text>
+  <text x="175" y="103" text-anchor="middle" font-size="12" fill="#cc88ff" font-weight="bold">Theta</text>
+  <text x="175" y="117" text-anchor="middle" font-size="10" fill="#aaaacc">4 – 8 Hz</text>
+  <text x="175" y="133" text-anchor="middle" font-size="9" fill="#9977bb">Hypnagogic</text>
+  <text x="175" y="145" text-anchor="middle" font-size="9" fill="#9977bb">Creative drift</text>
+  <text x="175" y="157" text-anchor="middle" font-size="9" fill="#9977bb">Emotional depth</text>
+  <rect x="137" y="163" width="76" height="1" fill="#553388"/>
+  <text x="175" y="178" text-anchor="middle" font-size="10" fill="#cc88ff" font-weight="bold">★ PRIMARY</text>
+
+  <!-- Alpha -->
+  <rect x="235" y="50" width="110" height="120" fill="#0d3d1a" rx="6"/>
+  <rect x="235" y="50" width="110" height="4" fill="#00cc55" rx="2"/>
+  <text x="290" y="80" text-anchor="middle" font-size="22" fill="#44ff88">α</text>
+  <text x="290" y="98" text-anchor="middle" font-size="12" fill="#55ff99" font-weight="bold">Alpha</text>
+  <text x="290" y="112" text-anchor="middle" font-size="10" fill="#aaccaa">8 – 13 Hz</text>
+  <text x="290" y="128" text-anchor="middle" font-size="9" fill="#77bb88">Flow state</text>
+  <text x="290" y="140" text-anchor="middle" font-size="9" fill="#77bb88">Calm alertness</text>
+  <text x="290" y="152" text-anchor="middle" font-size="9" fill="#77bb88">Open awareness</text>
+  <rect x="247" y="163" width="86" height="1" fill="#1a5533"/>
+  <text x="290" y="178" text-anchor="middle" font-size="10" fill="#44ff88" font-weight="bold">★ PRIMARY</text>
+
+  <!-- Beta -->
+  <rect x="355" y="60" width="150" height="110" fill="#2d1a00" rx="6"/>
+  <rect x="355" y="60" width="150" height="4" fill="#cc6600" rx="2"/>
+  <text x="430" y="88" text-anchor="middle" font-size="22" fill="#ff9933">β</text>
+  <text x="430" y="106" text-anchor="middle" font-size="12" fill="#ffaa55" font-weight="bold">Beta</text>
+  <text x="430" y="120" text-anchor="middle" font-size="10" fill="#ccaa88">13 – 30 Hz</text>
+  <text x="430" y="136" text-anchor="middle" font-size="9" fill="#997755">Active thinking</text>
+  <text x="430" y="148" text-anchor="middle" font-size="9" fill="#997755">External focus</text>
+  <rect x="367" y="163" width="126" height="1" fill="#553300"/>
+  <text x="430" y="177" text-anchor="middle" font-size="9" fill="#665544">Moiré by-product</text>
+
+  <!-- Gamma -->
+  <rect x="515" y="55" width="175" height="115" fill="#2d0d0d" rx="6"/>
+  <rect x="515" y="55" width="175" height="4" fill="#ff2222" rx="2"/>
+  <text x="602" y="85" text-anchor="middle" font-size="22" fill="#ff5555">γ</text>
+  <text x="602" y="103" text-anchor="middle" font-size="12" fill="#ff6666" font-weight="bold">Gamma</text>
+  <text x="602" y="117" text-anchor="middle" font-size="10" fill="#ccaaaa">30 – 100 Hz</text>
+  <text x="602" y="133" text-anchor="middle" font-size="9" fill="#997777">Insight / Binding</text>
+  <text x="602" y="145" text-anchor="middle" font-size="9" fill="#997777">Peak consciousness</text>
+  <text x="602" y="157" text-anchor="middle" font-size="9" fill="#997777">Memory encoding</text>
+  <rect x="527" y="163" width="150" height="1" fill="#551111"/>
+  <text x="602" y="178" text-anchor="middle" font-size="10" fill="#ff5555" font-weight="bold">★ SPECTRAL (40 Hz)</text>
+
+  <!-- Danger zone annotation -->
+  <rect x="125" y="195" width="540" height="22" fill="#330000" rx="4" opacity="0.8"/>
+  <text x="395" y="210" text-anchor="middle" font-size="10" fill="#ff6666">⚠  Public safety limit: raw strobe ≤ 4 Hz · Danger zone 3–30 Hz (photosensitive epilepsy) · Geometry creates effective frequency, not strobe rate</text>
+
+  <!-- Machine note -->
+  <text x="360" y="245" text-anchor="middle" font-size="10" fill="#666688">Disk @ 5–6 RPM × 4 spiral arms = 5.3–6.0 Hz effective (θ)  ·  8–12 RPM × 4 arms = 8–12 Hz (α)  ·  40 Hz via invisible spectral flicker (γ)</text>
+</svg>
