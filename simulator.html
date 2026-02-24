@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>FLASHY FLESH // Machine Simulator</title>
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=VT323&display=swap" rel="stylesheet"/>
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    :root{
+      --bg:#000;--bg2:#050505;--bg3:#0a0a0a;
+      --green:#00ff41;--gd:#00aa2a;--glo:#003a0e;
+      --amber:#ffb000;--red:#ff2222;--cyan:#00ffff;
+      --muted:#4a7a4a;--border:#1a3a1a;--border2:#2a5a2a;
+      --mono:'Share Tech Mono',monospace;--vt:'VT323',monospace;
+    }
+    html,body{height:100%;overflow:hidden;}
+    body{font-family:var(--mono);background:var(--bg);color:var(--green);font-size:11px;}
+    body::before{content:'';position:fixed;inset:0;z-index:9999;
+      background:repeating-linear-gradient(0deg,rgba(0,0,0,0.05) 0,rgba(0,0,0,0.05) 1px,transparent 1px,transparent 2px);
+      pointer-events:none;}
+
+    /* ── Layout ── */
+    #app{display:grid;grid-template-rows:32px 1fr 130px;height:100vh;gap:0;}
+    #topbar{background:var(--green);color:#000;display:flex;align-items:center;
+      justify-content:space-between;padding:0 12px;font-size:11px;letter-spacing:.1em;
+      font-family:var(--mono);}
+    #topbar a{color:#000;text-decoration:none;opacity:.7;}
+    #topbar a:hover{opacity:1;}
+    #main{display:grid;grid-template-columns:1fr 280px;overflow:hidden;}
+    #view-area{display:grid;grid-template-columns:1fr 1fr;overflow:hidden;border-right:1px solid var(--border2);}
+    #composite-wrap{position:relative;background:#000;border-right:1px solid var(--border);}
+    #disk-views{display:grid;grid-template-rows:1fr 1fr 1fr;background:#000;}
+    #controls{overflow-y:auto;background:var(--bg2);padding:12px 10px;display:flex;flex-direction:column;gap:10px;}
+    #readings-bar{border-top:1px solid var(--border2);background:var(--bg3);
+      display:flex;align-items:center;padding:0 12px;gap:24px;overflow:hidden;}
+
+    /* ── Canvas labels ── */
+    .view-label{position:absolute;top:6px;left:8px;font-size:9px;letter-spacing:.15em;color:var(--muted);pointer-events:none;}
+    .disk-wrap{position:relative;border-bottom:1px solid var(--border);}
+    .disk-wrap:last-child{border-bottom:none;}
+
+    /* ── Controls ── */
+    .ctrl-section{border:1px solid var(--border2);padding:8px 10px;}
+    .ctrl-section-title{font-size:9px;letter-spacing:.2em;color:var(--muted);margin-bottom:8px;}
+    .ctrl-row{display:flex;align-items:center;gap:6px;margin-bottom:5px;}
+    .ctrl-label{min-width:68px;font-size:10px;color:var(--muted);}
+    .ctrl-val{min-width:38px;text-align:right;font-size:11px;color:var(--green);}
+    input[type=range]{flex:1;-webkit-appearance:none;height:2px;background:var(--border2);outline:none;cursor:pointer;}
+    input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:10px;height:10px;background:var(--green);cursor:pointer;}
+    input[type=color]{width:28px;height:18px;border:1px solid var(--border2);padding:0;cursor:pointer;background:none;}
+    select{background:var(--bg3);color:var(--green);border:1px solid var(--border2);
+      font-family:var(--mono);font-size:10px;padding:2px 4px;cursor:pointer;outline:none;}
+    .btn-sm{font-family:var(--mono);font-size:9px;letter-spacing:.1em;
+      padding:3px 8px;cursor:pointer;border:1px solid var(--border2);
+      background:transparent;color:var(--muted);transition:all .1s;}
+    .btn-sm:hover{border-color:var(--green);color:var(--green);}
+    .btn-sm.active{background:var(--glo);border-color:var(--gd);color:var(--green);}
+    .btn-sm.danger{border-color:rgba(255,34,34,.3);color:rgba(255,34,34,.6);}
+    .btn-sm.danger:hover,.btn-sm.danger.active{background:rgba(255,34,34,.1);border-color:var(--red);color:var(--red);}
+    .preset-btns{display:flex;flex-wrap:wrap;gap:4px;}
+
+    /* ── Readings ── */
+    .reading{display:flex;flex-direction:column;gap:2px;}
+    .reading .r-label{font-size:8px;letter-spacing:.15em;color:var(--muted);}
+    .reading .r-val{font-size:13px;font-family:var(--vt);color:var(--green);}
+    .reading .r-val.amber{color:var(--amber);}
+    .reading .r-val.red{color:var(--red);}
+    .sep{width:1px;background:var(--border);align-self:stretch;margin:6px 0;}
+
+    @keyframes blink{0%,49%{opacity:1}50%,100%{opacity:0}}
+    .blink{animation:blink 1s step-end infinite;}
+  </style>
+</head>
+<body>
+<div id="app">
+
+<!-- Top bar -->
+<div id="topbar">
+  <span>FLASHY FLESH // MACHINE SIMULATOR v0.2 &nbsp;<span class="blink">█</span></span>
+  <span style="display:flex;gap:20px;align-items:center;">
+    <span id="fps-display">-- FPS</span>
+    <a href="index.html">← BACK TO SITE</a>
+  </span>
+</div>
+
+<!-- Main area -->
+<div id="main">
+
+  <!-- Left: composite + individual disk views -->
+  <div id="view-area">
+    <div id="composite-wrap">
+      <canvas id="composite" style="width:100%;height:100%;display:block;"></canvas>
+      <div class="view-label">COMPOSITE — OBSERVER POV &nbsp;·&nbsp; additive blend</div>
+    </div>
+    <div id="disk-views">
+      <div class="disk-wrap" id="wrap1" style="position:relative;">
+        <canvas id="c1" style="width:100%;height:100%;display:block;"></canvas>
+        <div class="view-label" id="lbl1">D1</div>
+      </div>
+      <div class="disk-wrap" id="wrap2" style="position:relative;">
+        <canvas id="c2" style="width:100%;height:100%;display:block;"></canvas>
+        <div class="view-label" id="lbl2">D2</div>
+      </div>
+      <div class="disk-wrap" id="wrap3" style="position:relative;">
+        <canvas id="c3" style="width:100%;height:100%;display:block;"></canvas>
+        <div class="view-label" id="lbl3">D3</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Right: controls -->
+  <div id="controls">
+
+    <!-- Presets -->
+    <div class="ctrl-section">
+      <div class="ctrl-section-title">// PRESETS</div>
+      <div class="preset-btns">
+        <button class="btn-sm" onclick="loadPreset('alpha')">ALPHA BLOOM</button>
+        <button class="btn-sm" onclick="loadPreset('theta')">THETA DIVE</button>
+        <button class="btn-sm" onclick="loadPreset('oceanic')">OCEANIC</button>
+        <button class="btn-sm" onclick="loadPreset('gamma')">GAMMA FLASH</button>
+        <button class="btn-sm" onclick="loadPreset('rgb')">RGB BLOOM</button>
+        <button class="btn-sm" onclick="loadPreset('lissajous')">LISSAJOUS</button>
+      </div>
+    </div>
+
+    <!-- Disk 1 -->
+    <div class="ctrl-section" id="sec1">
+      <div class="ctrl-section-title" id="sec1-title">// DISK 1 — 60cm — 4 ARMS</div>
+      <div class="ctrl-row"><span class="ctrl-label">RPM</span>
+        <input type="range" id="rpm1" min="-15" max="15" step="0.1" value="6"
+          oninput="S.disks[0].rpm=+this.value;updateLabel(0)"/>
+        <span class="ctrl-val" id="rpm1v">6.0</span></div>
+      <div class="ctrl-row"><span class="ctrl-label">COLOR</span>
+        <input type="color" id="col1" value="#ff2200" oninput="S.disks[0].color=this.value;updateLabel(0)"/>
+        <span style="flex:1"></span>
+        <span class="ctrl-label" style="min-width:42px;text-align:right;">ANIM</span>
+        <select id="anim1" onchange="S.disks[0].anim=this.value">
+          <option value="static">STATIC</option>
+          <option value="chase">CHASE</option>
+          <option value="rainbow">RAINBOW</option>
+          <option value="pulse">BPM PULSE</option>
+          <option value="comet">COMET</option>
+        </select></div>
+      <div class="ctrl-row"><span class="ctrl-label">ARMS EXT</span>
+        <input type="range" id="ext1" min="0.1" max="1" step="0.01" value="0.75"
+          oninput="S.disks[0].ext=+this.value"/>
+        <span class="ctrl-val" id="ext1v">75%</span></div>
+      <div class="ctrl-row"><span class="ctrl-label">LED SIZE</span>
+        <input type="range" id="led1" min="1" max="5" step="0.5" value="2.5"
+          oninput="S.disks[0].ledR=+this.value"/>
+        <span class="ctrl-val" id="led1v">2.5</span></div>
+    </div>
+
+    <!-- Disk 2 -->
+    <div class="ctrl-section" id="sec2">
+      <div class="ctrl-section-title">// DISK 2 — 45cm — 3 ARMS</div>
+      <div class="ctrl-row"><span class="ctrl-label">RPM</span>
+        <input type="range" id="rpm2" min="-15" max="15" step="0.1" value="-5.35"
+          oninput="S.disks[1].rpm=+this.value;updateLabel(1)"/>
+        <span class="ctrl-val" id="rpm2v">-5.4</span></div>
+      <div class="ctrl-row"><span class="ctrl-label">COLOR</span>
+        <input type="color" id="col2" value="#00ff44" oninput="S.disks[1].color=this.value;updateLabel(1)"/>
+        <span style="flex:1"></span>
+        <span class="ctrl-label" style="min-width:42px;text-align:right;">ANIM</span>
+        <select id="anim2" onchange="S.disks[1].anim=this.value">
+          <option value="static">STATIC</option>
+          <option value="chase" selected>CHASE</option>
+          <option value="rainbow">RAINBOW</option>
+          <option value="pulse">BPM PULSE</option>
+          <option value="comet">COMET</option>
+        </select></div>
+      <div class="ctrl-row"><span class="ctrl-label">ARMS EXT</span>
+        <input type="range" id="ext2" min="0.1" max="1" step="0.01" value="0.8"
+          oninput="S.disks[1].ext=+this.value"/>
+        <span class="ctrl-val" id="ext2v">80%</span></div>
+      <div class="ctrl-row"><span class="ctrl-label">LED SIZE</span>
+        <input type="range" id="led2" min="1" max="5" step="0.5" value="2.5"
+          oninput="S.disks[1].ledR=+this.value"/>
+        <span class="ctrl-val" id="led2v">2.5</span></div>
+    </div>
+
+    <!-- Disk 3 -->
+    <div class="ctrl-section" id="sec3">
+      <div class="ctrl-section-title">// DISK 3 — 30cm — 6 ARMS</div>
+      <div class="ctrl-row"><span class="ctrl-label">RPM</span>
+        <input type="range" id="rpm3" min="-15" max="15" step="0.1" value="2"
+          oninput="S.disks[2].rpm=+this.value;updateLabel(2)"/>
+        <span class="ctrl-val" id="rpm3v">2.0</span></div>
+      <div class="ctrl-row"><span class="ctrl-label">COLOR</span>
+        <input type="color" id="col3" value="#0044ff" oninput="S.disks[2].color=this.value;updateLabel(2)"/>
+        <span style="flex:1"></span>
+        <span class="ctrl-label" style="min-width:42px;text-align:right;">ANIM</span>
+        <select id="anim3" onchange="S.disks[2].anim=this.value">
+          <option value="static">STATIC</option>
+          <option value="chase">CHASE</option>
+          <option value="rainbow" selected>RAINBOW</option>
+          <option value="pulse">BPM PULSE</option>
+          <option value="comet">COMET</option>
+        </select></div>
+      <div class="ctrl-row"><span class="ctrl-label">ARMS EXT</span>
+        <input type="range" id="ext3" min="0.1" max="1" step="0.01" value="0.6"
+          oninput="S.disks[2].ext=+this.value"/>
+        <span class="ctrl-val" id="ext3v">60%</span></div>
+      <div class="ctrl-row"><span class="ctrl-label">LED SIZE</span>
+        <input type="range" id="led3" min="1" max="5" step="0.5" value="2.5"
+          oninput="S.disks[2].ledR=+this.value"/>
+        <span class="ctrl-val" id="led3v">2.5</span></div>
+    </div>
+
+    <!-- Global -->
+    <div class="ctrl-section">
+      <div class="ctrl-section-title">// GLOBAL</div>
+      <div class="ctrl-row"><span class="ctrl-label">BPM</span>
+        <input type="range" id="gbpm" min="60" max="180" step="1" value="140"
+          oninput="S.bpm=+this.value;document.getElementById('bpmv').textContent=this.value"/>
+        <span class="ctrl-val" id="bpmv">140</span></div>
+      <div class="ctrl-row"><span class="ctrl-label">STROBE Hz</span>
+        <input type="range" id="gstrobe" min="0" max="4" step="0.1" value="0"
+          oninput="S.strobeHz=+this.value;document.getElementById('strobev').textContent=this.value.toFixed(1)"/>
+        <span class="ctrl-val" id="strobev">0.0</span></div>
+      <div class="ctrl-row"><span class="ctrl-label">POV BLUR</span>
+        <input type="range" id="gpov" min="0.02" max="0.4" step="0.01" value="0.12"
+          oninput="S.povAlpha=+this.value"/>
+        <span class="ctrl-val" id="povv"></span></div>
+      <div class="ctrl-row"><span class="ctrl-label">LED COUNT</span>
+        <input type="range" id="gledct" min="4" max="24" step="1" value="12"
+          oninput="S.ledCount=+this.value;document.getElementById('ledctv').textContent=this.value"/>
+        <span class="ctrl-val" id="ledctv">12</span></div>
+      <div class="ctrl-row" style="margin-top:6px;gap:6px;">
+        <button class="btn-sm danger" id="btn-estop" onclick="eStop()">E-STOP</button>
+        <button class="btn-sm" id="btn-resume" onclick="eResume()" style="display:none;">RESUME</button>
+        <button class="btn-sm" id="btn-pov" onclick="togglePOV()" style="margin-left:auto;">POV: ON</button>
+        <button class="btn-sm" onclick="toggleTrails()" id="btn-trails">TRAILS: ON</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- Readings bar -->
+<div id="readings-bar">
+  <div class="reading">
+    <span class="r-label">D1 f_eff</span>
+    <span class="r-val" id="r-feff1">--</span>
+  </div>
+  <div class="sep"></div>
+  <div class="reading">
+    <span class="r-label">D2 f_eff</span>
+    <span class="r-val" id="r-feff2">--</span>
+  </div>
+  <div class="sep"></div>
+  <div class="reading">
+    <span class="r-label">D3 f_eff</span>
+    <span class="r-val" id="r-feff3">--</span>
+  </div>
+  <div class="sep"></div>
+  <div class="reading">
+    <span class="r-label">MOIRÉ BEAT</span>
+    <span class="r-val amber" id="r-moire">--</span>
+  </div>
+  <div class="sep"></div>
+  <div class="reading">
+    <span class="r-label">D1 ANGLE</span>
+    <span class="r-val" id="r-ang1">--</span>
+  </div>
+  <div class="sep"></div>
+  <div class="reading">
+    <span class="r-label">D2 ANGLE</span>
+    <span class="r-val" id="r-ang2">--</span>
+  </div>
+  <div class="sep"></div>
+  <div class="reading">
+    <span class="r-label">D3 ANGLE</span>
+    <span class="r-val" id="r-ang3">--</span>
+  </div>
+  <div class="sep"></div>
+  <div class="reading">
+    <span class="r-label">STROBE</span>
+    <span class="r-val red" id="r-strobe">OFF</span>
+  </div>
+  <div class="sep"></div>
+  <div class="reading">
+    <span class="r-label">BPM</span>
+    <span class="r-val" id="r-bpm">140</span>
+  </div>
+  <div class="sep"></div>
+  <div class="reading">
+    <span class="r-label">SAFETY</span>
+    <span class="r-val" id="r-safety" style="color:#00ff41;">OK</span>
+  </div>
+</div>
+
+</div><!-- #app -->
+
+<script>
+// ── State ───────────────────────────────────────────────────────────────────
+const S = {
+  disks: [
+    { rpm:6,    color:'#ff2200', anim:'static', ext:0.75, ledR:2.5, angle:0, nArms:4, radius:1.0 },
+    { rpm:-5.35,color:'#00ff44', anim:'chase',  ext:0.80, ledR:2.5, angle:0, nArms:3, radius:0.75 },
+    { rpm:2,    color:'#0044ff', anim:'rainbow',ext:0.60, ledR:2.5, angle:0, nArms:6, radius:0.50 },
+  ],
+  bpm: 140,
+  strobeHz: 0,
+  strobePhase: 0,
+  strobeOn: false,
+  ledCount: 12,
+  povAlpha: 0.12,
+  stopped: false,
+  povMode: true,
+  trails: true,
+  t: 0,   // time in seconds
+};
+
+const PRESETS = {
+  alpha:    { rpms:[8,-5,1.5],    colors:['#00ffcc','#44ddff','#22aaff'], anims:['static','static','static'],     bpm:90,  strobe:0.5 },
+  theta:    { rpms:[5.5,-4,1],    colors:['#6600ff','#aa00ff','#4400aa'], anims:['pulse','chase','static'],        bpm:70,  strobe:0.3 },
+  oceanic:  { rpms:[3.5,-3,0.8],  colors:['#0033ff','#0088ff','#00ccff'], anims:['static','rainbow','chase'],      bpm:58,  strobe:0.1 },
+  gamma:    { rpms:[12,-9,4],     colors:['#ffffff','#ff4400','#ff0044'], anims:['pulse','chase','comet'],          bpm:145, strobe:3.5 },
+  rgb:      { rpms:[10,-7,3],     colors:['#ff2200','#00ff44','#0044ff'], anims:['chase','chase','chase'],          bpm:140, strobe:0.5 },
+  lissajous:{ rpms:[6,-9,15],     colors:['#ff0088','#00ffcc','#ffff00'], anims:['rainbow','rainbow','rainbow'],    bpm:120, strobe:1.0 },
+};
+
+// ── Canvas setup ────────────────────────────────────────────────────────────
+const composite = document.getElementById('composite');
+const cc = composite.getContext('2d');
+const diskCanvases = [document.getElementById('c1'),document.getElementById('c2'),document.getElementById('c3')];
+const dcs = diskCanvases.map(c=>c.getContext('2d'));
+
+function resize() {
+  // Composite
+  const cw = composite.parentElement;
+  composite.width  = cw.clientWidth;
+  composite.height = cw.clientHeight;
+
+  // Individual disks
+  diskCanvases.forEach((c,i)=>{
+    const w=document.getElementById('wrap'+(i+1));
+    c.width  = w.clientWidth;
+    c.height = w.clientHeight;
+  });
+}
+
+// ── Color utils ─────────────────────────────────────────────────────────────
+function hexToRgb(hex) {
+  const r=parseInt(hex.slice(1,3),16);
+  const g=parseInt(hex.slice(3,5),16);
+  const b=parseInt(hex.slice(5,7),16);
+  return [r,g,b];
+}
+function hslToRgb(h,s,l) {
+  s/=100;l/=100;
+  const k=n=>(n+h/30)%12;
+  const a=s*Math.min(l,1-l);
+  const f=n=>l-a*Math.max(-1,Math.min(k(n)-3,Math.min(9-k(n),1)));
+  return [Math.round(f(0)*255),Math.round(f(8)*255),Math.round(f(4)*255)];
+}
+
+function getLEDColor(disk, ledIndex, totalLEDs) {
+  const [br,bg,bb] = hexToRgb(disk.color);
+  const t = S.t;
+
+  if (disk.anim === 'static') return `rgb(${br},${bg},${bb})`;
+
+  if (disk.anim === 'rainbow') {
+    const hue = ((ledIndex / totalLEDs) * 360 + t * 60) % 360;
+    const [r,g,b] = hslToRgb(hue,100,50);
+    return `rgb(${r},${g},${b})`;
+  }
+
+  if (disk.anim === 'chase') {
+    const wave = Math.sin(ledIndex / totalLEDs * Math.PI * 2 - t * 4);
+    const bright = Math.max(0, wave);
+    return `rgb(${Math.round(br*bright)},${Math.round(bg*bright)},${Math.round(bb*bright)})`;
+  }
+
+  if (disk.anim === 'pulse') {
+    const bps = S.bpm / 60;
+    const phase = (t * bps) % 1;
+    const bright = Math.max(0, Math.sin(phase * Math.PI));
+    return `rgb(${Math.round(br*bright)},${Math.round(bg*bright)},${Math.round(bb*bright)})`;
+  }
+
+  if (disk.anim === 'comet') {
+    // Bright at tip, fades toward hub
+    const normPos = ledIndex / totalLEDs; // 0=hub, 1=tip
+    const tail = Math.pow(normPos, 1.5);
+    // Head sweeps via time
+    const headPos = (t * 0.8) % 1;
+    const dist = Math.abs(normPos - headPos);
+    const bright = Math.max(0, 1 - dist * 8) * tail + tail * 0.15;
+    return `rgb(${Math.round(br*bright)},${Math.round(bg*bright)},${Math.round(bb*bright)})`;
+  }
+
+  return `rgb(${br},${bg},${bb})`;
+}
+
+// ── Draw one disk ────────────────────────────────────────────────────────────
+function drawDisk(ctx, w, h, disk, alpha=1.0, isComposite=false) {
+  const cx=w/2, cy=h/2;
+  const maxR = Math.min(w,h)*0.44;
+  const diskR = maxR * disk.radius;
+  const armLen = diskR * disk.ext;
+  const ledCount = S.ledCount;
+
+  ctx.save();
+  ctx.translate(cx, cy);
+
+  // Outer ring (faint)
+  if (!isComposite) {
+    ctx.beginPath();
+    ctx.arc(0,0,diskR,0,Math.PI*2);
+    const [r,g,b]=hexToRgb(disk.color);
+    ctx.strokeStyle=`rgba(${r},${g},${b},0.15)`;
+    ctx.lineWidth=1;
+    ctx.stroke();
+    // Hub
+    ctx.beginPath(); ctx.arc(0,0,4,0,Math.PI*2);
+    ctx.fillStyle=`rgba(${r},${g},${b},0.8)`;
+    ctx.fill();
+  }
+
+  // Arms
+  for (let a=0;a<disk.nArms;a++) {
+    const armAngle = disk.angle + (a/disk.nArms)*Math.PI*2;
+    const ax=Math.cos(armAngle), ay=Math.sin(armAngle);
+
+    // Arm line
+    if (!isComposite) {
+      const [r,g,b]=hexToRgb(disk.color);
+      ctx.beginPath();
+      ctx.moveTo(4*ax, 4*ay);
+      ctx.lineTo(armLen*ax, armLen*ay);
+      ctx.strokeStyle=`rgba(${r},${g},${b},0.25)`;
+      ctx.lineWidth=1;
+      ctx.stroke();
+    }
+
+    // LEDs along arm
+    for (let i=0;i<ledCount;i++) {
+      const t_led = (i+1)/(ledCount+1);
+      const ledR_world = 4 + (armLen-4)*t_led;
+      const lx = ledR_world*ax;
+      const ly = ledR_world*ay;
+
+      const col = getLEDColor(disk, i, ledCount);
+      const r2=disk.ledR * (isComposite ? 1.4 : 1.0);
+
+      ctx.beginPath();
+      ctx.arc(lx, ly, r2, 0, Math.PI*2);
+      ctx.fillStyle = col;
+      ctx.globalAlpha = alpha;
+      ctx.fill();
+
+      // Glow
+      if (r2 > 1.5) {
+        const grd = ctx.createRadialGradient(lx,ly,0,lx,ly,r2*3);
+        const [r,g,b]=hexToRgb(disk.color);
+        grd.addColorStop(0,`rgba(${r},${g},${b},${0.3*alpha})`);
+        grd.addColorStop(1,`rgba(${r},${g},${b},0)`);
+        ctx.beginPath();
+        ctx.arc(lx,ly,r2*3,0,Math.PI*2);
+        ctx.fillStyle=grd;
+        ctx.globalAlpha=1;
+        ctx.fill();
+      }
+    }
+  }
+
+  ctx.globalAlpha=1;
+  ctx.restore();
+}
+
+// ── FPS tracking ─────────────────────────────────────────────────────────────
+let lastTime=0, fpsArr=[], frameCount=0;
+
+// ── Main render loop ─────────────────────────────────────────────────────────
+function render(ts) {
+  if(!lastTime) lastTime=ts;
+  const dt = Math.min((ts-lastTime)/1000, 0.05);
+  lastTime = ts;
+
+  if (!S.stopped) {
+    S.t += dt;
+    S.disks.forEach(d => {
+      d.angle += (d.rpm / 60) * 2 * Math.PI * dt;
+    });
+    // Strobe
+    if (S.strobeHz > 0) {
+      S.strobePhase += S.strobeHz * dt;
+      S.strobeOn = (S.strobePhase % 1) < 0.15;
+    } else {
+      S.strobeOn = false;
+    }
+  }
+
+  // ── Individual disk views ──
+  diskCanvases.forEach((c,i)=>{
+    const dc=dcs[i];
+    const w=c.width, h=c.height;
+    // Trails fade
+    if (S.trails) {
+      dc.fillStyle='rgba(0,0,0,0.18)';
+      dc.fillRect(0,0,w,h);
+    } else {
+      dc.clearRect(0,0,w,h);
+      dc.fillStyle='#000';
+      dc.fillRect(0,0,w,h);
+    }
+    if (!S.stopped) drawDisk(dc,w,h,S.disks[i],1.0,false);
+  });
+
+  // ── Composite observer view ──
+  const cw=composite.width, ch=composite.height;
+  if (S.trails) {
+    cc.fillStyle=`rgba(0,0,0,${S.povAlpha})`;
+    cc.fillRect(0,0,cw,ch);
+  } else {
+    cc.clearRect(0,0,cw,ch);
+    cc.fillStyle='#000';
+    cc.fillRect(0,0,cw,ch);
+  }
+
+  if (!S.stopped) {
+    // Draw disks with additive blending in composite
+    const prevGCO = cc.globalCompositeOperation;
+    cc.globalCompositeOperation = 'lighter';
+
+    // Draw each disk at slightly different positions (stagger simulation)
+    const offsets = [{x:0,y:30},{x:0,y:0},{x:0,y:-28}];
+    S.disks.forEach((d,i)=>{
+      cc.save();
+      cc.translate(offsets[i].x, offsets[i].y);
+      drawDisk(cc, cw, ch, d, 0.9, true);
+      cc.restore();
+    });
+
+    cc.globalCompositeOperation = prevGCO;
+
+    // Strobe flash
+    if (S.strobeOn) {
+      cc.fillStyle='rgba(255,255,255,0.85)';
+      cc.fillRect(0,0,cw,ch);
+    }
+  } else {
+    // E-stopped
+    cc.fillStyle='rgba(255,0,0,0.05)';
+    cc.fillRect(0,0,cw,ch);
+    cc.font='bold 14px Share Tech Mono';
+    cc.fillStyle='#ff2222';
+    cc.textAlign='center';
+    cc.fillText('[ E-STOP ACTIVE ]', cw/2, ch/2);
+    cc.fillText('PRESS RESUME TO RESTART', cw/2, ch/2+22);
+    cc.textAlign='left';
+  }
+
+  // ── Readings ──
+  if (frameCount % 6 === 0) {
+    S.disks.forEach((d,i)=>{
+      const feff = Math.abs(d.rpm/60*d.nArms).toFixed(2);
+      document.getElementById('r-feff'+(i+1)).textContent = feff + ' Hz';
+      const ang = ((d.angle * 180/Math.PI) % 360 + 360) % 360;
+      document.getElementById('r-ang'+(i+1)).textContent = ang.toFixed(0)+'°';
+    });
+    const beat = Math.abs(Math.abs(S.disks[0].rpm)-Math.abs(S.disks[1].rpm))/60*
+      Math.min(S.disks[0].nArms,S.disks[1].nArms);
+    document.getElementById('r-moire').textContent = beat.toFixed(3)+' Hz';
+    document.getElementById('r-strobe').textContent = S.strobeHz>0 ? S.strobeHz.toFixed(1)+' Hz' : 'OFF';
+    document.getElementById('r-bpm').textContent = S.bpm;
+
+    // Safety check
+    const safe = S.strobeHz <= 4;
+    document.getElementById('r-safety').textContent = safe ? 'OK' : '! UNSAFE';
+    document.getElementById('r-safety').style.color = safe ? '#00ff41' : '#ff2222';
+
+    // Sync slider val displays
+    [0,1,2].forEach(i=>{
+      const d=S.disks[i];
+      document.getElementById('ext'+(i+1)+'v').textContent=Math.round(d.ext*100)+'%';
+      document.getElementById('led'+(i+1)+'v').textContent=d.ledR.toFixed(1);
+    });
+
+    // FPS
+    fpsArr.push(1/dt);
+    if(fpsArr.length>20) fpsArr.shift();
+    const avgFps=fpsArr.reduce((a,b)=>a+b,0)/fpsArr.length;
+    document.getElementById('fps-display').textContent=Math.round(avgFps)+' FPS';
+  }
+  frameCount++;
+
+  requestAnimationFrame(render);
+}
+
+// ── Controls ─────────────────────────────────────────────────────────────────
+function updateLabel(i) {
+  const d=S.disks[i];
+  document.getElementById('rpm'+(i+1)+'v').textContent=d.rpm.toFixed(1);
+  document.getElementById('lbl'+(i+1)).textContent=
+    'D'+(i+1)+' · '+d.rpm.toFixed(1)+' RPM · '+d.nArms+' ARMS · f_eff='+(Math.abs(d.rpm)/60*d.nArms).toFixed(2)+' Hz';
+}
+
+function loadPreset(name) {
+  const p=PRESETS[name];
+  if(!p) return;
+  p.rpms.forEach((r,i)=>{
+    S.disks[i].rpm=r;
+    document.getElementById('rpm'+(i+1)).value=r;
+    updateLabel(i);
+  });
+  p.colors.forEach((c,i)=>{
+    S.disks[i].color=c;
+    document.getElementById('col'+(i+1)).value=c;
+  });
+  p.anims.forEach((a,i)=>{
+    S.disks[i].anim=a;
+    document.getElementById('anim'+(i+1)).value=a;
+  });
+  S.bpm=p.bpm;
+  S.strobeHz=p.strobe;
+  document.getElementById('gbpm').value=p.bpm;
+  document.getElementById('bpmv').textContent=p.bpm;
+  document.getElementById('gstrobe').value=p.strobe;
+  document.getElementById('strobev').textContent=p.strobe.toFixed(1);
+}
+
+function eStop() {
+  S.stopped=true;
+  document.getElementById('btn-estop').style.display='none';
+  document.getElementById('btn-resume').style.display='inline-block';
+  diskCanvases.forEach((c,i)=>{
+    dcs[i].fillStyle='rgba(0,0,0,0.8)';
+    dcs[i].fillRect(0,0,c.width,c.height);
+  });
+}
+function eResume() {
+  S.stopped=false;
+  document.getElementById('btn-estop').style.display='inline-block';
+  document.getElementById('btn-resume').style.display='none';
+}
+
+let _povOn=true;
+function togglePOV() {
+  _povOn=!_povOn;
+  document.getElementById('btn-pov').textContent='POV: '+(_povOn?'ON':'OFF');
+  S.povAlpha=_povOn ? 0.12 : 0.9;
+  document.getElementById('gpov').value=S.povAlpha;
+}
+
+let _trailsOn=true;
+function toggleTrails() {
+  _trailsOn=!_trailsOn;
+  S.trails=_trailsOn;
+  document.getElementById('btn-trails').textContent='TRAILS: '+(_trailsOn?'ON':'OFF');
+}
+
+// ── Init ──────────────────────────────────────────────────────────────────────
+window.addEventListener('resize', ()=>{ resize(); });
+resize();
+[0,1,2].forEach(i=>updateLabel(i));
+loadPreset('rgb');
+requestAnimationFrame(render);
+</script>
+</body>
+</html>
