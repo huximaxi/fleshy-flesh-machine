@@ -6,850 +6,901 @@
 <title>Codex Mechanicus — Flashy Flesh</title>
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
-
   :root {
     --ink: #2c1a08;
     --ink-light: #5c3a1e;
-    --ink-faint: rgba(44,26,8,0.22);
-    --parchment: #f0dfa8;
+    --ink-faint: rgba(44,26,8,0.2);
     --parchment-shadow: #c4a555;
   }
-
   body {
     background-color: #f0dfa8;
     background-image:
-      radial-gradient(ellipse at 25% 60%, rgba(180,130,55,0.18) 0%, transparent 55%),
-      radial-gradient(ellipse at 75% 25%, rgba(200,155,70,0.13) 0%, transparent 50%),
-      linear-gradient(155deg, #f5e8bc 0%, #e8d090 55%, #f3e2a8 100%);
+      radial-gradient(ellipse at 25% 65%, rgba(175,125,50,0.17) 0%, transparent 55%),
+      radial-gradient(ellipse at 78% 22%, rgba(200,155,65,0.12) 0%, transparent 50%),
+      linear-gradient(152deg, #f5e8bc 0%, #e8d090 55%, #f3e2a8 100%);
     font-family: 'Palatino Linotype', Palatino, 'Book Antiqua', Georgia, serif;
-    color: var(--ink);
-    min-height: 100vh;
+    color: #2c1a08;
     padding: 30px 24px 70px;
-    max-width: 1280px;
+    max-width: 1300px;
     margin: 0 auto;
   }
 
-  /* ── Header ── */
+  /* Header */
   .codex-header {
     text-align: center;
-    padding: 28px 20px 22px;
-    border-top: 2.5px double var(--ink-light);
-    border-bottom: 2.5px double var(--ink-light);
-    margin-bottom: 36px;
+    padding: 26px 20px 20px;
+    border-top: 2.5px double #5c3a1e;
+    border-bottom: 2.5px double #5c3a1e;
+    margin-bottom: 34px;
   }
-  .codex-title {
-    font-size: 2.3rem;
-    font-style: italic;
-    letter-spacing: 0.06em;
-    line-height: 1.2;
-    margin-bottom: 7px;
-  }
-  .codex-subtitle {
-    font-size: 0.92rem;
-    font-style: italic;
-    color: var(--ink-light);
-    letter-spacing: 0.1em;
-    line-height: 1.6;
-  }
-  .codex-date {
-    font-size: 0.82rem;
-    margin-top: 12px;
-    color: var(--ink-light);
-    letter-spacing: 0.08em;
-  }
+  .codex-title { font-size: 2.2rem; font-style: italic; letter-spacing: .06em; line-height: 1.2; margin-bottom: 7px; }
+  .codex-subtitle { font-size: .9rem; font-style: italic; color: #5c3a1e; letter-spacing: .09em; line-height: 1.65; }
+  .codex-date { font-size: .8rem; margin-top: 11px; color: #5c3a1e; letter-spacing: .08em; }
+  .orn { display: block; margin: 12px auto 0; }
 
-  /* ── Ornament ── */
-  .ornament { display: block; margin: 12px auto 0; }
-
-  /* ── Grid ── */
-  .illustration-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 28px;
-    margin-bottom: 28px;
-  }
+  /* Grid */
+  .illustration-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 26px; margin-bottom: 26px; }
   .panel-wide { grid-column: 1 / -1; }
 
-  /* ── Panel ── */
+  /* Panel */
   .panel {
-    background: rgba(244,230,180,0.28);
-    border: 1.5px solid var(--ink-light);
-    padding: 18px 18px 14px;
+    background: rgba(244,230,180,0.26);
+    border: 1.5px solid #5c3a1e;
+    padding: 17px 17px 13px;
     position: relative;
   }
   .panel::after {
     content: '';
     position: absolute;
     top: 5px; left: 5px; right: -5px; bottom: -5px;
-    border: 1px solid rgba(196,165,85,0.55);
-    z-index: -1;
-    pointer-events: none;
+    border: 1px solid rgba(196,165,85,.5);
+    z-index: -1; pointer-events: none;
   }
-  .panel-title {
-    font-size: 1.05rem;
-    font-style: italic;
-    font-weight: bold;
-    text-align: center;
-    margin-bottom: 3px;
-    letter-spacing: 0.04em;
-    padding-bottom: 7px;
-    border-bottom: 1px solid var(--ink-faint);
-  }
-  .panel-subtitle {
-    font-size: 0.72rem;
-    font-style: italic;
-    text-align: center;
-    color: var(--ink-light);
-    margin-bottom: 10px;
-  }
+  .panel-title { font-size: 1.03rem; font-style: italic; font-weight: bold; text-align: center; margin-bottom: 3px; letter-spacing: .04em; padding-bottom: 7px; border-bottom: 1px solid rgba(44,26,8,.18); }
+  .panel-subtitle { font-size: .71rem; font-style: italic; text-align: center; color: #5c3a1e; margin-bottom: 9px; }
   .panel svg { display: block; width: 100%; height: auto; }
-  .panel-notes {
-    font-size: 0.71rem;
-    font-style: italic;
-    color: var(--ink-light);
-    margin-top: 10px;
-    line-height: 1.55;
-    border-top: 1px solid var(--ink-faint);
-    padding-top: 8px;
-  }
+  .panel-notes { font-size: .7rem; font-style: italic; color: #5c3a1e; margin-top: 9px; line-height: 1.55; border-top: 1px solid rgba(44,26,8,.17); padding-top: 7px; }
 
-  /* ── Marginalia ── */
-  .marginalia-row {
-    display: flex;
-    gap: 28px;
-    margin: 8px 0 32px;
-  }
-  .marginalia {
-    flex: 1;
-    font-size: 0.78rem;
-    font-style: italic;
-    color: var(--ink-light);
-    padding: 10px 16px;
-    border-left: 2.5px solid var(--parchment-shadow);
-    line-height: 1.55;
-  }
+  /* Marginalia */
+  .marg-row { display: flex; gap: 26px; margin: 6px 0 30px; }
+  .marg { flex: 1; font-size: .77rem; font-style: italic; color: #5c3a1e; padding: 9px 15px; border-left: 2.5px solid #c4a555; line-height: 1.55; }
 
-  /* ── Footer ── */
-  .codex-footer {
-    text-align: center;
-    font-size: 0.78rem;
-    font-style: italic;
-    color: var(--ink-light);
-    border-top: 1px solid var(--ink-light);
-    padding-top: 18px;
-    margin-top: 30px;
-    line-height: 1.7;
-  }
+  /* Footer */
+  .codex-footer { text-align: center; font-size: .77rem; font-style: italic; color: #5c3a1e; border-top: 1px solid #5c3a1e; padding-top: 17px; margin-top: 28px; line-height: 1.7; }
+  .codex-footer a { color: inherit; }
 </style>
 </head>
 <body>
 
-<!-- ════════════════ HEADER ════════════════ -->
+<!-- ═══════════ HEADER ═══════════ -->
 <header class="codex-header">
   <div class="codex-title">Codex Mechanicus</div>
   <div class="codex-subtitle">
     Anatomical Studies for an Audiovisual State-Engineering Apparatus<br>
     <em>Machina Carnis Fulgentis — The Flashy Flesh Machine</em>
   </div>
-  <div class="codex-date">Anno Domini MMXXVI &nbsp;·&nbsp; Open Apparatus Series &nbsp;·&nbsp; Folio I</div>
-  <svg class="ornament" width="320" height="22" viewBox="0 0 320 22">
-    <line x1="0" y1="11" x2="128" y2="11" stroke="#5c3a1e" stroke-width="0.9"/>
-    <circle cx="160" cy="11" r="7" fill="none" stroke="#5c3a1e" stroke-width="0.9"/>
-    <circle cx="160" cy="11" r="3.5" fill="#5c3a1e" opacity="0.35"/>
-    <line x1="192" y1="11" x2="320" y2="11" stroke="#5c3a1e" stroke-width="0.9"/>
-    <line x1="135" y1="11" x2="150" y2="11" stroke="#5c3a1e" stroke-width="0.9"/>
-    <line x1="170" y1="11" x2="185" y2="11" stroke="#5c3a1e" stroke-width="0.9"/>
+  <div class="codex-date">Anno Domini MMXXVI &nbsp;·&nbsp; Folio II — Corrected Geometry &nbsp;·&nbsp; Open Apparatus Series</div>
+  <svg class="orn" width="320" height="22" viewBox="0 0 320 22">
+    <line x1="0" y1="11" x2="128" y2="11" stroke="#5c3a1e" stroke-width=".9"/>
+    <circle cx="160" cy="11" r="7" fill="none" stroke="#5c3a1e" stroke-width=".9"/>
+    <circle cx="160" cy="11" r="3.5" fill="#5c3a1e" opacity=".34"/>
+    <line x1="192" y1="11" x2="320" y2="11" stroke="#5c3a1e" stroke-width=".9"/>
+    <line x1="135" y1="11" x2="150" y2="11" stroke="#5c3a1e" stroke-width=".9"/>
+    <line x1="170" y1="11" x2="185" y2="11" stroke="#5c3a1e" stroke-width=".9"/>
   </svg>
 </header>
 
-<!-- ════════════════ GRID ════════════════ -->
 <div class="illustration-grid">
 
-  <!-- ── PANEL I : Full Elevation ── -->
-  <div class="panel">
-    <div class="panel-title">I. Apparatus in Full Elevation</div>
-    <div class="panel-subtitle">Side view · scale 1:20 · all dimensions in centimetres</div>
-    <svg viewBox="0 0 400 520" xmlns="http://www.w3.org/2000/svg">
-      <defs>
-        <pattern id="p-hatch45" width="6" height="6" patternTransform="rotate(45)" patternUnits="userSpaceOnUse">
-          <line x1="0" y1="0" x2="0" y2="6" stroke="#2c1a08" stroke-width="0.55" opacity="0.33"/>
-        </pattern>
-        <pattern id="p-hatch-45" width="5" height="5" patternTransform="rotate(-45)" patternUnits="userSpaceOnUse">
-          <line x1="0" y1="0" x2="0" y2="5" stroke="#2c1a08" stroke-width="0.45" opacity="0.28"/>
-        </pattern>
-        <pattern id="p-cross" width="6" height="6" patternUnits="userSpaceOnUse">
-          <line x1="0" y1="0" x2="6" y2="6" stroke="#2c1a08" stroke-width="0.4" opacity="0.22"/>
-          <line x1="6" y1="0" x2="0" y2="6" stroke="#2c1a08" stroke-width="0.4" opacity="0.22"/>
-        </pattern>
-      </defs>
-
-      <!-- Ground shadow -->
-      <ellipse cx="200" cy="500" rx="85" ry="9" fill="#2c1a08" opacity="0.07"/>
-      <!-- Ground line -->
-      <line x1="60" y1="492" x2="340" y2="492" stroke="#2c1a08" stroke-width="1.3"/>
-
-      <!-- Tripod legs -->
-      <line x1="200" y1="462" x2="128" y2="492" stroke="#2c1a08" stroke-width="3.5" stroke-linecap="round"/>
-      <line x1="200" y1="462" x2="272" y2="492" stroke="#2c1a08" stroke-width="3.5" stroke-linecap="round"/>
-      <line x1="200" y1="462" x2="200" y2="492" stroke="#2c1a08" stroke-width="2.5" stroke-linecap="round" opacity="0.6"/>
-      <!-- Feet -->
-      <rect x="123" y="489" width="10" height="5" rx="1.5" fill="#2c1a08" opacity="0.75"/>
-      <rect x="267" y="489" width="10" height="5" rx="1.5" fill="#2c1a08" opacity="0.75"/>
-      <rect x="195" y="489" width="10" height="5" rx="1.5" fill="#2c1a08" opacity="0.55"/>
-      <!-- Cross brace -->
-      <line x1="148" y1="480" x2="252" y2="480" stroke="#2c1a08" stroke-width="1.8" opacity="0.65"/>
-      <!-- Base motor housing -->
-      <rect x="187" y="448" width="26" height="20" rx="3" fill="url(#p-hatch45)" stroke="#2c1a08" stroke-width="1.2"/>
-      <rect x="192" y="452" width="16" height="10" rx="1" fill="none" stroke="#2c1a08" stroke-width="0.7" opacity="0.55"/>
-      <!-- Cooling fins -->
-      <line x1="187" y1="452" x2="182" y2="452" stroke="#2c1a08" stroke-width="1"/>
-      <line x1="187" y1="456" x2="182" y2="456" stroke="#2c1a08" stroke-width="1"/>
-      <line x1="187" y1="460" x2="182" y2="460" stroke="#2c1a08" stroke-width="1"/>
-      <line x1="187" y1="464" x2="182" y2="464" stroke="#2c1a08" stroke-width="1"/>
-      <line x1="213" y1="452" x2="218" y2="452" stroke="#2c1a08" stroke-width="1"/>
-      <line x1="213" y1="456" x2="218" y2="456" stroke="#2c1a08" stroke-width="1"/>
-      <line x1="213" y1="460" x2="218" y2="460" stroke="#2c1a08" stroke-width="1"/>
-      <line x1="213" y1="464" x2="218" y2="464" stroke="#2c1a08" stroke-width="1"/>
-
-      <!-- Central pole -->
-      <rect x="195" y="78" width="10" height="372" fill="url(#p-hatch45)" stroke="#2c1a08" stroke-width="1.1"/>
-      <!-- Pole highlight -->
-      <rect x="196" y="78" width="2.5" height="372" fill="#f5e8bc" opacity="0.42"/>
-
-      <!-- ─ DISK 3 (30 cm, top) ─ -->
-      <ellipse cx="200" cy="148" rx="62" ry="9" fill="url(#p-hatch-45)" stroke="#2c1a08" stroke-width="1.3"/>
-      <line x1="138" y1="148" x2="262" y2="148" stroke="#2c1a08" stroke-width="1.8"/>
-      <!-- LEDs -->
-      <circle cx="152" cy="147" r="2.2" fill="#2c1a08"/><circle cx="166" cy="147" r="1.8" fill="#2c1a08" opacity="0.8"/>
-      <circle cx="180" cy="147" r="1.8" fill="#2c1a08" opacity="0.7"/><circle cx="220" cy="147" r="1.8" fill="#2c1a08" opacity="0.7"/>
-      <circle cx="234" cy="147" r="1.8" fill="#2c1a08" opacity="0.8"/><circle cx="248" cy="147" r="2.2" fill="#2c1a08"/>
-      <!-- Slip ring hub -->
-      <rect x="193" y="139" width="14" height="19" rx="2" fill="url(#p-cross)" stroke="#2c1a08" stroke-width="0.9"/>
-      <!-- Labels -->
-      <text x="268" y="144" font-family="Palatino,Georgia,serif" font-style="italic" font-size="8.5" fill="#2c1a08">∅ 30 cm</text>
-      <text x="268" y="155" font-family="Palatino,Georgia,serif" font-style="italic" font-size="7" fill="#5c3a1e">2-arm · 6 LED/arm</text>
-
-      <!-- ─ DISK 2 (45 cm, middle) ─ -->
-      <ellipse cx="200" cy="278" rx="93" ry="11" fill="url(#p-hatch-45)" stroke="#2c1a08" stroke-width="1.4"/>
-      <line x1="107" y1="278" x2="293" y2="278" stroke="#2c1a08" stroke-width="2"/>
-      <line x1="200" y1="278" x2="155" y2="238" stroke="#2c1a08" stroke-width="1.4" opacity="0.85"/>
-      <line x1="200" y1="278" x2="245" y2="318" stroke="#2c1a08" stroke-width="1.4" opacity="0.85"/>
-      <circle cx="122" cy="278" r="2.5" fill="#2c1a08"/><circle cx="140" cy="278" r="2" fill="#2c1a08" opacity="0.8"/>
-      <circle cx="158" cy="278" r="2" fill="#2c1a08" opacity="0.7"/><circle cx="242" cy="278" r="2" fill="#2c1a08" opacity="0.7"/>
-      <circle cx="260" cy="278" r="2" fill="#2c1a08" opacity="0.8"/><circle cx="278" cy="278" r="2.5" fill="#2c1a08"/>
-      <rect x="193" y="267" width="14" height="22" rx="2" fill="url(#p-cross)" stroke="#2c1a08" stroke-width="0.9"/>
-      <text x="298" y="273" font-family="Palatino,Georgia,serif" font-style="italic" font-size="8.5" fill="#2c1a08">∅ 45 cm</text>
-      <text x="298" y="284" font-family="Palatino,Georgia,serif" font-style="italic" font-size="7" fill="#5c3a1e">3-arm · 8 LED/arm</text>
-
-      <!-- ─ DISK 1 (60 cm, bottom) ─ -->
-      <ellipse cx="200" cy="395" rx="122" ry="13" fill="url(#p-hatch-45)" stroke="#2c1a08" stroke-width="1.6"/>
-      <line x1="78" y1="395" x2="322" y2="395" stroke="#2c1a08" stroke-width="2.2"/>
-      <line x1="200" y1="382" x2="200" y2="408" stroke="#2c1a08" stroke-width="1.8"/>
-      <circle cx="96" cy="394" r="3" fill="#2c1a08"/><circle cx="116" cy="394" r="2.5" fill="#2c1a08" opacity="0.8"/>
-      <circle cx="134" cy="394" r="2.2" fill="#2c1a08" opacity="0.7"/><circle cx="152" cy="394" r="2" fill="#2c1a08" opacity="0.6"/>
-      <circle cx="248" cy="394" r="2" fill="#2c1a08" opacity="0.6"/><circle cx="266" cy="394" r="2.2" fill="#2c1a08" opacity="0.7"/>
-      <circle cx="284" cy="394" r="2.5" fill="#2c1a08" opacity="0.8"/><circle cx="304" cy="394" r="3" fill="#2c1a08"/>
-      <rect x="192" y="382" width="16" height="26" rx="2" fill="url(#p-cross)" stroke="#2c1a08" stroke-width="1"/>
-      <text x="328" y="389" font-family="Palatino,Georgia,serif" font-style="italic" font-size="8.5" fill="#2c1a08">∅ 60 cm</text>
-      <text x="328" y="400" font-family="Palatino,Georgia,serif" font-style="italic" font-size="7" fill="#5c3a1e">4-arm · 12 LED/arm</text>
-
-      <!-- Strobe unit top -->
-      <rect x="177" y="52" width="46" height="18" rx="4" fill="url(#p-hatch45)" stroke="#2c1a08" stroke-width="1.1"/>
-      <text x="228" y="60" font-family="Palatino,Georgia,serif" font-style="italic" font-size="7.5" fill="#2c1a08">Strobe · 50 W RGBW</text>
-      <text x="228" y="70" font-family="Palatino,Georgia,serif" font-style="italic" font-size="7" fill="#5c3a1e">hard cap 4 Hz</text>
-      <line x1="173" y1="61" x2="158" y2="78" stroke="#2c1a08" stroke-width="0.5" stroke-dasharray="3,3" opacity="0.35"/>
-      <line x1="223" y1="61" x2="238" y2="78" stroke="#2c1a08" stroke-width="0.5" stroke-dasharray="3,3" opacity="0.35"/>
-
-      <!-- Control panel (side) -->
-      <rect x="332" y="375" width="52" height="68" rx="3" fill="url(#p-hatch-45)" stroke="#2c1a08" stroke-width="1"/>
-      <circle cx="347" cy="393" r="5.5" fill="none" stroke="#2c1a08" stroke-width="0.9"/>
-      <circle cx="367" cy="393" r="5.5" fill="none" stroke="#2c1a08" stroke-width="0.9"/>
-      <circle cx="357" cy="410" r="5.5" fill="none" stroke="#2c1a08" stroke-width="0.9"/>
-      <circle cx="347" cy="427" r="4.5" fill="#2c1a08" opacity="0.4"/>
-      <circle cx="367" cy="427" r="4.5" fill="#2c1a08" opacity="0.4"/>
-      <path d="M 332,418 Q 305,418 288,445" fill="none" stroke="#2c1a08" stroke-width="0.9" stroke-dasharray="2,2" opacity="0.55"/>
-      <text x="334" y="452" font-family="Palatino,Georgia,serif" font-style="italic" font-size="7.5" fill="#5c3a1e">Control panel</text>
-
-      <!-- Speaker -->
-      <ellipse cx="105" cy="305" rx="19" ry="26" fill="none" stroke="#2c1a08" stroke-width="1"/>
-      <ellipse cx="105" cy="305" rx="9" ry="12" fill="none" stroke="#2c1a08" stroke-width="0.7"/>
-      <line x1="91" y1="282" x2="95" y2="292" stroke="#2c1a08" stroke-width="0.5" opacity="0.45"/>
-      <line x1="119" y1="282" x2="115" y2="292" stroke="#2c1a08" stroke-width="0.5" opacity="0.45"/>
-      <path d="M 82,305 Q 77,295 82,285" fill="none" stroke="#2c1a08" stroke-width="0.6" stroke-dasharray="2,2" opacity="0.4"/>
-      <path d="M 76,305 Q 69,292 76,279" fill="none" stroke="#2c1a08" stroke-width="0.5" stroke-dasharray="2,2" opacity="0.3"/>
-      <text x="62" y="340" font-family="Palatino,Georgia,serif" font-style="italic" font-size="7.5" fill="#5c3a1e">Speaker · 360°</text>
-
-      <!-- Height dimension -->
-      <line x1="54" y1="448" x2="54" y2="78" stroke="#2c1a08" stroke-width="0.55" opacity="0.45"/>
-      <line x1="49" y1="448" x2="59" y2="448" stroke="#2c1a08" stroke-width="0.55" opacity="0.45"/>
-      <line x1="49" y1="78" x2="59" y2="78" stroke="#2c1a08" stroke-width="0.55" opacity="0.45"/>
-      <text x="38" y="268" font-family="Palatino,Georgia,serif" font-style="italic" font-size="8" fill="#5c3a1e" transform="rotate(-90,38,268)">≈ 185 cm</text>
-    </svg>
-    <div class="panel-notes">
-      The apparatus stands upon a welded-steel tripod from which rises the central pole bearing three independently-rotating disks. Each disk carries its own motor and slip-ring assembly at the hub, permitting continuous rotation without conductor entanglement.
-    </div>
-  </div>
-
-  <!-- ── PANEL II : Disk Geometry ── -->
-  <div class="panel">
-    <div class="panel-title">II. Geometria Discorum — Plan Views</div>
-    <div class="panel-subtitle">Plan view from above · arm patterns, LED positions, moiré relationship</div>
-    <svg viewBox="0 0 400 520" xmlns="http://www.w3.org/2000/svg">
-      <defs>
-        <radialGradient id="disk-fill" cx="50%" cy="50%" r="50%">
-          <stop offset="0%" stop-color="#2c1a08" stop-opacity="0.04"/>
-          <stop offset="100%" stop-color="#2c1a08" stop-opacity="0.13"/>
-        </radialGradient>
-        <pattern id="fine45" width="4" height="4" patternTransform="rotate(45)" patternUnits="userSpaceOnUse">
-          <line x1="0" y1="0" x2="0" y2="4" stroke="#2c1a08" stroke-width="0.45" opacity="0.28"/>
-        </pattern>
-      </defs>
-
-      <!-- ─ Disk 1 (60 cm, 4-arm) ─ -->
-      <text x="200" y="20" text-anchor="middle" font-family="Palatino,Georgia,serif" font-style="italic" font-size="10.5" fill="#2c1a08">Discus Primus — 4 armis, ∅ 60 cm</text>
-      <circle cx="200" cy="105" r="104" fill="url(#disk-fill)" stroke="#2c1a08" stroke-width="1.6"/>
-      <circle cx="200" cy="105" r="62" fill="none" stroke="#2c1a08" stroke-width="0.5" stroke-dasharray="4,3" opacity="0.38"/>
-      <circle cx="200" cy="105" r="22" fill="none" stroke="#2c1a08" stroke-width="0.5" opacity="0.5"/>
-      <!-- 4 arms (0°, 90°, 180°, 270°) -->
-      <line x1="96" y1="105" x2="304" y2="105" stroke="#2c1a08" stroke-width="2.8"/>
-      <line x1="200" y1="1" x2="200" y2="209" stroke="#2c1a08" stroke-width="2.8"/>
-      <!-- LEDs right arm -->
-      <circle cx="228" cy="104" r="2.8" fill="#2c1a08"/>
-      <circle cx="248" cy="104" r="2.5" fill="#2c1a08" opacity="0.85"/>
-      <circle cx="266" cy="104" r="2.5" fill="#2c1a08" opacity="0.75"/>
-      <circle cx="283" cy="104" r="2.5" fill="#2c1a08" opacity="0.65"/>
-      <!-- LEDs left arm -->
-      <circle cx="172" cy="104" r="2.8" fill="#2c1a08"/>
-      <circle cx="152" cy="104" r="2.5" fill="#2c1a08" opacity="0.85"/>
-      <circle cx="134" cy="104" r="2.5" fill="#2c1a08" opacity="0.75"/>
-      <circle cx="117" cy="104" r="2.5" fill="#2c1a08" opacity="0.65"/>
-      <!-- LEDs down arm -->
-      <circle cx="200" cy="133" r="2.8" fill="#2c1a08"/>
-      <circle cx="200" cy="153" r="2.5" fill="#2c1a08" opacity="0.85"/>
-      <circle cx="200" cy="171" r="2.5" fill="#2c1a08" opacity="0.75"/>
-      <circle cx="200" cy="188" r="2.5" fill="#2c1a08" opacity="0.65"/>
-      <!-- LEDs up arm -->
-      <circle cx="200" cy="77" r="2.8" fill="#2c1a08"/>
-      <circle cx="200" cy="57" r="2.5" fill="#2c1a08" opacity="0.85"/>
-      <circle cx="200" cy="39" r="2.5" fill="#2c1a08" opacity="0.75"/>
-      <circle cx="200" cy="22" r="2.5" fill="#2c1a08" opacity="0.65"/>
-      <!-- Center hub -->
-      <circle cx="200" cy="105" r="15" fill="url(#fine45)" stroke="#2c1a08" stroke-width="1.3"/>
-      <circle cx="200" cy="105" r="6" fill="#2c1a08" opacity="0.55"/>
-      <!-- Rotation arc + annotation -->
-      <path d="M 304,105 A 104,104 0 0 0 200,1" fill="none" stroke="#2c1a08" stroke-width="0.9" stroke-dasharray="6,4" opacity="0.45"/>
-      <text x="312" y="100" font-family="Palatino,Georgia,serif" font-style="italic" font-size="8" fill="#2c1a08">f_eff = RPM/60 × 4</text>
-      <text x="312" y="112" font-family="Palatino,Georgia,serif" font-style="italic" font-size="7" fill="#5c3a1e">@ 15 RPM → 1.0 Hz</text>
-
-      <!-- ─ Disk 2 (45 cm, 3-arm) ─ -->
-      <text x="200" y="238" text-anchor="middle" font-family="Palatino,Georgia,serif" font-style="italic" font-size="10.5" fill="#2c1a08">Discus Secundus — 3 armis, ∅ 45 cm</text>
-      <circle cx="200" cy="322" r="76" fill="url(#disk-fill)" stroke="#2c1a08" stroke-width="1.5"/>
-      <circle cx="200" cy="322" r="15" fill="url(#fine45)" stroke="#2c1a08" stroke-width="1.1"/>
-      <circle cx="200" cy="322" r="6" fill="#2c1a08" opacity="0.55"/>
-      <!-- 3 arms at 0°, 120°, 240° -->
-      <line x1="124" y1="322" x2="276" y2="322" stroke="#2c1a08" stroke-width="2.2"/>
-      <line x1="200" y1="322" x2="162" y2="256" stroke="#2c1a08" stroke-width="2.2"/>
-      <line x1="200" y1="322" x2="238" y2="388" stroke="#2c1a08" stroke-width="2.2"/>
-      <!-- LEDs arm 1 (right) -->
-      <circle cx="232" cy="322" r="2.5" fill="#2c1a08"/><circle cx="252" cy="322" r="2.2" fill="#2c1a08" opacity="0.8"/><circle cx="268" cy="322" r="2.2" fill="#2c1a08" opacity="0.7"/>
-      <!-- LEDs arm 2 (upper-left) -->
-      <circle cx="182" cy="290" r="2.5" fill="#2c1a08"/><circle cx="170" cy="269" r="2.2" fill="#2c1a08" opacity="0.8"/><circle cx="163" cy="258" r="2.2" fill="#2c1a08" opacity="0.7"/>
-      <!-- LEDs arm 3 (lower-right) -->
-      <circle cx="218" cy="354" r="2.5" fill="#2c1a08"/><circle cx="230" cy="375" r="2.2" fill="#2c1a08" opacity="0.8"/><circle cx="237" cy="386" r="2.2" fill="#2c1a08" opacity="0.7"/>
-      <!-- 120° angle arc -->
-      <path d="M 220,322 A 20,20 0 0 1 210,305" fill="none" stroke="#2c1a08" stroke-width="0.8" opacity="0.55"/>
-      <text x="224" y="316" font-family="Palatino,Georgia,serif" font-style="italic" font-size="8" fill="#5c3a1e">120°</text>
-
-      <!-- ─ Disk 3 (30 cm, 2-arm) ─ -->
-      <text x="200" y="424" text-anchor="middle" font-family="Palatino,Georgia,serif" font-style="italic" font-size="10.5" fill="#2c1a08">Discus Tertius — 2 armis, ∅ 30 cm</text>
-      <circle cx="200" cy="478" r="38" fill="url(#disk-fill)" stroke="#2c1a08" stroke-width="1.4"/>
-      <circle cx="200" cy="478" r="10" fill="url(#fine45)" stroke="#2c1a08" stroke-width="1"/>
-      <circle cx="200" cy="478" r="4.5" fill="#2c1a08" opacity="0.55"/>
-      <line x1="162" y1="478" x2="238" y2="478" stroke="#2c1a08" stroke-width="2.2"/>
-      <line x1="200" y1="440" x2="200" y2="516" stroke="#2c1a08" stroke-width="2.2"/>
-      <circle cx="174" cy="477" r="2" fill="#2c1a08"/><circle cx="162" cy="477" r="2" fill="#2c1a08" opacity="0.8"/>
-      <circle cx="226" cy="477" r="2" fill="#2c1a08"/><circle cx="238" cy="477" r="2" fill="#2c1a08" opacity="0.8"/>
-      <circle cx="200" cy="454" r="2" fill="#2c1a08"/><circle cx="200" cy="442" r="2" fill="#2c1a08" opacity="0.8"/>
-      <circle cx="200" cy="502" r="2" fill="#2c1a08"/><circle cx="200" cy="514" r="2" fill="#2c1a08" opacity="0.8"/>
-      <!-- Offset note -->
-      <text x="244" y="472" font-family="Palatino,Georgia,serif" font-style="italic" font-size="7.5" fill="#5c3a1e">offset 45°</text>
-      <text x="244" y="482" font-family="Palatino,Georgia,serif" font-style="italic" font-size="7" fill="#5c3a1e">from disk 1</text>
-    </svg>
-    <div class="panel-notes">
-      Three independently-driven disks, each offset in rotational phase. Contra-rotation at speeds differing by ≈7% generates moiré interference with apparent fractal dimension D≈1.6 — within the human visual preference optimum of D=1.4–1.6. Effective photic frequency equals (RPM ÷ 60) × arm count.
-    </div>
-  </div>
-
-  <!-- ── PANEL III : Slip Ring Section ── -->
-  <div class="panel">
-    <div class="panel-title">III. Annulus Electricus — Slip Ring Cross-Section</div>
-    <div class="panel-subtitle">Section A–A' · scale 1:2 · 6-conductor gold-contact assembly</div>
-    <svg viewBox="0 0 400 460" xmlns="http://www.w3.org/2000/svg">
-      <defs>
-        <pattern id="metal30" width="5" height="5" patternTransform="rotate(30)" patternUnits="userSpaceOnUse">
-          <line x1="0" y1="0" x2="0" y2="5" stroke="#2c1a08" stroke-width="0.6" opacity="0.38"/>
-        </pattern>
-        <pattern id="copper45" width="3.5" height="3.5" patternTransform="rotate(45)" patternUnits="userSpaceOnUse">
-          <line x1="0" y1="0" x2="0" y2="3.5" stroke="#2c1a08" stroke-width="0.8" opacity="0.48"/>
-        </pattern>
-      </defs>
-
-      <!-- Section cut dashes -->
-      <line x1="88" y1="20" x2="88" y2="440" stroke="#2c1a08" stroke-width="0.5" stroke-dasharray="9,5" opacity="0.28"/>
-      <line x1="312" y1="20" x2="312" y2="440" stroke="#2c1a08" stroke-width="0.5" stroke-dasharray="9,5" opacity="0.28"/>
-      <text x="82" y="16" font-family="Palatino,Georgia,serif" font-style="italic" font-size="8" fill="#5c3a1e">A</text>
-      <text x="308" y="16" font-family="Palatino,Georgia,serif" font-style="italic" font-size="8" fill="#5c3a1e">A'</text>
-      <text x="168" y="16" font-family="Palatino,Georgia,serif" font-style="italic" font-size="9" fill="#2c1a08">Section A – A'</text>
-
-      <!-- Central shaft -->
-      <rect x="170" y="28" width="18" height="405" fill="url(#metal30)" stroke="#2c1a08" stroke-width="1.3"/>
-      <rect x="171" y="28" width="3" height="405" fill="#f5e8bc" opacity="0.38"/>
-
-      <!-- 6 conducting rings (cross-sections) -->
-      <!-- Ring 1 GND -->
-      <rect x="148" y="66" width="74" height="16" rx="1.5" fill="url(#copper45)" stroke="#2c1a08" stroke-width="1.3"/>
-      <text x="232" y="77" font-family="Palatino,Georgia,serif" font-style="italic" font-size="8.5" fill="#2c1a08">Ring 1 · GND</text>
-      <!-- Ring 2 +5V -->
-      <rect x="148" y="100" width="74" height="16" rx="1.5" fill="url(#copper45)" stroke="#2c1a08" stroke-width="1.3"/>
-      <text x="232" y="111" font-family="Palatino,Georgia,serif" font-style="italic" font-size="8.5" fill="#2c1a08">Ring 2 · +5 V (LED logic)</text>
-      <!-- Ring 3 +12V -->
-      <rect x="148" y="134" width="74" height="16" rx="1.5" fill="url(#copper45)" stroke="#2c1a08" stroke-width="1.3"/>
-      <text x="232" y="145" font-family="Palatino,Georgia,serif" font-style="italic" font-size="8.5" fill="#2c1a08">Ring 3 · +12 V (motor)</text>
-      <!-- Ring 4 DATA -->
-      <rect x="148" y="168" width="74" height="16" rx="1.5" fill="url(#copper45)" stroke="#2c1a08" stroke-width="1.3"/>
-      <text x="232" y="179" font-family="Palatino,Georgia,serif" font-style="italic" font-size="8.5" fill="#2c1a08">Ring 4 · LED DATA (SK6812)</text>
-      <!-- Ring 5 SDA -->
-      <rect x="148" y="202" width="74" height="16" rx="1.5" fill="url(#copper45)" stroke="#2c1a08" stroke-width="1.3"/>
-      <text x="232" y="213" font-family="Palatino,Georgia,serif" font-style="italic" font-size="8.5" fill="#2c1a08">Ring 5 · I²C SDA</text>
-      <!-- Ring 6 SCL -->
-      <rect x="148" y="236" width="74" height="16" rx="1.5" fill="url(#copper45)" stroke="#2c1a08" stroke-width="1.3"/>
-      <text x="232" y="247" font-family="Palatino,Georgia,serif" font-style="italic" font-size="8.5" fill="#2c1a08">Ring 6 · I²C SCL</text>
-
-      <!-- Outer housing -->
-      <rect x="133" y="50" width="104" height="218" rx="5" fill="none" stroke="#2c1a08" stroke-width="2"/>
-
-      <!-- Contact brushes (stator side, left) -->
-      <line x1="148" y1="74" x2="115" y2="62" stroke="#2c1a08" stroke-width="1.3"/>
-      <circle cx="113" cy="61" r="3.5" fill="none" stroke="#2c1a08" stroke-width="0.9"/>
-      <line x1="148" y1="108" x2="115" y2="96" stroke="#2c1a08" stroke-width="1.3"/>
-      <circle cx="113" cy="95" r="3.5" fill="none" stroke="#2c1a08" stroke-width="0.9"/>
-      <line x1="148" y1="142" x2="115" y2="130" stroke="#2c1a08" stroke-width="1.3"/>
-      <circle cx="113" cy="129" r="3.5" fill="none" stroke="#2c1a08" stroke-width="0.9"/>
-      <line x1="148" y1="176" x2="115" y2="164" stroke="#2c1a08" stroke-width="1.3"/>
-      <circle cx="113" cy="163" r="3.5" fill="none" stroke="#2c1a08" stroke-width="0.9"/>
-      <line x1="148" y1="210" x2="115" y2="198" stroke="#2c1a08" stroke-width="1.3"/>
-      <circle cx="113" cy="197" r="3.5" fill="none" stroke="#2c1a08" stroke-width="0.9"/>
-      <line x1="148" y1="244" x2="115" y2="232" stroke="#2c1a08" stroke-width="1.3"/>
-      <circle cx="113" cy="231" r="3.5" fill="none" stroke="#2c1a08" stroke-width="0.9"/>
-
-      <!-- Stator bracket -->
-      <rect x="82" y="52" width="52" height="214" rx="2" fill="none" stroke="#2c1a08" stroke-width="0.9" stroke-dasharray="4,3" opacity="0.5"/>
-      <text x="90" y="276" font-family="Palatino,Georgia,serif" font-style="italic" font-size="8" fill="#5c3a1e">stator (fixed)</text>
-
-      <!-- Rotor bracket -->
-      <rect x="131" y="48" width="108" height="222" rx="5" fill="none" stroke="#2c1a08" stroke-width="0.8" stroke-dasharray="5,4" opacity="0.4"/>
-      <text x="148" y="280" font-family="Palatino,Georgia,serif" font-style="italic" font-size="8" fill="#5c3a1e">rotor (spins with disk)</text>
-
-      <!-- Sealed bearing -->
-      <rect x="142" y="290" width="86" height="24" rx="3.5" fill="url(#metal30)" stroke="#2c1a08" stroke-width="1.3"/>
-      <circle cx="162" cy="302" r="5" fill="none" stroke="#2c1a08" stroke-width="0.9"/>
-      <circle cx="185" cy="302" r="5" fill="none" stroke="#2c1a08" stroke-width="0.9"/>
-      <circle cx="208" cy="302" r="5" fill="none" stroke="#2c1a08" stroke-width="0.9"/>
-      <text x="234" y="305" font-family="Palatino,Georgia,serif" font-style="italic" font-size="8" fill="#5c3a1e">sealed ball bearing</text>
-
-      <!-- Mounting flange -->
-      <rect x="130" y="314" width="110" height="18" rx="2.5" fill="url(#metal30)" stroke="#2c1a08" stroke-width="1.3"/>
-      <line x1="117" y1="314" x2="130" y2="314" stroke="#2c1a08" stroke-width="1.2"/>
-      <line x1="240" y1="314" x2="253" y2="314" stroke="#2c1a08" stroke-width="1.2"/>
-      <text x="256" y="326" font-family="Palatino,Georgia,serif" font-style="italic" font-size="8" fill="#5c3a1e">mounting flange</text>
-
-      <!-- Wires out from stator to ESP32 -->
-      <line x1="82" y1="150" x2="60" y2="165" stroke="#2c1a08" stroke-width="0.8" stroke-dasharray="2,2" opacity="0.6"/>
-      <line x1="82" y1="160" x2="56" y2="178" stroke="#2c1a08" stroke-width="0.7" stroke-dasharray="2,2" opacity="0.5"/>
-      <line x1="82" y1="170" x2="52" y2="191" stroke="#2c1a08" stroke-width="0.6" stroke-dasharray="2,2" opacity="0.4"/>
-      <text x="28" y="205" font-family="Palatino,Georgia,serif" font-style="italic" font-size="7.5" fill="#5c3a1e">to ESP32</text>
-
-      <!-- Gold note -->
-      <text x="112" y="360" font-family="Palatino,Georgia,serif" font-style="italic" font-size="7.5" fill="#5c3a1e">Gold-plated contacts, 2 μm min.</text>
-      <text x="112" y="373" font-family="Palatino,Georgia,serif" font-style="italic" font-size="7.5" fill="#5c3a1e">rated ≥ 300 mA per circuit</text>
-      <text x="112" y="386" font-family="Palatino,Georgia,serif" font-style="italic" font-size="7.5" fill="#5c3a1e">6-wire, 6 mm O.D. bore</text>
-    </svg>
-    <div class="panel-notes">
-      Six independent circuits traverse the rotating joint — power rails for motor and LED logic, the serial LED data signal, and I²C for the onboard sensors. Gold contacts ensure minimal resistance across continuous rotation; the sealed ball bearing above receives the mechanical axial load.
-    </div>
-  </div>
-
-  <!-- ── PANEL IV : Motor & Drive ── -->
-  <div class="panel">
-    <div class="panel-title">IV. Machina Motrix — Drive Train Assembly</div>
-    <div class="panel-subtitle">Exploded elevation · geared DC motor, encoder & disk hub</div>
-    <svg viewBox="0 0 400 460" xmlns="http://www.w3.org/2000/svg">
-      <defs>
-        <pattern id="motorh" width="5" height="5" patternTransform="rotate(45)" patternUnits="userSpaceOnUse">
-          <line x1="0" y1="0" x2="0" y2="5" stroke="#2c1a08" stroke-width="0.55" opacity="0.32"/>
-        </pattern>
-        <pattern id="gearh" width="4" height="4" patternTransform="rotate(30)" patternUnits="userSpaceOnUse">
-          <line x1="0" y1="0" x2="0" y2="4" stroke="#2c1a08" stroke-width="0.65" opacity="0.38"/>
-        </pattern>
-      </defs>
-
-      <!-- DC Motor body -->
-      <rect x="125" y="32" width="90" height="140" rx="6" fill="url(#motorh)" stroke="#2c1a08" stroke-width="1.6"/>
-      <!-- End caps -->
-      <rect x="130" y="29" width="80" height="10" rx="2" fill="none" stroke="#2c1a08" stroke-width="1"/>
-      <rect x="130" y="168" width="80" height="10" rx="2" fill="none" stroke="#2c1a08" stroke-width="1"/>
-      <!-- Internal winding (ghost) -->
-      <ellipse cx="170" cy="104" rx="24" ry="35" fill="none" stroke="#2c1a08" stroke-width="0.6" opacity="0.25"/>
-      <ellipse cx="170" cy="104" rx="14" ry="22" fill="none" stroke="#2c1a08" stroke-width="0.5" opacity="0.2"/>
-      <!-- Cooling fins left -->
-      <line x1="125" y1="68" x2="110" y2="68" stroke="#2c1a08" stroke-width="1.1"/>
-      <line x1="125" y1="78" x2="110" y2="78" stroke="#2c1a08" stroke-width="1.1"/>
-      <line x1="125" y1="88" x2="110" y2="88" stroke="#2c1a08" stroke-width="1.1"/>
-      <line x1="125" y1="98" x2="110" y2="98" stroke="#2c1a08" stroke-width="1.1"/>
-      <line x1="125" y1="108" x2="110" y2="108" stroke="#2c1a08" stroke-width="1.1"/>
-      <line x1="125" y1="118" x2="110" y2="118" stroke="#2c1a08" stroke-width="1.1"/>
-      <line x1="125" y1="128" x2="110" y2="128" stroke="#2c1a08" stroke-width="1.1"/>
-      <line x1="125" y1="138" x2="110" y2="138" stroke="#2c1a08" stroke-width="1.1"/>
-      <line x1="125" y1="148" x2="110" y2="148" stroke="#2c1a08" stroke-width="1.1"/>
-      <!-- Labels -->
-      <text x="222" y="74" font-family="Palatino,Georgia,serif" font-style="italic" font-size="8.5" fill="#2c1a08">DC Gear Motor</text>
-      <text x="222" y="86" font-family="Palatino,Georgia,serif" font-style="italic" font-size="7.5" fill="#5c3a1e">12 V · 1–30 RPM</text>
-      <text x="222" y="98" font-family="Palatino,Georgia,serif" font-style="italic" font-size="7.5" fill="#5c3a1e">ratio 1:60 gearbox</text>
-      <text x="222" y="110" font-family="Palatino,Georgia,serif" font-style="italic" font-size="7.5" fill="#5c3a1e">max torque 5 N·m</text>
-
-      <!-- L298N driver (top-right) -->
-      <rect x="252" y="32" width="112" height="70" rx="3.5" fill="url(#motorh)" stroke="#2c1a08" stroke-width="1.2"/>
-      <text x="265" y="52" font-family="Palatino,Georgia,serif" font-style="italic" font-size="9" fill="#2c1a08">L298N Driver</text>
-      <text x="265" y="64" font-family="Palatino,Georgia,serif" font-style="italic" font-size="7.5" fill="#5c3a1e">IN1/IN2: direction</text>
-      <text x="265" y="76" font-family="Palatino,Georgia,serif" font-style="italic" font-size="7.5" fill="#5c3a1e">ENA: speed PWM</text>
-      <text x="265" y="88" font-family="Palatino,Georgia,serif" font-style="italic" font-size="7.5" fill="#5c3a1e">dual H-bridge</text>
-      <rect x="265" y="92" width="46" height="10" rx="1" fill="#2c1a08" opacity="0.38"/>
-      <!-- Connector to motor -->
-      <line x1="252" y1="60" x2="215" y2="90" stroke="#2c1a08" stroke-width="0.9" stroke-dasharray="3,2" opacity="0.55"/>
-      <line x1="252" y1="72" x2="215" y2="110" stroke="#2c1a08" stroke-width="0.7" stroke-dasharray="3,2" opacity="0.45"/>
-      <!-- To ESP32 -->
-      <line x1="308" y1="102" x2="308" y2="130" stroke="#2c1a08" stroke-width="0.9" stroke-dasharray="2,2" opacity="0.5"/>
-      <text x="314" y="126" font-family="Palatino,Georgia,serif" font-style="italic" font-size="7.5" fill="#5c3a1e">→ ESP32</text>
-
-      <!-- Gearbox -->
-      <rect x="133" y="178" width="74" height="58" rx="3.5" fill="url(#gearh)" stroke="#2c1a08" stroke-width="1.6"/>
-      <circle cx="170" cy="207" r="17" fill="none" stroke="#2c1a08" stroke-width="0.7" opacity="0.38"/>
-      <circle cx="170" cy="207" r="9" fill="none" stroke="#2c1a08" stroke-width="0.6" opacity="0.3"/>
-      <!-- Gear teeth -->
-      <line x1="170" y1="190" x2="170" y2="185" stroke="#2c1a08" stroke-width="1.5" opacity="0.5"/>
-      <line x1="183" y1="195" x2="186" y2="191" stroke="#2c1a08" stroke-width="1.5" opacity="0.5"/>
-      <line x1="187" y1="207" x2="192" y2="207" stroke="#2c1a08" stroke-width="1.5" opacity="0.5"/>
-      <line x1="183" y1="219" x2="186" y2="223" stroke="#2c1a08" stroke-width="1.5" opacity="0.5"/>
-      <line x1="170" y1="224" x2="170" y2="229" stroke="#2c1a08" stroke-width="1.5" opacity="0.5"/>
-      <line x1="157" y1="219" x2="154" y2="223" stroke="#2c1a08" stroke-width="1.5" opacity="0.5"/>
-      <line x1="153" y1="207" x2="148" y2="207" stroke="#2c1a08" stroke-width="1.5" opacity="0.5"/>
-      <line x1="157" y1="195" x2="154" y2="191" stroke="#2c1a08" stroke-width="1.5" opacity="0.5"/>
-
-      <!-- Output shaft -->
-      <rect x="162" y="234" width="16" height="32" fill="url(#motorh)" stroke="#2c1a08" stroke-width="1.1"/>
-      <text x="184" y="254" font-family="Palatino,Georgia,serif" font-style="italic" font-size="7.5" fill="#5c3a1e">output shaft</text>
-
-      <!-- Flexible coupling -->
-      <rect x="154" y="266" width="32" height="20" rx="2.5" fill="none" stroke="#2c1a08" stroke-width="1.3"/>
-      <line x1="162" y1="266" x2="162" y2="286" stroke="#2c1a08" stroke-width="0.9" opacity="0.45"/>
-      <line x1="170" y1="266" x2="170" y2="286" stroke="#2c1a08" stroke-width="0.9" opacity="0.45"/>
-      <line x1="178" y1="266" x2="178" y2="286" stroke="#2c1a08" stroke-width="0.9" opacity="0.45"/>
-      <text x="192" y="279" font-family="Palatino,Georgia,serif" font-style="italic" font-size="7.5" fill="#5c3a1e">flex. coupling</text>
-
-      <!-- Disk shaft to encoder -->
-      <rect x="162" y="286" width="16" height="28" fill="url(#motorh)" stroke="#2c1a08" stroke-width="1.1"/>
-
-      <!-- Encoder disk -->
-      <ellipse cx="170" cy="330" rx="34" ry="7" fill="none" stroke="#2c1a08" stroke-width="1.3"/>
-      <!-- Encoder slots -->
-      <rect x="155" y="326" width="5" height="8" fill="#2c1a08" opacity="0.48" rx="0.8"/>
-      <rect x="163" y="326" width="5" height="8" fill="#2c1a08" opacity="0.48" rx="0.8"/>
-      <rect x="171" y="326" width="5" height="8" fill="#2c1a08" opacity="0.48" rx="0.8"/>
-      <rect x="179" y="326" width="5" height="8" fill="#2c1a08" opacity="0.48" rx="0.8"/>
-      <!-- IR sensor -->
-      <rect x="132" y="325" width="14" height="12" rx="1.5" fill="none" stroke="#2c1a08" stroke-width="0.9"/>
-      <line x1="146" y1="331" x2="154" y2="331" stroke="#2c1a08" stroke-width="0.7" stroke-dasharray="1.5,1.5" opacity="0.6"/>
-      <text x="80" y="334" font-family="Palatino,Georgia,serif" font-style="italic" font-size="7.5" fill="#5c3a1e">IR encoder</text>
-      <text x="210" y="327" font-family="Palatino,Georgia,serif" font-style="italic" font-size="7.5" fill="#5c3a1e">20-slot disk</text>
-      <text x="210" y="337" font-family="Palatino,Georgia,serif" font-style="italic" font-size="7" fill="#5c3a1e">PID speed loop</text>
-
-      <!-- Disk hub -->
-      <rect x="148" y="340" width="44" height="22" rx="3.5" fill="url(#gearh)" stroke="#2c1a08" stroke-width="1.3"/>
-      <text x="198" y="354" font-family="Palatino,Georgia,serif" font-style="italic" font-size="7.5" fill="#5c3a1e">disk hub adapter</text>
-
-      <!-- Disk cross section -->
-      <rect x="92" y="362" width="156" height="10" rx="1.5" fill="none" stroke="#2c1a08" stroke-width="1.8"/>
-      <!-- LED strip on arm -->
-      <rect x="98" y="363" width="44" height="5" fill="#2c1a08" opacity="0.28" rx="1.2"/>
-      <circle cx="107" cy="366" r="2.2" fill="#2c1a08" opacity="0.7"/>
-      <circle cx="118" cy="366" r="2.2" fill="#2c1a08" opacity="0.7"/>
-      <circle cx="129" cy="366" r="2.2" fill="#2c1a08" opacity="0.7"/>
-      <text x="92" y="384" font-family="Palatino,Georgia,serif" font-style="italic" font-size="7.5" fill="#5c3a1e">SK6812 LED strip, flex. PCB</text>
-
-      <!-- Dimension: shaft to disk -->
-      <line x1="72" y1="236" x2="72" y2="362" stroke="#2c1a08" stroke-width="0.55" opacity="0.4"/>
-      <line x1="67" y1="236" x2="77" y2="236" stroke="#2c1a08" stroke-width="0.55" opacity="0.4"/>
-      <line x1="67" y1="362" x2="77" y2="362" stroke="#2c1a08" stroke-width="0.55" opacity="0.4"/>
-      <text x="28" y="306" font-family="Palatino,Georgia,serif" font-style="italic" font-size="8" fill="#5c3a1e" transform="rotate(-90,36,302)">drive train</text>
-    </svg>
-    <div class="panel-notes">
-      Each of three disks has its own geared DC motor (ratio 1:60), permitting independent speed control from 1–30 RPM via PWM through an L298N dual H-bridge. A 20-slot encoder disk with infrared sensor provides tachometer feedback to the ESP32 closed-loop PID controller.
-    </div>
-  </div>
-
-  <!-- ── PANEL V : Control Schematic ── -->
-  <div class="panel">
-    <div class="panel-title">V. Nexus Intelligens — Control Architecture</div>
-    <div class="panel-subtitle">System topology · ESP32 · power rails · data buses · WiFi</div>
-    <svg viewBox="0 0 400 460" xmlns="http://www.w3.org/2000/svg">
-      <defs>
-        <pattern id="pcbh" width="5.5" height="5.5" patternTransform="rotate(45)" patternUnits="userSpaceOnUse">
-          <line x1="0" y1="0" x2="0" y2="5.5" stroke="#2c1a08" stroke-width="0.5" opacity="0.28"/>
-        </pattern>
-      </defs>
-
-      <!-- ESP32 (center) -->
-      <rect x="136" y="170" width="128" height="90" rx="5.5" fill="url(#pcbh)" stroke="#2c1a08" stroke-width="2.2"/>
-      <text x="200" y="204" text-anchor="middle" font-family="Palatino,Georgia,serif" font-style="italic" font-size="13" font-weight="bold" fill="#2c1a08">ESP32</text>
-      <text x="200" y="220" text-anchor="middle" font-family="Palatino,Georgia,serif" font-style="italic" font-size="8" fill="#5c3a1e">240 MHz dual-core</text>
-      <text x="200" y="232" text-anchor="middle" font-family="Palatino,Georgia,serif" font-style="italic" font-size="8" fill="#5c3a1e">WiFi · FreeRTOS · FastLED</text>
-      <text x="200" y="244" text-anchor="middle" font-family="Palatino,Georgia,serif" font-style="italic" font-size="8" fill="#5c3a1e">PID × 3 · DMX · PWM</text>
-      <!-- GPIO pins left -->
-      <line x1="136" y1="186" x2="120" y2="186" stroke="#2c1a08" stroke-width="1.1"/>
-      <line x1="136" y1="196" x2="120" y2="196" stroke="#2c1a08" stroke-width="1.1"/>
-      <line x1="136" y1="206" x2="120" y2="206" stroke="#2c1a08" stroke-width="1.1"/>
-      <line x1="136" y1="216" x2="120" y2="216" stroke="#2c1a08" stroke-width="1.1"/>
-      <line x1="136" y1="226" x2="120" y2="226" stroke="#2c1a08" stroke-width="1.1"/>
-      <line x1="136" y1="236" x2="120" y2="236" stroke="#2c1a08" stroke-width="1.1"/>
-      <!-- GPIO pins right -->
-      <line x1="264" y1="186" x2="280" y2="186" stroke="#2c1a08" stroke-width="1.1"/>
-      <line x1="264" y1="196" x2="280" y2="196" stroke="#2c1a08" stroke-width="1.1"/>
-      <line x1="264" y1="206" x2="280" y2="206" stroke="#2c1a08" stroke-width="1.1"/>
-      <line x1="264" y1="216" x2="280" y2="216" stroke="#2c1a08" stroke-width="1.1"/>
-      <line x1="264" y1="226" x2="280" y2="226" stroke="#2c1a08" stroke-width="1.1"/>
-      <line x1="264" y1="236" x2="280" y2="236" stroke="#2c1a08" stroke-width="1.1"/>
-
-      <!-- WiFi antenna -->
-      <path d="M 193,158 Q 200,150 207,158" fill="none" stroke="#2c1a08" stroke-width="1.4"/>
-      <path d="M 188,154 Q 200,142 212,154" fill="none" stroke="#2c1a08" stroke-width="1.1"/>
-      <path d="M 183,150 Q 200,134 217,150" fill="none" stroke="#2c1a08" stroke-width="0.9" opacity="0.6"/>
-      <line x1="200" y1="158" x2="200" y2="170" stroke="#2c1a08" stroke-width="1.1"/>
-      <text x="220" y="153" font-family="Palatino,Georgia,serif" font-style="italic" font-size="7.5" fill="#5c3a1e">WiFi AP · 192.168.4.1</text>
-      <text x="220" y="163" font-family="Palatino,Georgia,serif" font-style="italic" font-size="7" fill="#5c3a1e">"flashy-flesh" / preset API</text>
-
-      <!-- 3× L298N (left column) -->
-      <rect x="24" y="52" width="80" height="48" rx="3" fill="url(#pcbh)" stroke="#2c1a08" stroke-width="1.2"/>
-      <text x="64" y="72" text-anchor="middle" font-family="Palatino,Georgia,serif" font-style="italic" font-size="8.5" fill="#2c1a08">L298N #1</text>
-      <text x="64" y="85" text-anchor="middle" font-family="Palatino,Georgia,serif" font-style="italic" font-size="7.5" fill="#5c3a1e">Disk 1 · 60 cm</text>
-      <line x1="64" y1="100" x2="64" y2="126" stroke="#2c1a08" stroke-width="1.5" stroke-dasharray="3,2" opacity="0.6"/>
-
-      <rect x="24" y="180" width="80" height="48" rx="3" fill="url(#pcbh)" stroke="#2c1a08" stroke-width="1.2"/>
-      <text x="64" y="200" text-anchor="middle" font-family="Palatino,Georgia,serif" font-style="italic" font-size="8.5" fill="#2c1a08">L298N #2</text>
-      <text x="64" y="213" text-anchor="middle" font-family="Palatino,Georgia,serif" font-style="italic" font-size="7.5" fill="#5c3a1e">Disk 2 · 45 cm</text>
-
-      <rect x="24" y="308" width="80" height="48" rx="3" fill="url(#pcbh)" stroke="#2c1a08" stroke-width="1.2"/>
-      <text x="64" y="328" text-anchor="middle" font-family="Palatino,Georgia,serif" font-style="italic" font-size="8.5" fill="#2c1a08">L298N #3</text>
-      <text x="64" y="341" text-anchor="middle" font-family="Palatino,Georgia,serif" font-style="italic" font-size="7.5" fill="#5c3a1e">Disk 3 · 30 cm</text>
-
-      <!-- Connections L298N → ESP32 -->
-      <line x1="104" y1="76" x2="136" y2="195" stroke="#2c1a08" stroke-width="0.85" opacity="0.55"/>
-      <line x1="104" y1="204" x2="136" y2="210" stroke="#2c1a08" stroke-width="0.85" opacity="0.55"/>
-      <line x1="104" y1="332" x2="136" y2="242" stroke="#2c1a08" stroke-width="0.85" opacity="0.55"/>
-
-      <!-- Strobe (right column) -->
-      <rect x="296" y="52" width="90" height="50" rx="3" fill="url(#pcbh)" stroke="#2c1a08" stroke-width="1.2"/>
-      <text x="341" y="72" text-anchor="middle" font-family="Palatino,Georgia,serif" font-style="italic" font-size="8.5" fill="#2c1a08">Strobe · 50 W RGBW</text>
-      <text x="341" y="84" text-anchor="middle" font-family="Palatino,Georgia,serif" font-style="italic" font-size="7.5" fill="#5c3a1e">ISR hard cap 4 Hz</text>
-      <text x="341" y="96" text-anchor="middle" font-family="Palatino,Georgia,serif" font-style="italic" font-size="7" fill="#8b2a2a">⚠ safety critical</text>
-      <line x1="296" y1="78" x2="264" y2="196" stroke="#2c1a08" stroke-width="0.85" opacity="0.55"/>
-
-      <!-- DMX spots -->
-      <rect x="296" y="172" width="90" height="50" rx="3" fill="url(#pcbh)" stroke="#2c1a08" stroke-width="1.2"/>
-      <text x="341" y="191" text-anchor="middle" font-family="Palatino,Georgia,serif" font-style="italic" font-size="8.5" fill="#2c1a08">DMX-512 Spots</text>
-      <text x="341" y="203" text-anchor="middle" font-family="Palatino,Georgia,serif" font-style="italic" font-size="7.5" fill="#5c3a1e">RS-485 · MAX3485</text>
-      <text x="341" y="215" text-anchor="middle" font-family="Palatino,Georgia,serif" font-style="italic" font-size="7" fill="#5c3a1e">multi-colour spots</text>
-      <line x1="296" y1="200" x2="264" y2="215" stroke="#2c1a08" stroke-width="0.85" opacity="0.55"/>
-
-      <!-- LED strips -->
-      <rect x="296" y="292" width="90" height="50" rx="3" fill="url(#pcbh)" stroke="#2c1a08" stroke-width="1.2"/>
-      <text x="341" y="312" text-anchor="middle" font-family="Palatino,Georgia,serif" font-style="italic" font-size="8.5" fill="#2c1a08">SK6812 LEDs ×3</text>
-      <text x="341" y="324" text-anchor="middle" font-family="Palatino,Georgia,serif" font-style="italic" font-size="7.5" fill="#5c3a1e">via slip rings</text>
-      <text x="341" y="336" text-anchor="middle" font-family="Palatino,Georgia,serif" font-style="italic" font-size="7" fill="#5c3a1e">FastLED · 144 px/m</text>
-      <line x1="296" y1="317" x2="264" y2="235" stroke="#2c1a08" stroke-width="0.85" opacity="0.55"/>
-
-      <!-- Audio amp -->
-      <rect x="136" y="330" width="128" height="48" rx="3" fill="url(#pcbh)" stroke="#2c1a08" stroke-width="1.2"/>
-      <text x="200" y="350" text-anchor="middle" font-family="Palatino,Georgia,serif" font-style="italic" font-size="8.5" fill="#2c1a08">Audio Amplifier</text>
-      <text x="200" y="362" text-anchor="middle" font-family="Palatino,Georgia,serif" font-style="italic" font-size="7.5" fill="#5c3a1e">3.5 mm jack + speaker</text>
-      <text x="200" y="372" text-anchor="middle" font-family="Palatino,Georgia,serif" font-style="italic" font-size="7" fill="#5c3a1e">sync'd to disk phase</text>
-      <line x1="200" y1="260" x2="200" y2="330" stroke="#2c1a08" stroke-width="1" stroke-dasharray="3,2" opacity="0.6"/>
-
-      <!-- PSU -->
-      <rect x="136" y="400" width="128" height="44" rx="3" fill="url(#pcbh)" stroke="#2c1a08" stroke-width="1.6"/>
-      <text x="200" y="420" text-anchor="middle" font-family="Palatino,Georgia,serif" font-style="italic" font-size="9" fill="#2c1a08">230 V Power Supply</text>
-      <text x="200" y="434" text-anchor="middle" font-family="Palatino,Georgia,serif" font-style="italic" font-size="7.5" fill="#5c3a1e">12 V / 10 A · 5 V / 5 A rails</text>
-      <line x1="200" y1="378" x2="200" y2="400" stroke="#2c1a08" stroke-width="1.5" opacity="0.65"/>
-
-      <!-- Consent button -->
-      <circle cx="64" cy="396" r="18" fill="none" stroke="#2c1a08" stroke-width="1.3"/>
-      <circle cx="64" cy="396" r="10" fill="#2c1a08" opacity="0.13"/>
-      <text x="64" y="400" text-anchor="middle" font-family="Palatino,Georgia,serif" font-style="italic" font-size="8" fill="#2c1a08">START</text>
-      <text x="64" y="422" text-anchor="middle" font-family="Palatino,Georgia,serif" font-style="italic" font-size="7.5" fill="#5c3a1e">3-sec hold</text>
-      <line x1="82" y1="396" x2="136" y2="418" stroke="#2c1a08" stroke-width="0.75" opacity="0.45"/>
-    </svg>
-    <div class="panel-notes">
-      The ESP32 orchestrates all subsystems under FreeRTOS: independent PID loops for each disk motor, LED animation via FastLED, strobe timing (hardware-interrupt hard-capped at 4 Hz), DMX spot control, audio synchronisation, and a WiFi access point serving the real-time JSON preset API for DJ/VJ integration.
-    </div>
-  </div>
-
-  <!-- ── PANEL VI : Human Scale (wide) ── -->
-  <div class="panel panel-wide">
-    <div class="panel-title">VI. Homo in Machina — Experience Geometry &amp; Human Scale</div>
-    <div class="panel-subtitle">Lateral section · participant position, visual field, projected light cone, acoustic field</div>
-    <svg viewBox="0 0 820 360" xmlns="http://www.w3.org/2000/svg">
-      <defs>
-        <pattern id="floor-fill" width="14" height="14" patternUnits="userSpaceOnUse">
-          <line x1="0" y1="14" x2="14" y2="0" stroke="#2c1a08" stroke-width="0.4" opacity="0.22"/>
-        </pattern>
-      </defs>
-
-      <!-- Floor -->
-      <rect x="0" y="318" width="820" height="38" fill="url(#floor-fill)" opacity="0.55"/>
-      <line x1="0" y1="318" x2="820" y2="318" stroke="#2c1a08" stroke-width="1.5"/>
-
-      <!-- ─ MACHINE ─ -->
-      <!-- Tripod -->
-      <line x1="568" y1="290" x2="510" y2="318" stroke="#2c1a08" stroke-width="3" stroke-linecap="round"/>
-      <line x1="568" y1="290" x2="626" y2="318" stroke="#2c1a08" stroke-width="3" stroke-linecap="round"/>
-      <line x1="568" y1="290" x2="568" y2="318" stroke="#2c1a08" stroke-width="2.2" stroke-linecap="round" opacity="0.55"/>
-      <!-- Pole -->
-      <rect x="563" y="55" width="10" height="237" fill="#2c1a08" opacity="0.42" stroke="#2c1a08" stroke-width="0.7"/>
-      <!-- Disk 1 (lowest, largest) -->
-      <ellipse cx="568" cy="224" rx="125" ry="11" fill="rgba(44,26,8,0.07)" stroke="#2c1a08" stroke-width="1.5"/>
-      <line x1="443" y1="224" x2="693" y2="224" stroke="#2c1a08" stroke-width="2.2"/>
-      <!-- Disk 2 -->
-      <ellipse cx="568" cy="168" rx="95" ry="9" fill="rgba(44,26,8,0.065)" stroke="#2c1a08" stroke-width="1.3"/>
-      <line x1="473" y1="168" x2="663" y2="168" stroke="#2c1a08" stroke-width="1.9"/>
-      <!-- Disk 3 -->
-      <ellipse cx="568" cy="112" rx="64" ry="7" fill="rgba(44,26,8,0.06)" stroke="#2c1a08" stroke-width="1.1"/>
-      <line x1="504" y1="112" x2="632" y2="112" stroke="#2c1a08" stroke-width="1.5"/>
-      <!-- Strobe -->
-      <rect x="547" y="43" width="42" height="16" rx="3.5" fill="#2c1a08" opacity="0.28" stroke="#2c1a08" stroke-width="1.1"/>
-
-      <!-- ─ LIGHT CONE ─ -->
-      <path d="M 505,162 L 345,118 L 345,295 Z" fill="rgba(44,26,8,0.038)" stroke="#2c1a08" stroke-width="0.6" stroke-dasharray="5,4" opacity="0.42"/>
-      <line x1="505" y1="156" x2="348" y2="110" stroke="#2c1a08" stroke-width="0.4" stroke-dasharray="5,4" opacity="0.3"/>
-      <line x1="505" y1="162" x2="348" y2="168" stroke="#2c1a08" stroke-width="0.4" stroke-dasharray="5,4" opacity="0.3"/>
-      <line x1="505" y1="174" x2="348" y2="220" stroke="#2c1a08" stroke-width="0.4" stroke-dasharray="5,4" opacity="0.3"/>
-
-      <!-- ─ OPTIMAL DISTANCE ANNOTATION ─ -->
-      <line x1="345" y1="302" x2="505" y2="302" stroke="#2c1a08" stroke-width="0.8" opacity="0.55"/>
-      <line x1="345" y1="296" x2="345" y2="308" stroke="#2c1a08" stroke-width="0.8" opacity="0.55"/>
-      <line x1="505" y1="296" x2="505" y2="308" stroke="#2c1a08" stroke-width="0.8" opacity="0.55"/>
-      <text x="420" y="316" text-anchor="middle" font-family="Palatino,Georgia,serif" font-style="italic" font-size="8.5" fill="#2c1a08">optimal viewing: 80 – 150 cm</text>
-
-      <!-- ─ HUMAN FIGURE ─ -->
-      <!-- Head (circle) -->
-      <circle cx="280" cy="107" r="24" fill="none" stroke="#2c1a08" stroke-width="1.7"/>
-      <!-- Face details -->
-      <circle cx="272" cy="105" r="2.2" fill="#2c1a08" opacity="0.48"/>
-      <circle cx="288" cy="105" r="2.2" fill="#2c1a08" opacity="0.48"/>
-      <path d="M 272,116 Q 280,122 288,116" fill="none" stroke="#2c1a08" stroke-width="1" opacity="0.48"/>
-      <!-- Neck -->
-      <line x1="280" y1="131" x2="280" y2="152" stroke="#2c1a08" stroke-width="3.5" stroke-linecap="round"/>
-      <!-- Torso -->
-      <line x1="280" y1="152" x2="280" y2="234" stroke="#2c1a08" stroke-width="4.5" stroke-linecap="round"/>
-      <!-- Arms -->
-      <line x1="280" y1="168" x2="242" y2="206" stroke="#2c1a08" stroke-width="2.8" stroke-linecap="round"/>
-      <line x1="280" y1="168" x2="318" y2="206" stroke="#2c1a08" stroke-width="2.8" stroke-linecap="round"/>
-      <line x1="242" y1="206" x2="234" y2="244" stroke="#2c1a08" stroke-width="2.2" stroke-linecap="round"/>
-      <line x1="318" y1="206" x2="326" y2="244" stroke="#2c1a08" stroke-width="2.2" stroke-linecap="round"/>
-      <!-- Legs -->
-      <line x1="280" y1="234" x2="258" y2="290" stroke="#2c1a08" stroke-width="3.2" stroke-linecap="round"/>
-      <line x1="280" y1="234" x2="302" y2="290" stroke="#2c1a08" stroke-width="3.2" stroke-linecap="round"/>
-      <line x1="258" y1="290" x2="246" y2="300" stroke="#2c1a08" stroke-width="2.8" stroke-linecap="round"/>
-      <line x1="302" y1="290" x2="314" y2="300" stroke="#2c1a08" stroke-width="2.8" stroke-linecap="round"/>
-
-      <!-- Person height dimension -->
-      <line x1="210" y1="83" x2="210" y2="305" stroke="#2c1a08" stroke-width="0.55" opacity="0.42"/>
-      <line x1="204" y1="83" x2="216" y2="83" stroke="#2c1a08" stroke-width="0.55" opacity="0.42"/>
-      <line x1="204" y1="305" x2="216" y2="305" stroke="#2c1a08" stroke-width="0.55" opacity="0.42"/>
-      <text x="198" y="198" font-family="Palatino,Georgia,serif" font-style="italic" font-size="8" fill="#5c3a1e" transform="rotate(-90,198,198)">≈ 170 cm</text>
-
-      <!-- Eye-level to disk 2 gaze line -->
-      <line x1="304" y1="107" x2="475" y2="168" stroke="#2c1a08" stroke-width="0.55" stroke-dasharray="7,5" opacity="0.38"/>
-      <text x="372" y="130" font-family="Palatino,Georgia,serif" font-style="italic" font-size="7.5" fill="#5c3a1e">gaze to disk 2</text>
-
-      <!-- Visual arc -->
-      <path d="M 308,86 A 32,32 0 0 1 308,130" fill="none" stroke="#2c1a08" stroke-width="0.8" opacity="0.45"/>
-      <text x="314" y="107" font-family="Palatino,Georgia,serif" font-style="italic" font-size="8" fill="#5c3a1e">≈ 45°</text>
-      <text x="314" y="118" font-family="Palatino,Georgia,serif" font-style="italic" font-size="7" fill="#5c3a1e">visual arc</text>
-
-      <!-- Sound waves from speaker (left of machine) -->
-      <path d="M 430,220 Q 415,210 420,198" fill="none" stroke="#2c1a08" stroke-width="0.75" stroke-dasharray="3,2" opacity="0.48"/>
-      <path d="M 420,226 Q 400,213 406,196" fill="none" stroke="#2c1a08" stroke-width="0.6" stroke-dasharray="3,3" opacity="0.38"/>
-      <path d="M 410,232 Q 384,215 392,193" fill="none" stroke="#2c1a08" stroke-width="0.5" stroke-dasharray="2,3" opacity="0.28"/>
-      <text x="360" y="252" font-family="Palatino,Georgia,serif" font-style="italic" font-size="7.5" fill="#5c3a1e">acoustic field · 360°</text>
-
-      <!-- Right side annotations -->
-      <text x="706" y="55" font-family="Palatino,Georgia,serif" font-style="italic" font-size="8" fill="#5c3a1e">Strobe · nadir proj.</text>
-      <text x="706" y="102" font-family="Palatino,Georgia,serif" font-style="italic" font-size="8" fill="#2c1a08">Disk 3 · 30 cm</text>
-      <text x="706" y="160" font-family="Palatino,Georgia,serif" font-style="italic" font-size="8" fill="#2c1a08">Disk 2 · 45 cm</text>
-      <text x="706" y="218" font-family="Palatino,Georgia,serif" font-style="italic" font-size="8" fill="#2c1a08">Disk 1 · 60 cm</text>
-      <line x1="700" y1="100" x2="636" y2="112" stroke="#2c1a08" stroke-width="0.6" opacity="0.45"/>
-      <line x1="700" y1="157" x2="666" y2="168" stroke="#2c1a08" stroke-width="0.6" opacity="0.45"/>
-      <line x1="700" y1="215" x2="697" y2="224" stroke="#2c1a08" stroke-width="0.6" opacity="0.45"/>
-
-      <!-- Entrainment annotation (left) -->
-      <text x="42" y="98" font-family="Palatino,Georgia,serif" font-style="italic" font-size="8.5" fill="#5c3a1e">α / θ entrainment</text>
-      <text x="42" y="110" font-family="Palatino,Georgia,serif" font-style="italic" font-size="7.5" fill="#5c3a1e">photic driving → V1 → cortex</text>
-      <line x1="175" y1="107" x2="256" y2="107" stroke="#2c1a08" stroke-width="0.55" stroke-dasharray="2,2" opacity="0.38"/>
-
-      <!-- Formula box (bottom left) -->
-      <rect x="28" y="240" width="170" height="68" rx="3" fill="rgba(44,26,8,0.04)" stroke="#2c1a08" stroke-width="0.8" stroke-dasharray="5,4" opacity="0.6"/>
-      <text x="38" y="258" font-family="Palatino,Georgia,serif" font-style="italic" font-size="8.5" fill="#5c3a1e">f_eff = (RPM ÷ 60) × N_arms</text>
-      <text x="38" y="272" font-family="Palatino,Georgia,serif" font-style="italic" font-size="7.5" fill="#5c3a1e">e.g. 4-arm @ 12 RPM → 0.8 Hz</text>
-      <text x="38" y="286" font-family="Palatino,Georgia,serif" font-style="italic" font-size="7" fill="#8b2a2a">danger zone: 3 – 30 Hz (PSE)</text>
-      <text x="38" y="298" font-family="Palatino,Georgia,serif" font-style="italic" font-size="7" fill="#8b2a2a">hard cap enforced: ≤ 4 Hz</text>
-
-      <!-- Standing annotation -->
-      <text x="220" y="335" text-anchor="middle" font-family="Palatino,Georgia,serif" font-style="italic" font-size="8.5" fill="#5c3a1e">participant · standing or seated</text>
-    </svg>
-    <div class="panel-notes">
-      The participant stands approximately 100 cm before the apparatus, positioning Disk 2 at eye level. The projected light field subtends ≈45° of visual arc — sufficient to engage peripheral entrainment pathways in the primary visual cortex. Three independent motor speeds allow simultaneous targeting of theta (4–8 Hz), alpha (8–12 Hz), and gamma (40 Hz invisible-spectral) bands across the disk stack.
-    </div>
-  </div>
-
-</div><!-- /grid -->
-
-<!-- ════════════════ MARGINALIA ════════════════ -->
-<div class="marginalia-row">
-  <div class="marginalia">
-    On the nature of effective frequency: a disk bearing four arms spinning at twelve revolutions per minute shall produce eight pulses of light per second upon the retina — identical in neural effect to a strobe set to eight hertz, yet without the strobe's abrupt violence. The geometry is the mechanism; the rotation is the clock.
-  </div>
-  <div class="marginalia">
-    On moiré and complexity: two overlapping patterns of differing spatial frequency combine to produce an interference pattern whose fractal dimension exceeds that of either constituent. Counter-rotation at 7% speed differential generates emergent D≈1.6, the optimum of human visual preference according to Taylor et al. Neither disk alone exceeds the aversion threshold of D=1.7.
-  </div>
-  <div class="marginalia">
-    Safety principle, paramount above all: the photosensitive epilepsy threshold commences at three hertz, reaching peak danger near fifteen. The apparatus is constrained by hardware interrupt — not software, which may fail — to produce no effective frequency above four hertz. This limit is inviolable in firmware and physically documented on the apparatus panel.
+<!-- ═══════════ PANEL I : FAÇADE — FRONT ELEVATION ═══════════ -->
+<div class="panel">
+  <div class="panel-title">I. Façade — Three Disks Facing the Observer</div>
+  <div class="panel-subtitle">Front elevation · observer's view · disks rotate in their own vertical planes · scale 1:5</div>
+  <svg viewBox="0 0 400 570" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <radialGradient id="diskwash" cx="50%" cy="50%" r="50%">
+        <stop offset="0%" stop-color="#2c1a08" stop-opacity=".03"/>
+        <stop offset="100%" stop-color="#2c1a08" stop-opacity=".11"/>
+      </radialGradient>
+      <pattern id="fineh" width="4" height="4" patternTransform="rotate(45)" patternUnits="userSpaceOnUse">
+        <line x1="0" y1="0" x2="0" y2="4" stroke="#2c1a08" stroke-width=".42" opacity=".28"/>
+      </pattern>
+      <pattern id="crossh" width="6" height="6" patternUnits="userSpaceOnUse">
+        <line x1="0" y1="0" x2="6" y2="6" stroke="#2c1a08" stroke-width=".38" opacity=".22"/>
+        <line x1="6" y1="0" x2="0" y2="6" stroke="#2c1a08" stroke-width=".38" opacity=".22"/>
+      </pattern>
+    </defs>
+
+    <!-- Frame / mounting column (behind disks, partially hidden) -->
+    <rect x="192" y="90" width="16" height="450" fill="url(#fineh)" stroke="#2c1a08" stroke-width=".9" opacity=".5"/>
+    <rect x="193" y="90" width="3" height="450" fill="#f5e8bc" opacity=".35"/>
+
+    <!-- ─── DISK 3 · 30 cm · 2-arm (top) ─── -->
+    <!-- y_center = 140, r = 42 -->
+    <text x="200" y="20" text-anchor="middle" font-family="Palatino,Georgia,serif" font-style="italic" font-size="10" fill="#2c1a08">Discus Tertius — ∅ 30 cm · 2 armis</text>
+    <circle cx="200" cy="140" r="42" fill="url(#diskwash)" stroke="#2c1a08" stroke-width="1.4"/>
+    <!-- Construction circle -->
+    <circle cx="200" cy="140" r="25" fill="none" stroke="#2c1a08" stroke-width=".45" stroke-dasharray="3,3" opacity=".35"/>
+    <!-- 2 arms: horizontal + vertical (+cross) -->
+    <line x1="158" y1="140" x2="242" y2="140" stroke="#2c1a08" stroke-width="2.3"/>
+    <line x1="200" y1="98" x2="200" y2="182" stroke="#2c1a08" stroke-width="2.3"/>
+    <!-- LEDs right -->
+    <circle cx="212" cy="139" r="2.1" fill="#2c1a08"/><circle cx="223" cy="139" r="1.9" fill="#2c1a08" opacity=".85"/><circle cx="234" cy="139" r="1.9" fill="#2c1a08" opacity=".75"/>
+    <!-- LEDs left -->
+    <circle cx="188" cy="139" r="2.1" fill="#2c1a08"/><circle cx="177" cy="139" r="1.9" fill="#2c1a08" opacity=".85"/><circle cx="166" cy="139" r="1.9" fill="#2c1a08" opacity=".75"/>
+    <!-- LEDs up -->
+    <circle cx="200" cy="128" r="2.1" fill="#2c1a08"/><circle cx="200" cy="117" r="1.9" fill="#2c1a08" opacity=".85"/><circle cx="200" cy="106" r="1.9" fill="#2c1a08" opacity=".75"/>
+    <!-- LEDs down -->
+    <circle cx="200" cy="152" r="2.1" fill="#2c1a08"/><circle cx="200" cy="163" r="1.9" fill="#2c1a08" opacity=".85"/><circle cx="200" cy="174" r="1.9" fill="#2c1a08" opacity=".75"/>
+    <!-- Hub -->
+    <circle cx="200" cy="140" r="12" fill="url(#crossh)" stroke="#2c1a08" stroke-width="1.1"/>
+    <circle cx="200" cy="140" r="5" fill="#2c1a08" opacity=".55"/>
+    <!-- Rotation arrow -->
+    <path d="M 200,98 A 42,42 0 0 1 242,140" fill="none" stroke="#2c1a08" stroke-width=".9" stroke-dasharray="5,4" opacity=".4"/>
+    <!-- Annotations right -->
+    <text x="249" y="136" font-family="Palatino,Georgia,serif" font-style="italic" font-size="8" fill="#2c1a08">∅ 30 cm</text>
+    <text x="249" y="147" font-family="Palatino,Georgia,serif" font-style="italic" font-size="7" fill="#5c3a1e">4 LED/arm</text>
+    <!-- Diameter line -->
+    <line x1="158" y1="186" x2="242" y2="186" stroke="#2c1a08" stroke-width=".5" opacity=".45"/>
+    <line x1="158" y1="182" x2="158" y2="190" stroke="#2c1a08" stroke-width=".5" opacity=".45"/>
+    <line x1="242" y1="182" x2="242" y2="190" stroke="#2c1a08" stroke-width=".5" opacity=".45"/>
+    <text x="200" y="196" text-anchor="middle" font-family="Palatino,Georgia,serif" font-style="italic" font-size="7.5" fill="#5c3a1e">30 cm</text>
+
+    <!-- ─── DISK 2 · 45 cm · 3-arm (middle) ─── -->
+    <!-- y_center = 300, r = 63 -->
+    <text x="200" y="222" text-anchor="middle" font-family="Palatino,Georgia,serif" font-style="italic" font-size="10" fill="#2c1a08">Discus Secundus — ∅ 45 cm · 3 armis</text>
+    <circle cx="200" cy="300" r="63" fill="url(#diskwash)" stroke="#2c1a08" stroke-width="1.5"/>
+    <circle cx="200" cy="300" r="38" fill="none" stroke="#2c1a08" stroke-width=".45" stroke-dasharray="4,3" opacity=".33"/>
+    <!-- 3 arms: up (90°), lower-left (210°), lower-right (330°) -->
+    <line x1="200" y1="237" x2="200" y2="300" stroke="#2c1a08" stroke-width="2.2"/>
+    <line x1="200" y1="300" x2="145" y2="332" stroke="#2c1a08" stroke-width="2.2"/>
+    <line x1="200" y1="300" x2="255" y2="332" stroke="#2c1a08" stroke-width="2.2"/>
+    <!-- LEDs arm-up -->
+    <circle cx="200" cy="285" r="2.3" fill="#2c1a08"/><circle cx="200" cy="270" r="2" fill="#2c1a08" opacity=".85"/><circle cx="200" cy="256" r="2" fill="#2c1a08" opacity=".75"/><circle cx="200" cy="243" r="2" fill="#2c1a08" opacity=".65"/>
+    <!-- LEDs arm lower-left (unit vec ≈ -0.866, 0.5) -->
+    <circle cx="186" cy="308" r="2.3" fill="#2c1a08"/><circle cx="173" cy="316" r="2" fill="#2c1a08" opacity=".85"/><circle cx="161" cy="323" r="2" fill="#2c1a08" opacity=".75"/><circle cx="149" cy="330" r="2" fill="#2c1a08" opacity=".65"/>
+    <!-- LEDs arm lower-right -->
+    <circle cx="214" cy="308" r="2.3" fill="#2c1a08"/><circle cx="227" cy="316" r="2" fill="#2c1a08" opacity=".85"/><circle cx="239" cy="323" r="2" fill="#2c1a08" opacity=".75"/><circle cx="251" cy="330" r="2" fill="#2c1a08" opacity=".65"/>
+    <!-- Hub -->
+    <circle cx="200" cy="300" r="14" fill="url(#crossh)" stroke="#2c1a08" stroke-width="1.2"/>
+    <circle cx="200" cy="300" r="6" fill="#2c1a08" opacity=".55"/>
+    <!-- 120° angle annotation -->
+    <path d="M 214,300 A 14,14 0 0 1 207,288" fill="none" stroke="#2c1a08" stroke-width=".75" opacity=".5"/>
+    <text x="218" y="295" font-family="Palatino,Georgia,serif" font-style="italic" font-size="7.5" fill="#5c3a1e">120°</text>
+    <!-- Rotation arc (counter) -->
+    <path d="M 137,300 A 63,63 0 0 0 200,237" fill="none" stroke="#2c1a08" stroke-width=".9" stroke-dasharray="5,4" opacity=".4"/>
+    <!-- Annotations -->
+    <text x="270" y="295" font-family="Palatino,Georgia,serif" font-style="italic" font-size="8" fill="#2c1a08">∅ 45 cm</text>
+    <text x="270" y="306" font-family="Palatino,Georgia,serif" font-style="italic" font-size="7" fill="#5c3a1e">5 LED/arm</text>
+    <!-- Diam line -->
+    <line x1="137" y1="346" x2="263" y2="346" stroke="#2c1a08" stroke-width=".5" opacity=".42"/>
+    <line x1="137" y1="342" x2="137" y2="350" stroke="#2c1a08" stroke-width=".5" opacity=".42"/>
+    <line x1="263" y1="342" x2="263" y2="350" stroke="#2c1a08" stroke-width=".5" opacity=".42"/>
+    <text x="200" y="358" text-anchor="middle" font-family="Palatino,Georgia,serif" font-style="italic" font-size="7.5" fill="#5c3a1e">45 cm</text>
+
+    <!-- ─── DISK 1 · 60 cm · 4-arm (bottom) ─── -->
+    <!-- y_center = 470, r = 84 -->
+    <text x="200" y="378" text-anchor="middle" font-family="Palatino,Georgia,serif" font-style="italic" font-size="10" fill="#2c1a08">Discus Primus — ∅ 60 cm · 4 armis</text>
+    <circle cx="200" cy="470" r="84" fill="url(#diskwash)" stroke="#2c1a08" stroke-width="1.7"/>
+    <circle cx="200" cy="470" r="50" fill="none" stroke="#2c1a08" stroke-width=".45" stroke-dasharray="5,3" opacity=".3"/>
+    <!-- 4 arms: 0°/90°/180°/270° (+cross, full through-lines) -->
+    <line x1="116" y1="470" x2="284" y2="470" stroke="#2c1a08" stroke-width="2.6"/>
+    <line x1="200" y1="386" x2="200" y2="554" stroke="#2c1a08" stroke-width="2.6"/>
+    <!-- LEDs right arm -->
+    <circle cx="218" cy="469" r="2.6" fill="#2c1a08"/><circle cx="234" cy="469" r="2.3" fill="#2c1a08" opacity=".85"/>
+    <circle cx="249" cy="469" r="2.2" fill="#2c1a08" opacity=".75"/><circle cx="264" cy="469" r="2.1" fill="#2c1a08" opacity=".65"/><circle cx="277" cy="469" r="2.1" fill="#2c1a08" opacity=".55"/>
+    <!-- LEDs left arm -->
+    <circle cx="182" cy="469" r="2.6" fill="#2c1a08"/><circle cx="166" cy="469" r="2.3" fill="#2c1a08" opacity=".85"/>
+    <circle cx="151" cy="469" r="2.2" fill="#2c1a08" opacity=".75"/><circle cx="136" cy="469" r="2.1" fill="#2c1a08" opacity=".65"/><circle cx="123" cy="469" r="2.1" fill="#2c1a08" opacity=".55"/>
+    <!-- LEDs up arm -->
+    <circle cx="200" cy="451" r="2.6" fill="#2c1a08"/><circle cx="200" cy="435" r="2.3" fill="#2c1a08" opacity=".85"/>
+    <circle cx="200" cy="420" r="2.2" fill="#2c1a08" opacity=".75"/><circle cx="200" cy="405" r="2.1" fill="#2c1a08" opacity=".65"/><circle cx="200" cy="391" r="2.1" fill="#2c1a08" opacity=".55"/>
+    <!-- LEDs down arm -->
+    <circle cx="200" cy="489" r="2.6" fill="#2c1a08"/><circle cx="200" cy="505" r="2.3" fill="#2c1a08" opacity=".85"/>
+    <circle cx="200" cy="520" r="2.2" fill="#2c1a08" opacity=".75"/><circle cx="200" cy="535" r="2.1" fill="#2c1a08" opacity=".65"/><circle cx="200" cy="548" r="2.1" fill="#2c1a08" opacity=".55"/>
+    <!-- Hub -->
+    <circle cx="200" cy="470" r="17" fill="url(#crossh)" stroke="#2c1a08" stroke-width="1.3"/>
+    <circle cx="200" cy="470" r="7.5" fill="#2c1a08" opacity=".55"/>
+    <!-- Rotation arc (same direction as disk 1) -->
+    <path d="M 200,386 A 84,84 0 0 1 284,470" fill="none" stroke="#2c1a08" stroke-width=".9" stroke-dasharray="6,4" opacity=".4"/>
+    <!-- Annotations -->
+    <text x="293" y="464" font-family="Palatino,Georgia,serif" font-style="italic" font-size="8.5" fill="#2c1a08">∅ 60 cm</text>
+    <text x="293" y="476" font-family="Palatino,Georgia,serif" font-style="italic" font-size="7" fill="#5c3a1e">6 LED/arm</text>
+    <!-- f_eff formula -->
+    <text x="38" y="464" font-family="Palatino,Georgia,serif" font-style="italic" font-size="8" fill="#5c3a1e">f_eff = RPM/60 × 4</text>
+    <text x="38" y="476" font-family="Palatino,Georgia,serif" font-style="italic" font-size="7" fill="#5c3a1e">@ 12 RPM → 0.8 Hz</text>
+
+    <!-- Counter-rotation note -->
+    <text x="38" y="378" font-family="Palatino,Georgia,serif" font-style="italic" font-size="8" fill="#5c3a1e">D1 ↻ CW</text>
+    <text x="38" y="295" font-family="Palatino,Georgia,serif" font-style="italic" font-size="8" fill="#5c3a1e">D2 ↺ CCW</text>
+    <text x="38" y="140" font-family="Palatino,Georgia,serif" font-style="italic" font-size="8" fill="#5c3a1e">D3 ↻ CW</text>
+  </svg>
+  <div class="panel-notes">
+    The observer faces three vertically-standing disks in a column. Each disk rotates in its own plane — like a clock face — with alternating clockwise and counter-clockwise direction. From this vantage the full LED geometry, arm symmetry, and moiré interference between overlapping disks are all directly visible.
   </div>
 </div>
 
-<!-- ════════════════ FOOTER ════════════════ -->
+<!-- ═══════════ PANEL II : SIDE ELEVATION ═══════════ -->
+<div class="panel">
+  <div class="panel-title">II. Apparatus Profile — Side Elevation</div>
+  <div class="panel-subtitle">View from right · disks edge-on · motor units behind each disk · heights to ground</div>
+  <svg viewBox="0 0 400 570" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <pattern id="motH" width="5" height="5" patternTransform="rotate(45)" patternUnits="userSpaceOnUse">
+        <line x1="0" y1="0" x2="0" y2="5" stroke="#2c1a08" stroke-width=".55" opacity=".32"/>
+      </pattern>
+      <pattern id="frameH" width="5" height="5" patternTransform="rotate(30)" patternUnits="userSpaceOnUse">
+        <line x1="0" y1="0" x2="0" y2="5" stroke="#2c1a08" stroke-width=".5" opacity=".3"/>
+      </pattern>
+      <pattern id="floorH" width="14" height="14" patternUnits="userSpaceOnUse">
+        <line x1="0" y1="14" x2="14" y2="0" stroke="#2c1a08" stroke-width=".38" opacity=".2"/>
+      </pattern>
+    </defs>
+
+    <!-- Floor -->
+    <rect x="0" y="520" width="400" height="40" fill="url(#floorH)" opacity=".5"/>
+    <line x1="40" y1="520" x2="360" y2="520" stroke="#2c1a08" stroke-width="1.4"/>
+
+    <!-- Ground shadow -->
+    <ellipse cx="245" cy="525" rx="80" ry="7" fill="#2c1a08" opacity=".06"/>
+
+    <!-- Frame / vertical mounting column -->
+    <rect x="248" y="90" width="18" height="430" fill="url(#frameH)" stroke="#2c1a08" stroke-width="1.2"/>
+    <rect x="249" y="90" width="3" height="430" fill="#f5e8bc" opacity=".38"/>
+
+    <!-- Frame base feet -->
+    <line x1="257" y1="520" x2="190" y2="520" stroke="#2c1a08" stroke-width="3.5" stroke-linecap="round"/>
+    <line x1="257" y1="520" x2="324" y2="520" stroke="#2c1a08" stroke-width="3.5" stroke-linecap="round"/>
+    <!-- Foot pads -->
+    <rect x="183" y="518" width="14" height="5" rx="1.5" fill="#2c1a08" opacity=".7"/>
+    <rect x="317" y="518" width="14" height="5" rx="1.5" fill="#2c1a08" opacity=".7"/>
+
+    <!-- Brace bar at mid-height -->
+    <rect x="238" y="300" width="38" height="8" rx="2" fill="url(#motH)" stroke="#2c1a08" stroke-width=".9" opacity=".6"/>
+
+    <!-- OBSERVER label + arrow (left side) -->
+    <text x="72" y="304" text-anchor="middle" font-family="Palatino,Georgia,serif" font-style="italic" font-size="9" fill="#2c1a08">OBSERVER</text>
+    <line x1="108" y1="302" x2="130" y2="302" stroke="#2c1a08" stroke-width="1.1"/>
+    <polygon points="130,298 138,302 130,306" fill="#2c1a08" opacity=".7"/>
+
+    <!-- Light projections from disks toward observer -->
+    <line x1="135" y1="155" x2="110" y2="145" stroke="#2c1a08" stroke-width=".4" stroke-dasharray="4,4" opacity=".28"/>
+    <line x1="135" y1="155" x2="110" y2="165" stroke="#2c1a08" stroke-width=".4" stroke-dasharray="4,4" opacity=".28"/>
+    <line x1="135" y1="300" x2="108" y2="290" stroke="#2c1a08" stroke-width=".4" stroke-dasharray="4,4" opacity=".28"/>
+    <line x1="135" y1="300" x2="108" y2="310" stroke="#2c1a08" stroke-width=".4" stroke-dasharray="4,4" opacity=".28"/>
+    <line x1="135" y1="460" x2="108" y2="448" stroke="#2c1a08" stroke-width=".4" stroke-dasharray="4,4" opacity=".28"/>
+    <line x1="135" y1="460" x2="108" y2="472" stroke="#2c1a08" stroke-width=".4" stroke-dasharray="4,4" opacity=".28"/>
+
+    <!-- ─ DISK 3 (top, 30cm) at y=155 ─ -->
+    <!-- Disk edge-on: thin vertical ellipse -->
+    <ellipse cx="135" cy="155" rx="5" ry="42" fill="url(#motH)" stroke="#2c1a08" stroke-width="1.3"/>
+    <!-- Axle -->
+    <line x1="140" y1="155" x2="200" y2="155" stroke="#2c1a08" stroke-width="2.2" stroke-linecap="round"/>
+    <!-- Motor body -->
+    <rect x="200" y="131" width="52" height="48" rx="3.5" fill="url(#motH)" stroke="#2c1a08" stroke-width="1.3"/>
+    <!-- Gearbox attached to frame side -->
+    <rect x="236" y="137" width="14" height="36" rx="2" fill="url(#frameH)" stroke="#2c1a08" stroke-width=".9"/>
+    <!-- Slip ring at back -->
+    <rect x="252" y="139" width="12" height="32" rx="2" fill="none" stroke="#2c1a08" stroke-width=".9" stroke-dasharray="3,2"/>
+    <!-- Motor cooling fins -->
+    <line x1="200" y1="140" x2="194" y2="140" stroke="#2c1a08" stroke-width=".9"/>
+    <line x1="200" y1="147" x2="194" y2="147" stroke="#2c1a08" stroke-width=".9"/>
+    <line x1="200" y1="154" x2="194" y2="154" stroke="#2c1a08" stroke-width=".9"/>
+    <line x1="200" y1="161" x2="194" y2="161" stroke="#2c1a08" stroke-width=".9"/>
+    <line x1="200" y1="168" x2="194" y2="168" stroke="#2c1a08" stroke-width=".9"/>
+    <!-- Labels -->
+    <text x="268" y="151" font-family="Palatino,Georgia,serif" font-style="italic" font-size="8" fill="#2c1a08">Motor 3</text>
+    <text x="268" y="162" font-family="Palatino,Georgia,serif" font-style="italic" font-size="7" fill="#5c3a1e">∅ 30 cm disk</text>
+    <text x="268" y="173" font-family="Palatino,Georgia,serif" font-style="italic" font-size="7" fill="#5c3a1e">slip ring →</text>
+
+    <!-- ─ DISK 2 (middle, 45cm) at y=300 ─ -->
+    <ellipse cx="135" cy="300" rx="5" ry="63" fill="url(#motH)" stroke="#2c1a08" stroke-width="1.4"/>
+    <line x1="140" y1="300" x2="200" y2="300" stroke="#2c1a08" stroke-width="2.3" stroke-linecap="round"/>
+    <rect x="200" y="270" width="52" height="60" rx="3.5" fill="url(#motH)" stroke="#2c1a08" stroke-width="1.3"/>
+    <rect x="236" y="276" width="14" height="48" rx="2" fill="url(#frameH)" stroke="#2c1a08" stroke-width=".9"/>
+    <rect x="252" y="278" width="12" height="44" rx="2" fill="none" stroke="#2c1a08" stroke-width=".9" stroke-dasharray="3,2"/>
+    <line x1="200" y1="280" x2="193" y2="280" stroke="#2c1a08" stroke-width=".9"/>
+    <line x1="200" y1="289" x2="193" y2="289" stroke="#2c1a08" stroke-width=".9"/>
+    <line x1="200" y1="298" x2="193" y2="298" stroke="#2c1a08" stroke-width=".9"/>
+    <line x1="200" y1="307" x2="193" y2="307" stroke="#2c1a08" stroke-width=".9"/>
+    <line x1="200" y1="316" x2="193" y2="316" stroke="#2c1a08" stroke-width=".9"/>
+    <text x="268" y="295" font-family="Palatino,Georgia,serif" font-style="italic" font-size="8" fill="#2c1a08">Motor 2</text>
+    <text x="268" y="306" font-family="Palatino,Georgia,serif" font-style="italic" font-size="7" fill="#5c3a1e">∅ 45 cm disk</text>
+
+    <!-- ─ DISK 1 (bottom, 60cm) at y=460 ─ -->
+    <ellipse cx="135" cy="460" rx="5" ry="82" fill="url(#motH)" stroke="#2c1a08" stroke-width="1.5"/>
+    <line x1="140" y1="460" x2="200" y2="460" stroke="#2c1a08" stroke-width="2.5" stroke-linecap="round"/>
+    <rect x="200" y="424" width="52" height="72" rx="3.5" fill="url(#motH)" stroke="#2c1a08" stroke-width="1.4"/>
+    <rect x="236" y="430" width="14" height="60" rx="2" fill="url(#frameH)" stroke="#2c1a08" stroke-width=".9"/>
+    <rect x="252" y="432" width="12" height="56" rx="2" fill="none" stroke="#2c1a08" stroke-width=".9" stroke-dasharray="3,2"/>
+    <line x1="200" y1="432" x2="192" y2="432" stroke="#2c1a08" stroke-width=".9"/>
+    <line x1="200" y1="442" x2="192" y2="442" stroke="#2c1a08" stroke-width=".9"/>
+    <line x1="200" y1="452" x2="192" y2="452" stroke="#2c1a08" stroke-width=".9"/>
+    <line x1="200" y1="462" x2="192" y2="462" stroke="#2c1a08" stroke-width=".9"/>
+    <line x1="200" y1="472" x2="192" y2="472" stroke="#2c1a08" stroke-width=".9"/>
+    <line x1="200" y1="482" x2="192" y2="482" stroke="#2c1a08" stroke-width=".9"/>
+    <text x="268" y="453" font-family="Palatino,Georgia,serif" font-style="italic" font-size="8" fill="#2c1a08">Motor 1</text>
+    <text x="268" y="464" font-family="Palatino,Georgia,serif" font-style="italic" font-size="7" fill="#5c3a1e">∅ 60 cm disk</text>
+
+    <!-- Height dimension lines (left side) -->
+    <!-- Ground to Disk 1 center -->
+    <line x1="60" y1="460" x2="60" y2="520" stroke="#2c1a08" stroke-width=".5" opacity=".4"/>
+    <line x1="55" y1="460" x2="65" y2="460" stroke="#2c1a08" stroke-width=".5" opacity=".4"/>
+    <line x1="55" y1="520" x2="65" y2="520" stroke="#2c1a08" stroke-width=".5" opacity=".4"/>
+    <text x="42" y="495" font-family="Palatino,Georgia,serif" font-style="italic" font-size="7.5" fill="#5c3a1e" transform="rotate(-90,42,495)">≈ 80 cm</text>
+    <!-- Disk 1 to Disk 2 -->
+    <line x1="60" y1="300" x2="60" y2="460" stroke="#2c1a08" stroke-width=".5" opacity=".4"/>
+    <line x1="55" y1="300" x2="65" y2="300" stroke="#2c1a08" stroke-width=".5" opacity=".4"/>
+    <text x="42" y="385" font-family="Palatino,Georgia,serif" font-style="italic" font-size="7.5" fill="#5c3a1e" transform="rotate(-90,42,385)">≈ 55 cm</text>
+    <!-- Disk 2 to Disk 3 -->
+    <line x1="60" y1="155" x2="60" y2="300" stroke="#2c1a08" stroke-width=".5" opacity=".4"/>
+    <line x1="55" y1="155" x2="65" y2="155" stroke="#2c1a08" stroke-width=".5" opacity=".4"/>
+    <text x="42" y="232" font-family="Palatino,Georgia,serif" font-style="italic" font-size="7.5" fill="#5c3a1e" transform="rotate(-90,42,232)">≈ 50 cm</text>
+
+    <!-- Depth dimension (axle length) -->
+    <line x1="135" y1="100" x2="252" y2="100" stroke="#2c1a08" stroke-width=".5" opacity=".4"/>
+    <line x1="135" y1="95" x2="135" y2="105" stroke="#2c1a08" stroke-width=".5" opacity=".4"/>
+    <line x1="252" y1="95" x2="252" y2="105" stroke="#2c1a08" stroke-width=".5" opacity=".4"/>
+    <text x="193" y="96" text-anchor="middle" font-family="Palatino,Georgia,serif" font-style="italic" font-size="7.5" fill="#5c3a1e">≈ 23 cm (motor depth)</text>
+
+    <!-- "disk face" annotation -->
+    <text x="100" y="118" font-family="Palatino,Georgia,serif" font-style="italic" font-size="8" fill="#5c3a1e">disk face</text>
+    <text x="100" y="129" font-family="Palatino,Georgia,serif" font-style="italic" font-size="7.5" fill="#5c3a1e">(edge-on)</text>
+    <line x1="130" y1="124" x2="140" y2="140" stroke="#2c1a08" stroke-width=".6" opacity=".4"/>
+  </svg>
+  <div class="panel-notes">
+    In profile the disks appear as thin vertical lines — they stand perpendicular to the ground, face-on to the observer. Each disk sits on its own horizontal axle driven by a motor/gearbox unit attached to the rear face of the mounting column. An independent slip ring at the back of each unit feeds power and data to the rotating LEDs.
+  </div>
+</div>
+
+<!-- ═══════════ PANEL III : DISK FACE DETAIL ═══════════ -->
+<div class="panel">
+  <div class="panel-title">III. Discus Magnus — Disk Face Detail · Two Material Variants</div>
+  <div class="panel-subtitle">Front face · ∅ 60 cm · 4-arm · Option A: skeletal frame · Option B: acrylic-infilled</div>
+  <svg viewBox="0 0 400 480" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <radialGradient id="dw2" cx="50%" cy="50%" r="50%">
+        <stop offset="0%" stop-color="#2c1a08" stop-opacity=".02"/>
+        <stop offset="100%" stop-color="#2c1a08" stop-opacity=".09"/>
+      </radialGradient>
+      <pattern id="plexiH" width="5" height="5" patternTransform="rotate(60)" patternUnits="userSpaceOnUse">
+        <line x1="0" y1="0" x2="0" y2="5" stroke="#2c1a08" stroke-width=".35" opacity=".22"/>
+      </pattern>
+      <pattern id="xh" width="5" height="5" patternUnits="userSpaceOnUse">
+        <line x1="0" y1="0" x2="5" y2="5" stroke="#2c1a08" stroke-width=".35" opacity=".2"/>
+        <line x1="5" y1="0" x2="0" y2="5" stroke="#2c1a08" stroke-width=".35" opacity=".2"/>
+      </pattern>
+    </defs>
+
+    <!-- ── OPTION A: Skeletal frame (left disk) ── -->
+    <text x="110" y="22" text-anchor="middle" font-family="Palatino,Georgia,serif" font-style="italic" font-size="9.5" fill="#2c1a08">Opt. A — Skeletal</text>
+    <circle cx="110" cy="195" r="88" fill="url(#dw2)" stroke="#2c1a08" stroke-width="1.6"/>
+    <!-- Construction circle -->
+    <circle cx="110" cy="195" r="55" fill="none" stroke="#2c1a08" stroke-width=".42" stroke-dasharray="4,3" opacity=".3"/>
+    <!-- Arm spokes (structural aluminium) — shown slightly wider -->
+    <line x1="22" y1="195" x2="198" y2="195" stroke="#2c1a08" stroke-width="4"/>
+    <line x1="110" y1="107" x2="110" y2="283" stroke="#2c1a08" stroke-width="4"/>
+    <!-- Arm width detail callouts -->
+    <line x1="22" y1="188" x2="22" y2="202" stroke="#2c1a08" stroke-width=".7" opacity=".5"/>
+    <text x="8" y="192" font-family="Palatino,Georgia,serif" font-style="italic" font-size="7" fill="#5c3a1e">20mm</text>
+    <text x="8" y="201" font-family="Palatino,Georgia,serif" font-style="italic" font-size="7" fill="#5c3a1e">arm</text>
+    <!-- LED strip channel on arm (top surface) -->
+    <line x1="22" y1="191" x2="198" y2="191" stroke="#2c1a08" stroke-width="1.2" stroke-dasharray="2,2" opacity=".5"/>
+    <!-- LEDs on right arm -->
+    <circle cx="128" cy="194" r="3" fill="#2c1a08"/><circle cx="145" cy="194" r="2.8" fill="#2c1a08" opacity=".85"/>
+    <circle cx="160" cy="194" r="2.6" fill="#2c1a08" opacity=".75"/><circle cx="175" cy="194" r="2.5" fill="#2c1a08" opacity=".65"/>
+    <circle cx="188" cy="194" r="2.4" fill="#2c1a08" opacity=".55"/>
+    <!-- LEDs left arm -->
+    <circle cx="92" cy="194" r="3" fill="#2c1a08"/><circle cx="75" cy="194" r="2.8" fill="#2c1a08" opacity=".85"/>
+    <circle cx="60" cy="194" r="2.6" fill="#2c1a08" opacity=".75"/><circle cx="45" cy="194" r="2.5" fill="#2c1a08" opacity=".65"/>
+    <circle cx="32" cy="194" r="2.4" fill="#2c1a08" opacity=".55"/>
+    <!-- LEDs up arm -->
+    <circle cx="110" cy="177" r="3" fill="#2c1a08"/><circle cx="110" cy="160" r="2.8" fill="#2c1a08" opacity=".85"/>
+    <circle cx="110" cy="145" r="2.6" fill="#2c1a08" opacity=".75"/><circle cx="110" cy="130" r="2.5" fill="#2c1a08" opacity=".65"/>
+    <circle cx="110" cy="117" r="2.4" fill="#2c1a08" opacity=".55"/>
+    <!-- LEDs down arm -->
+    <circle cx="110" cy="213" r="3" fill="#2c1a08"/><circle cx="110" cy="230" r="2.8" fill="#2c1a08" opacity=".85"/>
+    <circle cx="110" cy="245" r="2.6" fill="#2c1a08" opacity=".75"/><circle cx="110" cy="260" r="2.5" fill="#2c1a08" opacity=".65"/>
+    <circle cx="110" cy="273" r="2.4" fill="#2c1a08" opacity=".55"/>
+    <!-- Hub -->
+    <circle cx="110" cy="195" r="16" fill="url(#xh)" stroke="#2c1a08" stroke-width="1.3"/>
+    <circle cx="110" cy="195" r="7" fill="#2c1a08" opacity=".55"/>
+    <!-- Axle hole -->
+    <circle cx="110" cy="195" r="3.5" fill="#f5e8bc" stroke="#2c1a08" stroke-width=".7"/>
+    <!-- Weight note -->
+    <text x="110" y="298" text-anchor="middle" font-family="Palatino,Georgia,serif" font-style="italic" font-size="8" fill="#5c3a1e">Wt. ≈ 0.8 kg</text>
+    <text x="110" y="309" text-anchor="middle" font-family="Palatino,Georgia,serif" font-style="italic" font-size="7.5" fill="#5c3a1e">Al alloy 6061 · open air</text>
+    <text x="110" y="320" text-anchor="middle" font-family="Palatino,Georgia,serif" font-style="italic" font-size="7.5" fill="#5c3a1e">LED strips on arm faces</text>
+
+    <!-- ── OPTION B: Acrylic-infilled (right disk) ── -->
+    <text x="300" y="22" text-anchor="middle" font-family="Palatino,Georgia,serif" font-style="italic" font-size="9.5" fill="#2c1a08">Opt. B — Acrylic Infill</text>
+    <circle cx="300" cy="195" r="88" fill="url(#dw2)" stroke="#2c1a08" stroke-width="1.6"/>
+    <!-- Acrylic infill quadrant panels (4 panels between arms) -->
+    <!-- Each is a quarter-circle sector, shown with subtle hatch -->
+    <path d="M 300,195 L 388,195 A 88,88 0 0 1 300,107 Z" fill="url(#plexiH)" stroke="#2c1a08" stroke-width=".7" stroke-dasharray="4,3" opacity=".7"/>
+    <path d="M 300,195 L 300,107 A 88,88 0 0 1 212,195 Z" fill="url(#plexiH)" stroke="#2c1a08" stroke-width=".7" stroke-dasharray="4,3" opacity=".7"/>
+    <path d="M 300,195 L 212,195 A 88,88 0 0 1 300,283 Z" fill="url(#plexiH)" stroke="#2c1a08" stroke-width=".7" stroke-dasharray="4,3" opacity=".7"/>
+    <path d="M 300,195 L 300,283 A 88,88 0 0 1 388,195 Z" fill="url(#plexiH)" stroke="#2c1a08" stroke-width=".7" stroke-dasharray="4,3" opacity=".7"/>
+    <!-- Laser-etched spiral on one panel (top-right) -->
+    <path d="M 340,155 Q 360,165 355,185 Q 350,205 330,205 Q 315,205 315,190" fill="none" stroke="#2c1a08" stroke-width=".7" opacity=".4"/>
+    <path d="M 346,148 Q 372,162 366,190 Q 360,218 332,218 Q 308,218 305,195" fill="none" stroke="#2c1a08" stroke-width=".55" opacity=".28"/>
+    <!-- Arms (same structure, but arms are channels in plexi) -->
+    <line x1="212" y1="195" x2="388" y2="195" stroke="#2c1a08" stroke-width="4"/>
+    <line x1="300" y1="107" x2="300" y2="283" stroke="#2c1a08" stroke-width="4"/>
+    <!-- LEDs same positions -->
+    <circle cx="318" cy="194" r="3" fill="#2c1a08"/><circle cx="335" cy="194" r="2.8" fill="#2c1a08" opacity=".85"/>
+    <circle cx="350" cy="194" r="2.6" fill="#2c1a08" opacity=".75"/><circle cx="365" cy="194" r="2.5" fill="#2c1a08" opacity=".65"/>
+    <circle cx="378" cy="194" r="2.4" fill="#2c1a08" opacity=".55"/>
+    <circle cx="282" cy="194" r="3" fill="#2c1a08"/><circle cx="265" cy="194" r="2.8" fill="#2c1a08" opacity=".85"/>
+    <circle cx="250" cy="194" r="2.6" fill="#2c1a08" opacity=".75"/><circle cx="235" cy="194" r="2.5" fill="#2c1a08" opacity=".65"/>
+    <circle cx="222" cy="194" r="2.4" fill="#2c1a08" opacity=".55"/>
+    <circle cx="300" cy="177" r="3" fill="#2c1a08"/><circle cx="300" cy="160" r="2.8" fill="#2c1a08" opacity=".85"/>
+    <circle cx="300" cy="145" r="2.6" fill="#2c1a08" opacity=".75"/><circle cx="300" cy="130" r="2.5" fill="#2c1a08" opacity=".65"/>
+    <circle cx="300" cy="117" r="2.4" fill="#2c1a08" opacity=".55"/>
+    <circle cx="300" cy="213" r="3" fill="#2c1a08"/><circle cx="300" cy="230" r="2.8" fill="#2c1a08" opacity=".85"/>
+    <circle cx="300" cy="245" r="2.6" fill="#2c1a08" opacity=".75"/><circle cx="300" cy="260" r="2.5" fill="#2c1a08" opacity=".65"/>
+    <circle cx="300" cy="273" r="2.4" fill="#2c1a08" opacity=".55"/>
+    <circle cx="300" cy="195" r="16" fill="url(#xh)" stroke="#2c1a08" stroke-width="1.3"/>
+    <circle cx="300" cy="195" r="7" fill="#2c1a08" opacity=".55"/>
+    <circle cx="300" cy="195" r="3.5" fill="#f5e8bc" stroke="#2c1a08" stroke-width=".7"/>
+    <text x="300" y="298" text-anchor="middle" font-family="Palatino,Georgia,serif" font-style="italic" font-size="8" fill="#5c3a1e">Wt. ≈ 2.1 kg</text>
+    <text x="300" y="309" text-anchor="middle" font-family="Palatino,Georgia,serif" font-style="italic" font-size="7.5" fill="#5c3a1e">6 mm cast acrylic · edge-lit</text>
+    <text x="300" y="320" text-anchor="middle" font-family="Palatino,Georgia,serif" font-style="italic" font-size="7.5" fill="#5c3a1e">laser-etched geometry (opt.)</text>
+
+    <!-- Dividing line between options -->
+    <line x1="200" y1="20" x2="200" y2="340" stroke="#2c1a08" stroke-width=".6" stroke-dasharray="6,5" opacity=".35"/>
+
+    <!-- Shared note: LED strip cross-section callout -->
+    <rect x="50" y="345" width="300" height="55" rx="3" fill="rgba(44,26,8,0.04)" stroke="#2c1a08" stroke-width=".8" opacity=".6"/>
+    <text x="200" y="361" text-anchor="middle" font-family="Palatino,Georgia,serif" font-style="italic" font-size="8.5" fill="#2c1a08">LED strip cross-section (both options)</text>
+    <!-- Mini cross-section of arm + LED strip -->
+    <rect x="80" y="368" width="24" height="16" rx="1.5" fill="url(#xh)" stroke="#2c1a08" stroke-width=".9"/>
+    <rect x="85" y="365" width="14" height="6" rx="1" fill="#2c1a08" opacity=".35" stroke="#2c1a08" stroke-width=".7"/>
+    <circle cx="88" cy="368" r="1.8" fill="#2c1a08" opacity=".7"/>
+    <circle cx="95" cy="368" r="1.8" fill="#2c1a08" opacity=".7"/>
+    <circle cx="102" cy="368" r="1.8" fill="#2c1a08" opacity=".7"/>
+    <text x="114" y="371" font-family="Palatino,Georgia,serif" font-style="italic" font-size="7.5" fill="#5c3a1e">Al arm (20×10 mm)</text>
+    <text x="114" y="382" font-family="Palatino,Georgia,serif" font-style="italic" font-size="7.5" fill="#5c3a1e">SK6812 strip (10 mm wide)</text>
+    <text x="114" y="393" font-family="Palatino,Georgia,serif" font-style="italic" font-size="7.5" fill="#5c3a1e">M3 adhesive + cable channel</text>
+
+    <!-- f_eff note bottom -->
+    <text x="200" y="425" text-anchor="middle" font-family="Palatino,Georgia,serif" font-style="italic" font-size="8" fill="#5c3a1e">f_eff = (RPM ÷ 60) × 4 · e.g. 12 RPM → 0.80 Hz (alpha lower)</text>
+    <text x="200" y="438" text-anchor="middle" font-family="Palatino,Georgia,serif" font-style="italic" font-size="8" fill="#5c3a1e">Opt. A moiré: LED-trail / persistence-of-vision geometry</text>
+    <text x="200" y="451" text-anchor="middle" font-family="Palatino,Georgia,serif" font-style="italic" font-size="8" fill="#5c3a1e">Opt. B moiré: physical plexi pattern overlap + LED-trail</text>
+    <text x="200" y="464" text-anchor="middle" font-family="Palatino,Georgia,serif" font-style="italic" font-size="7.5" fill="#8b2a2a">Recommended: Option A for sharpest geometry · B for festival spectacle</text>
+  </svg>
+  <div class="panel-notes">
+    Option A (skeletal): aluminium alloy arms with SK6812 strips in routed channels. Moiré arises entirely from persistence-of-vision LED trails — cleanest for neural entrainment. Option B (acrylic): 6mm cast acrylic panels fill the sectors between arms, allowing edge-lit glow and optional laser-etched patterns. Both mount identically on the same hub and axle.
+  </div>
+</div>
+
+<!-- ═══════════ PANEL IV : AXLE & MOTOR CROSS-SECTION ═══════════ -->
+<div class="panel">
+  <div class="panel-title">IV. Sectio Axialis — Motor, Axle &amp; Slip Ring</div>
+  <div class="panel-subtitle">Horizontal cross-section through one disk unit · front (observer side) left</div>
+  <svg viewBox="0 0 400 480" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <pattern id="mh2" width="5" height="5" patternTransform="rotate(45)" patternUnits="userSpaceOnUse">
+        <line x1="0" y1="0" x2="0" y2="5" stroke="#2c1a08" stroke-width=".55" opacity=".32"/>
+      </pattern>
+      <pattern id="cph" width="3.5" height="3.5" patternTransform="rotate(45)" patternUnits="userSpaceOnUse">
+        <line x1="0" y1="0" x2="0" y2="3.5" stroke="#2c1a08" stroke-width=".8" opacity=".48"/>
+      </pattern>
+      <pattern id="gh" width="4" height="4" patternTransform="rotate(30)" patternUnits="userSpaceOnUse">
+        <line x1="0" y1="0" x2="0" y2="4" stroke="#2c1a08" stroke-width=".6" opacity=".38"/>
+      </pattern>
+    </defs>
+
+    <!-- Section direction arrows -->
+    <text x="32" y="24" font-family="Palatino,Georgia,serif" font-style="italic" font-size="9" fill="#5c3a1e">← OBSERVER</text>
+    <text x="290" y="24" font-family="Palatino,Georgia,serif" font-style="italic" font-size="9" fill="#5c3a1e">FRAME COLUMN →</text>
+    <line x1="0" y1="32" x2="400" y2="32" stroke="#2c1a08" stroke-width=".6" stroke-dasharray="8,4" opacity=".3"/>
+
+    <!-- ① DISK FACE -->
+    <!-- Disk shown as thin vertical rect (edge-on cross-section) -->
+    <rect x="40" y="100" width="14" height="280" rx="1" fill="url(#mh2)" stroke="#2c1a08" stroke-width="1.4"/>
+    <text x="47" y="90" text-anchor="middle" font-family="Palatino,Georgia,serif" font-style="italic" font-size="8.5" fill="#2c1a08">① Disk face</text>
+    <text x="47" y="398" text-anchor="middle" font-family="Palatino,Georgia,serif" font-style="italic" font-size="7.5" fill="#5c3a1e">5 mm thick</text>
+    <!-- LED on front face -->
+    <circle cx="41" cy="200" r="4" fill="#2c1a08" opacity=".5" stroke="#2c1a08" stroke-width=".8"/>
+    <text x="20" y="204" text-anchor="middle" font-family="Palatino,Georgia,serif" font-style="italic" font-size="7" fill="#5c3a1e">LED</text>
+
+    <!-- ② HUB / DISK MOUNTING PLATE -->
+    <rect x="54" y="165" width="30" height="150" rx="3" fill="url(#gh)" stroke="#2c1a08" stroke-width="1.3"/>
+    <text x="69" y="90" text-anchor="middle" font-family="Palatino,Georgia,serif" font-style="italic" font-size="8.5" fill="#2c1a08">② Hub plate</text>
+    <text x="69" y="398" text-anchor="middle" font-family="Palatino,Georgia,serif" font-style="italic" font-size="7.5" fill="#5c3a1e">Al 20 mm</text>
+    <!-- Bolt holes -->
+    <circle cx="64" cy="195" r="3.5" fill="#f5e8bc" stroke="#2c1a08" stroke-width=".9"/>
+    <circle cx="64" cy="285" r="3.5" fill="#f5e8bc" stroke="#2c1a08" stroke-width=".9"/>
+    <circle cx="74" cy="195" r="3.5" fill="#f5e8bc" stroke="#2c1a08" stroke-width=".9"/>
+    <circle cx="74" cy="285" r="3.5" fill="#f5e8bc" stroke="#2c1a08" stroke-width=".9"/>
+
+    <!-- ③ FRONT BEARING -->
+    <rect x="84" y="185" width="22" height="110" rx="2" fill="url(#mh2)" stroke="#2c1a08" stroke-width="1.3"/>
+    <text x="95" y="90" text-anchor="middle" font-family="Palatino,Georgia,serif" font-style="italic" font-size="8.5" fill="#2c1a08">③ Bearing</text>
+    <!-- Ball detail -->
+    <circle cx="89" cy="220" r="4" fill="none" stroke="#2c1a08" stroke-width=".8"/>
+    <circle cx="89" cy="240" r="4" fill="none" stroke="#2c1a08" stroke-width=".8"/>
+    <circle cx="89" cy="260" r="4" fill="none" stroke="#2c1a08" stroke-width=".8"/>
+    <circle cx="101" cy="220" r="4" fill="none" stroke="#2c1a08" stroke-width=".8"/>
+    <circle cx="101" cy="240" r="4" fill="none" stroke="#2c1a08" stroke-width=".8"/>
+    <circle cx="101" cy="260" r="4" fill="none" stroke="#2c1a08" stroke-width=".8"/>
+    <text x="95" y="398" text-anchor="middle" font-family="Palatino,Georgia,serif" font-style="italic" font-size="7.5" fill="#5c3a1e">6205 sealed</text>
+
+    <!-- AXLE (central rod, runs full width) -->
+    <rect x="40" y="228" width="320" height="24" rx="2" fill="url(#mh2)" stroke="#2c1a08" stroke-width="1.5"/>
+    <rect x="41" y="229" width="5" height="22" fill="#f5e8bc" opacity=".38"/>
+    <text x="200" y="222" text-anchor="middle" font-family="Palatino,Georgia,serif" font-style="italic" font-size="8.5" fill="#2c1a08">Horizontal Axle / Drive Shaft — 20 mm dia. steel</text>
+
+    <!-- ④ GEARBOX -->
+    <rect x="106" y="175" width="60" height="130" rx="3.5" fill="url(#gh)" stroke="#2c1a08" stroke-width="1.4"/>
+    <text x="136" y="90" text-anchor="middle" font-family="Palatino,Georgia,serif" font-style="italic" font-size="8.5" fill="#2c1a08">④ Gearbox</text>
+    <!-- Gear teeth suggestion -->
+    <circle cx="136" cy="240" r="20" fill="none" stroke="#2c1a08" stroke-width=".65" opacity=".38"/>
+    <circle cx="136" cy="240" r="11" fill="none" stroke="#2c1a08" stroke-width=".5" opacity=".28"/>
+    <line x1="136" y1="220" x2="136" y2="215" stroke="#2c1a08" stroke-width="1.5" opacity=".45"/>
+    <line x1="150" y1="224" x2="153" y2="220" stroke="#2c1a08" stroke-width="1.5" opacity=".45"/>
+    <line x1="156" y1="240" x2="161" y2="240" stroke="#2c1a08" stroke-width="1.5" opacity=".45"/>
+    <line x1="150" y1="256" x2="153" y2="260" stroke="#2c1a08" stroke-width="1.5" opacity=".45"/>
+    <line x1="136" y1="260" x2="136" y2="265" stroke="#2c1a08" stroke-width="1.5" opacity=".45"/>
+    <line x1="122" y1="256" x2="119" y2="260" stroke="#2c1a08" stroke-width="1.5" opacity=".45"/>
+    <line x1="116" y1="240" x2="111" y2="240" stroke="#2c1a08" stroke-width="1.5" opacity=".45"/>
+    <line x1="122" y1="224" x2="119" y2="220" stroke="#2c1a08" stroke-width="1.5" opacity=".45"/>
+    <text x="136" y="398" text-anchor="middle" font-family="Palatino,Georgia,serif" font-style="italic" font-size="7.5" fill="#5c3a1e">ratio 1:60</text>
+
+    <!-- ⑤ MOTOR BODY -->
+    <rect x="166" y="160" width="80" height="160" rx="4" fill="url(#mh2)" stroke="#2c1a08" stroke-width="1.5"/>
+    <text x="206" y="90" text-anchor="middle" font-family="Palatino,Georgia,serif" font-style="italic" font-size="8.5" fill="#2c1a08">⑤ DC Motor</text>
+    <!-- Internal winding -->
+    <ellipse cx="206" cy="240" rx="22" ry="35" fill="none" stroke="#2c1a08" stroke-width=".55" opacity=".22"/>
+    <ellipse cx="206" cy="240" rx="12" ry="20" fill="none" stroke="#2c1a08" stroke-width=".45" opacity=".18"/>
+    <!-- Cooling fins top -->
+    <line x1="175" y1="162" x2="175" y2="155" stroke="#2c1a08" stroke-width="1"/>
+    <line x1="183" y1="162" x2="183" y2="155" stroke="#2c1a08" stroke-width="1"/>
+    <line x1="191" y1="162" x2="191" y2="155" stroke="#2c1a08" stroke-width="1"/>
+    <line x1="199" y1="162" x2="199" y2="155" stroke="#2c1a08" stroke-width="1"/>
+    <line x1="207" y1="162" x2="207" y2="155" stroke="#2c1a08" stroke-width="1"/>
+    <line x1="215" y1="162" x2="215" y2="155" stroke="#2c1a08" stroke-width="1"/>
+    <line x1="223" y1="162" x2="223" y2="155" stroke="#2c1a08" stroke-width="1"/>
+    <line x1="231" y1="162" x2="231" y2="155" stroke="#2c1a08" stroke-width="1"/>
+    <!-- Motor wiring terminals -->
+    <circle cx="176" cy="320" r="4" fill="none" stroke="#2c1a08" stroke-width=".9"/>
+    <circle cx="188" cy="320" r="4" fill="none" stroke="#2c1a08" stroke-width=".9"/>
+    <text x="206" y="398" text-anchor="middle" font-family="Palatino,Georgia,serif" font-style="italic" font-size="7.5" fill="#5c3a1e">12 V DC</text>
+
+    <!-- ⑥ ENCODER WHEEL -->
+    <ellipse cx="246" cy="240" rx="5" ry="35" fill="url(#mh2)" stroke="#2c1a08" stroke-width="1"/>
+    <!-- Slots -->
+    <line x1="243" y1="215" x2="249" y2="215" stroke="#f5e8bc" stroke-width="2.5"/>
+    <line x1="243" y1="222" x2="249" y2="222" stroke="#f5e8bc" stroke-width="2.5"/>
+    <line x1="243" y1="230" x2="249" y2="230" stroke="#f5e8bc" stroke-width="2.5"/>
+    <line x1="243" y1="238" x2="249" y2="238" stroke="#f5e8bc" stroke-width="2.5"/>
+    <line x1="243" y1="246" x2="249" y2="246" stroke="#f5e8bc" stroke-width="2.5"/>
+    <line x1="243" y1="254" x2="249" y2="254" stroke="#f5e8bc" stroke-width="2.5"/>
+    <line x1="243" y1="262" x2="249" y2="262" stroke="#f5e8bc" stroke-width="2.5"/>
+    <text x="246" y="90" text-anchor="middle" font-family="Palatino,Georgia,serif" font-style="italic" font-size="8.5" fill="#2c1a08">⑥ Encoder</text>
+    <text x="246" y="398" text-anchor="middle" font-family="Palatino,Georgia,serif" font-style="italic" font-size="7.5" fill="#5c3a1e">20-slot IR</text>
+
+    <!-- ⑦ SLIP RING -->
+    <rect x="256" y="175" width="34" height="130" rx="3" fill="none" stroke="#2c1a08" stroke-width="1.3" stroke-dasharray="4,3"/>
+    <!-- Ring conductors -->
+    <rect x="260" y="186" width="26" height="10" rx="1" fill="url(#cph)" stroke="#2c1a08" stroke-width=".9"/>
+    <rect x="260" y="202" width="26" height="10" rx="1" fill="url(#cph)" stroke="#2c1a08" stroke-width=".9"/>
+    <rect x="260" y="218" width="26" height="10" rx="1" fill="url(#cph)" stroke="#2c1a08" stroke-width=".9"/>
+    <rect x="260" y="234" width="26" height="10" rx="1" fill="url(#cph)" stroke="#2c1a08" stroke-width=".9"/>
+    <rect x="260" y="250" width="26" height="10" rx="1" fill="url(#cph)" stroke="#2c1a08" stroke-width=".9"/>
+    <rect x="260" y="266" width="26" height="10" rx="1" fill="url(#cph)" stroke="#2c1a08" stroke-width=".9"/>
+    <text x="273" y="90" text-anchor="middle" font-family="Palatino,Georgia,serif" font-style="italic" font-size="8.5" fill="#2c1a08">⑦ Slip ring</text>
+    <text x="273" y="398" text-anchor="middle" font-family="Palatino,Georgia,serif" font-style="italic" font-size="7.5" fill="#5c3a1e">6-wire Au</text>
+
+    <!-- ⑧ FRAME MOUNT -->
+    <rect x="290" y="160" width="70" height="160" rx="3" fill="url(#gh)" stroke="#2c1a08" stroke-width="1.4"/>
+    <text x="325" y="90" text-anchor="middle" font-family="Palatino,Georgia,serif" font-style="italic" font-size="8.5" fill="#2c1a08">⑧ Frame</text>
+    <rect x="298" y="170" width="18" height="140" rx="2" fill="none" stroke="#2c1a08" stroke-width=".7" opacity=".4"/>
+    <text x="325" y="398" text-anchor="middle" font-family="Palatino,Georgia,serif" font-style="italic" font-size="7.5" fill="#5c3a1e">Al extrusion</text>
+
+    <!-- Wiring from slip ring to ESP32 (going right and down out of frame) -->
+    <line x1="290" y1="240" x2="360" y2="240" stroke="#2c1a08" stroke-width=".9" stroke-dasharray="2,2" opacity=".55"/>
+    <line x1="360" y1="240" x2="370" y2="260" stroke="#2c1a08" stroke-width=".9" stroke-dasharray="2,2" opacity=".5"/>
+    <text x="355" y="276" font-family="Palatino,Georgia,serif" font-style="italic" font-size="7.5" fill="#5c3a1e">to ESP32</text>
+
+    <!-- Section label bar at bottom -->
+    <line x1="40" y1="415" x2="360" y2="415" stroke="#2c1a08" stroke-width=".6" opacity=".4"/>
+    <text x="200" y="432" text-anchor="middle" font-family="Palatino,Georgia,serif" font-style="italic" font-size="8" fill="#5c3a1e">Total unit depth: ≈ 25 cm &nbsp;·&nbsp; Total unit mass: ≈ 2.8 kg (motor + gearbox + disk A)</text>
+    <text x="200" y="446" text-anchor="middle" font-family="Palatino,Georgia,serif" font-style="italic" font-size="7.5" fill="#5c3a1e">Axle: 20 mm dia. steel · Motor: 12 V brushed DC · Slip ring: 6-circuit gold contact</text>
+    <text x="200" y="460" text-anchor="middle" font-family="Palatino,Georgia,serif" font-style="italic" font-size="7.5" fill="#5c3a1e">Each unit is fully independent; frame column receives no rotational forces</text>
+  </svg>
+  <div class="panel-notes">
+    From the observer's side leftward: disk face → hub plate → front bearing → axle → gearbox → motor body → encoder wheel → slip ring → frame mount. The slip ring at the rear of each unit feeds six gold-contact circuits (GND, +5 V, +12 V, LED DATA, SDA, SCL) from the fixed frame wiring to the rotating axle and disk.
+  </div>
+</div>
+
+<!-- ═══════════ PANEL V : CONTROL ARCHITECTURE ═══════════ -->
+<div class="panel">
+  <div class="panel-title">V. Nexus Intelligens — Control Architecture</div>
+  <div class="panel-subtitle">ESP32 system topology · 3× motor PID · LED · Strobe · DMX · WiFi preset API</div>
+  <svg viewBox="0 0 400 460" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <pattern id="pcb2" width="5.5" height="5.5" patternTransform="rotate(45)" patternUnits="userSpaceOnUse">
+        <line x1="0" y1="0" x2="0" y2="5.5" stroke="#2c1a08" stroke-width=".5" opacity=".27"/>
+      </pattern>
+    </defs>
+    <!-- ESP32 Center -->
+    <rect x="134" y="168" width="132" height="92" rx="5.5" fill="url(#pcb2)" stroke="#2c1a08" stroke-width="2.2"/>
+    <text x="200" y="202" text-anchor="middle" font-family="Palatino,Georgia,serif" font-style="italic" font-size="13" font-weight="bold" fill="#2c1a08">ESP32</text>
+    <text x="200" y="218" text-anchor="middle" font-family="Palatino,Georgia,serif" font-style="italic" font-size="7.8" fill="#5c3a1e">240 MHz dual-core · FreeRTOS</text>
+    <text x="200" y="230" text-anchor="middle" font-family="Palatino,Georgia,serif" font-style="italic" font-size="7.8" fill="#5c3a1e">PID ×3 · FastLED · DMX · PWM</text>
+    <text x="200" y="242" text-anchor="middle" font-family="Palatino,Georgia,serif" font-style="italic" font-size="7.8" fill="#5c3a1e">WiFi AP · JSON preset API</text>
+    <!-- GPIO pins -->
+    <line x1="134" y1="184" x2="118" y2="184" stroke="#2c1a08" stroke-width="1.1"/>
+    <line x1="134" y1="194" x2="118" y2="194" stroke="#2c1a08" stroke-width="1.1"/>
+    <line x1="134" y1="204" x2="118" y2="204" stroke="#2c1a08" stroke-width="1.1"/>
+    <line x1="134" y1="214" x2="118" y2="214" stroke="#2c1a08" stroke-width="1.1"/>
+    <line x1="134" y1="224" x2="118" y2="224" stroke="#2c1a08" stroke-width="1.1"/>
+    <line x1="134" y1="234" x2="118" y2="234" stroke="#2c1a08" stroke-width="1.1"/>
+    <line x1="266" y1="184" x2="282" y2="184" stroke="#2c1a08" stroke-width="1.1"/>
+    <line x1="266" y1="194" x2="282" y2="194" stroke="#2c1a08" stroke-width="1.1"/>
+    <line x1="266" y1="204" x2="282" y2="204" stroke="#2c1a08" stroke-width="1.1"/>
+    <line x1="266" y1="214" x2="282" y2="214" stroke="#2c1a08" stroke-width="1.1"/>
+    <line x1="266" y1="224" x2="282" y2="224" stroke="#2c1a08" stroke-width="1.1"/>
+    <line x1="266" y1="234" x2="282" y2="234" stroke="#2c1a08" stroke-width="1.1"/>
+    <!-- WiFi antenna -->
+    <path d="M 193,156 Q 200,148 207,156" fill="none" stroke="#2c1a08" stroke-width="1.4"/>
+    <path d="M 188,152 Q 200,140 212,152" fill="none" stroke="#2c1a08" stroke-width="1.1"/>
+    <path d="M 183,148 Q 200,132 217,148" fill="none" stroke="#2c1a08" stroke-width=".9" opacity=".6"/>
+    <line x1="200" y1="156" x2="200" y2="168" stroke="#2c1a08" stroke-width="1.1"/>
+    <text x="220" y="150" font-family="Palatino,Georgia,serif" font-style="italic" font-size="7.5" fill="#5c3a1e">WiFi AP · 192.168.4.1</text>
+    <text x="220" y="161" font-family="Palatino,Georgia,serif" font-style="italic" font-size="7" fill="#5c3a1e">POST /preset · /script · /stop</text>
+    <!-- 3× L298N -->
+    <rect x="22" y="50" width="82" height="48" rx="3" fill="url(#pcb2)" stroke="#2c1a08" stroke-width="1.2"/>
+    <text x="63" y="70" text-anchor="middle" font-family="Palatino,Georgia,serif" font-style="italic" font-size="8.5" fill="#2c1a08">L298N #1</text>
+    <text x="63" y="82" text-anchor="middle" font-family="Palatino,Georgia,serif" font-style="italic" font-size="7.5" fill="#5c3a1e">Disk 1 · 60 cm</text>
+    <line x1="63" y1="98" x2="63" y2="126" stroke="#2c1a08" stroke-width="1.5" stroke-dasharray="3,2" opacity=".6"/>
+    <rect x="22" y="178" width="82" height="48" rx="3" fill="url(#pcb2)" stroke="#2c1a08" stroke-width="1.2"/>
+    <text x="63" y="197" text-anchor="middle" font-family="Palatino,Georgia,serif" font-style="italic" font-size="8.5" fill="#2c1a08">L298N #2</text>
+    <text x="63" y="209" text-anchor="middle" font-family="Palatino,Georgia,serif" font-style="italic" font-size="7.5" fill="#5c3a1e">Disk 2 · 45 cm</text>
+    <rect x="22" y="306" width="82" height="48" rx="3" fill="url(#pcb2)" stroke="#2c1a08" stroke-width="1.2"/>
+    <text x="63" y="325" text-anchor="middle" font-family="Palatino,Georgia,serif" font-style="italic" font-size="8.5" fill="#2c1a08">L298N #3</text>
+    <text x="63" y="337" text-anchor="middle" font-family="Palatino,Georgia,serif" font-style="italic" font-size="7.5" fill="#5c3a1e">Disk 3 · 30 cm</text>
+    <line x1="104" y1="74" x2="134" y2="193" stroke="#2c1a08" stroke-width=".85" opacity=".52"/>
+    <line x1="104" y1="202" x2="134" y2="210" stroke="#2c1a08" stroke-width=".85" opacity=".52"/>
+    <line x1="104" y1="330" x2="134" y2="244" stroke="#2c1a08" stroke-width=".85" opacity=".52"/>
+    <!-- Strobe -->
+    <rect x="296" y="50" width="88" height="52" rx="3" fill="url(#pcb2)" stroke="#2c1a08" stroke-width="1.2"/>
+    <text x="340" y="70" text-anchor="middle" font-family="Palatino,Georgia,serif" font-style="italic" font-size="8.5" fill="#2c1a08">Strobe 50 W RGBW</text>
+    <text x="340" y="82" text-anchor="middle" font-family="Palatino,Georgia,serif" font-style="italic" font-size="7.5" fill="#5c3a1e">ISR hard cap 4 Hz</text>
+    <text x="340" y="94" text-anchor="middle" font-family="Palatino,Georgia,serif" font-style="italic" font-size="7" fill="#8b2a2a">⚠ safety critical</text>
+    <line x1="296" y1="76" x2="266" y2="194" stroke="#2c1a08" stroke-width=".85" opacity=".52"/>
+    <!-- DMX -->
+    <rect x="296" y="172" width="88" height="50" rx="3" fill="url(#pcb2)" stroke="#2c1a08" stroke-width="1.2"/>
+    <text x="340" y="191" text-anchor="middle" font-family="Palatino,Georgia,serif" font-style="italic" font-size="8.5" fill="#2c1a08">DMX-512 Spots</text>
+    <text x="340" y="203" text-anchor="middle" font-family="Palatino,Georgia,serif" font-style="italic" font-size="7.5" fill="#5c3a1e">RS-485 · MAX3485</text>
+    <text x="340" y="215" text-anchor="middle" font-family="Palatino,Georgia,serif" font-style="italic" font-size="7" fill="#5c3a1e">multi-colour spots</text>
+    <line x1="296" y1="197" x2="266" y2="214" stroke="#2c1a08" stroke-width=".85" opacity=".52"/>
+    <!-- SK6812 -->
+    <rect x="296" y="292" width="88" height="50" rx="3" fill="url(#pcb2)" stroke="#2c1a08" stroke-width="1.2"/>
+    <text x="340" y="311" text-anchor="middle" font-family="Palatino,Georgia,serif" font-style="italic" font-size="8.5" fill="#2c1a08">SK6812 LEDs ×3</text>
+    <text x="340" y="323" text-anchor="middle" font-family="Palatino,Georgia,serif" font-style="italic" font-size="7.5" fill="#5c3a1e">via slip rings</text>
+    <text x="340" y="335" text-anchor="middle" font-family="Palatino,Georgia,serif" font-style="italic" font-size="7" fill="#5c3a1e">FastLED · 144 px/m</text>
+    <line x1="296" y1="317" x2="266" y2="234" stroke="#2c1a08" stroke-width=".85" opacity=".52"/>
+    <!-- Audio -->
+    <rect x="134" y="328" width="132" height="46" rx="3" fill="url(#pcb2)" stroke="#2c1a08" stroke-width="1.2"/>
+    <text x="200" y="347" text-anchor="middle" font-family="Palatino,Georgia,serif" font-style="italic" font-size="8.5" fill="#2c1a08">Audio Amplifier</text>
+    <text x="200" y="360" text-anchor="middle" font-family="Palatino,Georgia,serif" font-style="italic" font-size="7.5" fill="#5c3a1e">3.5 mm + speaker · phase-sync'd</text>
+    <line x1="200" y1="260" x2="200" y2="328" stroke="#2c1a08" stroke-width="1" stroke-dasharray="3,2" opacity=".6"/>
+    <!-- PSU -->
+    <rect x="134" y="396" width="132" height="44" rx="3" fill="url(#pcb2)" stroke="#2c1a08" stroke-width="1.6"/>
+    <text x="200" y="415" text-anchor="middle" font-family="Palatino,Georgia,serif" font-style="italic" font-size="9" fill="#2c1a08">230 V PSU</text>
+    <text x="200" y="429" text-anchor="middle" font-family="Palatino,Georgia,serif" font-style="italic" font-size="7.5" fill="#5c3a1e">12 V / 10 A · 5 V / 5 A</text>
+    <line x1="200" y1="374" x2="200" y2="396" stroke="#2c1a08" stroke-width="1.5" opacity=".65"/>
+    <!-- Consent button -->
+    <circle cx="63" cy="396" r="18" fill="none" stroke="#2c1a08" stroke-width="1.3"/>
+    <circle cx="63" cy="396" r="10" fill="#2c1a08" opacity=".12"/>
+    <text x="63" y="400" text-anchor="middle" font-family="Palatino,Georgia,serif" font-style="italic" font-size="8" fill="#2c1a08">START</text>
+    <text x="63" y="420" text-anchor="middle" font-family="Palatino,Georgia,serif" font-style="italic" font-size="7" fill="#5c3a1e">3-sec hold</text>
+    <line x1="81" y1="396" x2="134" y2="418" stroke="#2c1a08" stroke-width=".75" opacity=".42"/>
+  </svg>
+  <div class="panel-notes">
+    ESP32 orchestrates all subsystems under FreeRTOS: three independent motor PID loops, LED animation via FastLED through slip rings, strobe timing via hardware interrupt (hard-capped at 4 Hz), DMX spot lights, audio sync, and a WiFi access point serving the real-time JSON preset API for DJ/VJ scripting.
+  </div>
+</div>
+
+<!-- ═══════════ PANEL VI : HUMAN SCALE (wide) ═══════════ -->
+<div class="panel panel-wide">
+  <div class="panel-title">VI. Homo in Machina — Experience Geometry &amp; Human Scale</div>
+  <div class="panel-subtitle">Front-lateral view · participant faces the column of three vertical disk faces · visual field, light cones, acoustic field</div>
+  <svg viewBox="0 0 820 360" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <pattern id="fl2" width="14" height="14" patternUnits="userSpaceOnUse">
+        <line x1="0" y1="14" x2="14" y2="0" stroke="#2c1a08" stroke-width=".38" opacity=".2"/>
+      </pattern>
+      <radialGradient id="dw3" cx="50%" cy="50%" r="50%">
+        <stop offset="0%" stop-color="#2c1a08" stop-opacity=".02"/>
+        <stop offset="100%" stop-color="#2c1a08" stop-opacity=".1"/>
+      </radialGradient>
+    </defs>
+
+    <!-- Floor -->
+    <rect x="0" y="316" width="820" height="40" fill="url(#fl2)" opacity=".5"/>
+    <line x1="0" y1="316" x2="820" y2="316" stroke="#2c1a08" stroke-width="1.5"/>
+
+    <!-- ── MACHINE COLUMN (right side) ── -->
+    <!-- Vertical mounting frame column -->
+    <rect x="558" y="50" width="14" height="266" fill="#2c1a08" opacity=".38" stroke="#2c1a08" stroke-width=".8"/>
+    <!-- Base feet -->
+    <line x1="565" y1="316" x2="505" y2="316" stroke="#2c1a08" stroke-width="3.5" stroke-linecap="round"/>
+    <line x1="565" y1="316" x2="625" y2="316" stroke="#2c1a08" stroke-width="3.5" stroke-linecap="round"/>
+    <rect x="497" y="314" width="14" height="5" rx="1.5" fill="#2c1a08" opacity=".65"/>
+    <rect x="619" y="314" width="14" height="5" rx="1.5" fill="#2c1a08" opacity=".65"/>
+
+    <!-- Disk 1 (60cm, bottom) y_center = 258, r=64 -->
+    <!-- Motor behind disk (to right of frame) -->
+    <rect x="572" y="224" width="52" height="68" rx="3.5" fill="#2c1a08" opacity=".22" stroke="#2c1a08" stroke-width="1"/>
+    <!-- Axle from frame to disk face -->
+    <line x1="558" y1="258" x2="500" y2="258" stroke="#2c1a08" stroke-width="2.2" stroke-linecap="round"/>
+    <!-- Disk face (circle, facing left = facing observer) -->
+    <circle cx="500" cy="258" r="64" fill="url(#dw3)" stroke="#2c1a08" stroke-width="1.6"/>
+    <line x1="436" y1="258" x2="564" y2="258" stroke="#2c1a08" stroke-width="2.2"/>
+    <line x1="500" y1="194" x2="500" y2="322" stroke="#2c1a08" stroke-width="2.2"/>
+    <circle cx="500" cy="258" r="13" fill="#2c1a08" opacity=".35" stroke="#2c1a08" stroke-width="1"/>
+    <!-- LEDs -->
+    <circle cx="516" cy="257" r="2.2" fill="#2c1a08"/><circle cx="530" cy="257" r="2" fill="#2c1a08" opacity=".8"/><circle cx="544" cy="257" r="2" fill="#2c1a08" opacity=".7"/>
+    <circle cx="484" cy="257" r="2.2" fill="#2c1a08"/><circle cx="470" cy="257" r="2" fill="#2c1a08" opacity=".8"/><circle cx="456" cy="257" r="2" fill="#2c1a08" opacity=".7"/>
+    <circle cx="500" cy="241" r="2.2" fill="#2c1a08"/><circle cx="500" cy="226" r="2" fill="#2c1a08" opacity=".8"/>
+    <circle cx="500" cy="275" r="2.2" fill="#2c1a08"/><circle cx="500" cy="290" r="2" fill="#2c1a08" opacity=".8"/>
+
+    <!-- Disk 2 (45cm, middle) y_center = 167, r=48 -->
+    <rect x="572" y="140" width="46" height="54" rx="3.5" fill="#2c1a08" opacity=".22" stroke="#2c1a08" stroke-width="1"/>
+    <line x1="558" y1="167" x2="500" y2="167" stroke="#2c1a08" stroke-width="2" stroke-linecap="round"/>
+    <circle cx="500" cy="167" r="48" fill="url(#dw3)" stroke="#2c1a08" stroke-width="1.4"/>
+    <!-- 3-arm -->
+    <line x1="500" y1="119" x2="500" y2="167" stroke="#2c1a08" stroke-width="2"/>
+    <line x1="500" y1="167" x2="458" y2="191" stroke="#2c1a08" stroke-width="2"/>
+    <line x1="500" y1="167" x2="542" y2="191" stroke="#2c1a08" stroke-width="2"/>
+    <circle cx="500" cy="167" r="10" fill="#2c1a08" opacity=".35" stroke="#2c1a08" stroke-width=".9"/>
+    <!-- LEDs -->
+    <circle cx="500" cy="150" r="2" fill="#2c1a08"/><circle cx="500" cy="134" r="1.8" fill="#2c1a08" opacity=".8"/>
+    <circle cx="483" cy="177" r="2" fill="#2c1a08"/><circle cx="471" cy="184" r="1.8" fill="#2c1a08" opacity=".8"/>
+    <circle cx="517" cy="177" r="2" fill="#2c1a08"/><circle cx="529" cy="184" r="1.8" fill="#2c1a08" opacity=".8"/>
+
+    <!-- Disk 3 (30cm, top) y_center = 90, r=32 -->
+    <rect x="572" y="68" width="38" height="44" rx="3.5" fill="#2c1a08" opacity=".22" stroke="#2c1a08" stroke-width="1"/>
+    <line x1="558" y1="90" x2="500" y2="90" stroke="#2c1a08" stroke-width="1.8" stroke-linecap="round"/>
+    <circle cx="500" cy="90" r="32" fill="url(#dw3)" stroke="#2c1a08" stroke-width="1.2"/>
+    <line x1="468" y1="90" x2="532" y2="90" stroke="#2c1a08" stroke-width="1.8"/>
+    <line x1="500" y1="58" x2="500" y2="122" stroke="#2c1a08" stroke-width="1.8"/>
+    <circle cx="500" cy="90" r="8" fill="#2c1a08" opacity=".35" stroke="#2c1a08" stroke-width=".8"/>
+    <!-- LEDs -->
+    <circle cx="511" cy="89" r="1.8" fill="#2c1a08"/><circle cx="522" cy="89" r="1.6" fill="#2c1a08" opacity=".8"/>
+    <circle cx="489" cy="89" r="1.8" fill="#2c1a08"/><circle cx="478" cy="89" r="1.6" fill="#2c1a08" opacity=".8"/>
+    <circle cx="500" cy="78" r="1.8" fill="#2c1a08"/><circle cx="500" cy="100" r="1.8" fill="#2c1a08"/>
+
+    <!-- ── LIGHT CONES from disk faces toward observer ── -->
+    <!-- Cone from Disk 1 (largest, lowest) -->
+    <path d="M 436,258 L 310,200 L 310,316 Z" fill="rgba(44,26,8,0.04)" stroke="#2c1a08" stroke-width=".5" stroke-dasharray="5,4" opacity=".4"/>
+    <!-- Cone from Disk 2 (middle) -->
+    <path d="M 452,167 L 340,132 L 340,202 Z" fill="rgba(44,26,8,0.035)" stroke="#2c1a08" stroke-width=".45" stroke-dasharray="4,4" opacity=".35"/>
+    <!-- Cone from Disk 3 (top) -->
+    <path d="M 468,90 L 376,68 L 376,112 Z" fill="rgba(44,26,8,0.03)" stroke="#2c1a08" stroke-width=".4" stroke-dasharray="4,4" opacity=".3"/>
+
+    <!-- ── HUMAN FIGURE ── -->
+    <!-- Head -->
+    <circle cx="240" cy="95" r="24" fill="none" stroke="#2c1a08" stroke-width="1.8"/>
+    <!-- Face (looking right toward machine) -->
+    <circle cx="250" cy="92" r="2.4" fill="#2c1a08" opacity=".48"/>
+    <circle cx="264" cy="92" r="2.4" fill="#2c1a08" opacity=".48"/>
+    <path d="M 250,104 Q 257,110 264,104" fill="none" stroke="#2c1a08" stroke-width="1.1" opacity=".45"/>
+    <!-- Neck -->
+    <line x1="257" y1="119" x2="257" y2="140" stroke="#2c1a08" stroke-width="3.8" stroke-linecap="round"/>
+    <!-- Torso -->
+    <line x1="257" y1="140" x2="257" y2="224" stroke="#2c1a08" stroke-width="5" stroke-linecap="round"/>
+    <!-- Arms (slightly forward) -->
+    <line x1="257" y1="156" x2="220" y2="196" stroke="#2c1a08" stroke-width="3" stroke-linecap="round"/>
+    <line x1="257" y1="156" x2="294" y2="196" stroke="#2c1a08" stroke-width="3" stroke-linecap="round"/>
+    <line x1="220" y1="196" x2="213" y2="234" stroke="#2c1a08" stroke-width="2.4" stroke-linecap="round"/>
+    <line x1="294" y1="196" x2="301" y2="234" stroke="#2c1a08" stroke-width="2.4" stroke-linecap="round"/>
+    <!-- Legs -->
+    <line x1="257" y1="224" x2="236" y2="283" stroke="#2c1a08" stroke-width="3.4" stroke-linecap="round"/>
+    <line x1="257" y1="224" x2="278" y2="283" stroke="#2c1a08" stroke-width="3.4" stroke-linecap="round"/>
+    <line x1="236" y1="283" x2="224" y2="294" stroke="#2c1a08" stroke-width="3" stroke-linecap="round"/>
+    <line x1="278" y1="283" x2="290" y2="294" stroke="#2c1a08" stroke-width="3" stroke-linecap="round"/>
+
+    <!-- Height dimension -->
+    <line x1="186" y1="71" x2="186" y2="300" stroke="#2c1a08" stroke-width=".55" opacity=".42"/>
+    <line x1="180" y1="71" x2="192" y2="71" stroke="#2c1a08" stroke-width=".55" opacity=".42"/>
+    <line x1="180" y1="300" x2="192" y2="300" stroke="#2c1a08" stroke-width=".55" opacity=".42"/>
+    <text x="174" y="190" font-family="Palatino,Georgia,serif" font-style="italic" font-size="7.5" fill="#5c3a1e" transform="rotate(-90,174,190)">≈ 170 cm</text>
+
+    <!-- Eye gaze line to disk 2 face -->
+    <line x1="280" y1="95" x2="452" y2="167" stroke="#2c1a08" stroke-width=".55" stroke-dasharray="7,5" opacity=".38"/>
+    <text x="355" y="120" font-family="Palatino,Georgia,serif" font-style="italic" font-size="7.5" fill="#5c3a1e">gaze to Disk 2 face</text>
+
+    <!-- Visual arc annotation -->
+    <path d="M 280,74 A 30,30 0 0 1 280,116" fill="none" stroke="#2c1a08" stroke-width=".8" opacity=".42"/>
+    <text x="286" y="93" font-family="Palatino,Georgia,serif" font-style="italic" font-size="8" fill="#5c3a1e">≈ 45°</text>
+    <text x="286" y="104" font-family="Palatino,Georgia,serif" font-style="italic" font-size="7" fill="#5c3a1e">visual arc</text>
+
+    <!-- Optimal distance -->
+    <line x1="310" y1="308" x2="436" y2="308" stroke="#2c1a08" stroke-width=".8" opacity=".52"/>
+    <line x1="310" y1="302" x2="310" y2="314" stroke="#2c1a08" stroke-width=".8" opacity=".52"/>
+    <line x1="436" y1="302" x2="436" y2="314" stroke="#2c1a08" stroke-width=".8" opacity=".52"/>
+    <text x="373" y="327" text-anchor="middle" font-family="Palatino,Georgia,serif" font-style="italic" font-size="8.5" fill="#2c1a08">optimal: 80 – 150 cm</text>
+
+    <!-- Sound waves (from speaker on machine) -->
+    <path d="M 436,258 Q 415,246 420,232" fill="none" stroke="#2c1a08" stroke-width=".7" stroke-dasharray="3,2" opacity=".45"/>
+    <path d="M 424,265 Q 398,250 404,230" fill="none" stroke="#2c1a08" stroke-width=".6" stroke-dasharray="3,3" opacity=".35"/>
+    <path d="M 412,272 Q 381,254 388,228" fill="none" stroke="#2c1a08" stroke-width=".5" stroke-dasharray="2,3" opacity=".25"/>
+    <text x="368" y="278" font-family="Palatino,Georgia,serif" font-style="italic" font-size="7.5" fill="#5c3a1e">acoustic 360°</text>
+
+    <!-- Disk height annotations (right side) -->
+    <text x="636" y="48" font-family="Palatino,Georgia,serif" font-style="italic" font-size="8" fill="#5c3a1e">Motor 3</text>
+    <text x="636" y="86" font-family="Palatino,Georgia,serif" font-style="italic" font-size="8" fill="#2c1a08">Disk 3 · ∅ 30 cm</text>
+    <text x="636" y="158" font-family="Palatino,Georgia,serif" font-style="italic" font-size="8" fill="#2c1a08">Disk 2 · ∅ 45 cm</text>
+    <text x="636" y="249" font-family="Palatino,Georgia,serif" font-style="italic" font-size="8" fill="#2c1a08">Disk 1 · ∅ 60 cm</text>
+    <line x1="632" y1="84" x2="568" y2="90" stroke="#2c1a08" stroke-width=".6" opacity=".42"/>
+    <line x1="632" y1="156" x2="568" y2="167" stroke="#2c1a08" stroke-width=".6" opacity=".42"/>
+    <line x1="632" y1="248" x2="568" y2="258" stroke="#2c1a08" stroke-width=".6" opacity=".42"/>
+
+    <!-- Heights from ground annotations -->
+    <line x1="695" y1="316" x2="695" y2="258" stroke="#2c1a08" stroke-width=".5" opacity=".38"/>
+    <line x1="695" y1="316" x2="695" y2="167" stroke="#2c1a08" stroke-width=".5" opacity=".38"/>
+    <line x1="695" y1="316" x2="695" y2="90" stroke="#2c1a08" stroke-width=".5" opacity=".38"/>
+    <line x1="690" y1="258" x2="700" y2="258" stroke="#2c1a08" stroke-width=".5" opacity=".38"/>
+    <line x1="690" y1="167" x2="700" y2="167" stroke="#2c1a08" stroke-width=".5" opacity=".38"/>
+    <line x1="690" y1="90" x2="700" y2="90" stroke="#2c1a08" stroke-width=".5" opacity=".38"/>
+    <line x1="690" y1="316" x2="700" y2="316" stroke="#2c1a08" stroke-width=".5" opacity=".38"/>
+    <text x="706" y="294" font-family="Palatino,Georgia,serif" font-style="italic" font-size="7" fill="#5c3a1e">≈ 80 cm</text>
+    <text x="706" y="218" font-family="Palatino,Georgia,serif" font-style="italic" font-size="7" fill="#5c3a1e">≈ 135 cm</text>
+    <text x="706" y="134" font-family="Palatino,Georgia,serif" font-style="italic" font-size="7" fill="#5c3a1e">≈ 185 cm</text>
+
+    <!-- Entrainment + formula note (left) -->
+    <rect x="22" y="226" width="172" height="82" rx="3" fill="rgba(44,26,8,0.04)" stroke="#2c1a08" stroke-width=".8" stroke-dasharray="5,4" opacity=".55"/>
+    <text x="32" y="244" font-family="Palatino,Georgia,serif" font-style="italic" font-size="8.5" fill="#5c3a1e">f_eff = (RPM ÷ 60) × N_arms</text>
+    <text x="32" y="257" font-family="Palatino,Georgia,serif" font-style="italic" font-size="7.5" fill="#5c3a1e">4-arm @ 12 RPM → 0.80 Hz (δ/θ border)</text>
+    <text x="32" y="270" font-family="Palatino,Georgia,serif" font-style="italic" font-size="7.5" fill="#5c3a1e">3-arm @ 18 RPM → 0.90 Hz (theta)</text>
+    <text x="32" y="283" font-family="Palatino,Georgia,serif" font-style="italic" font-size="7.5" fill="#5c3a1e">2-arm @ 240 RPM → 8 Hz (alpha) *</text>
+    <text x="32" y="296" font-family="Palatino,Georgia,serif" font-style="italic" font-size="7" fill="#8b2a2a">* strobe ≤ 4 Hz hard cap always applies</text>
+
+    <!-- α/θ brain annotation -->
+    <text x="100" y="86" text-anchor="middle" font-family="Palatino,Georgia,serif" font-style="italic" font-size="8.5" fill="#5c3a1e">α / θ entrainment</text>
+    <text x="100" y="98" text-anchor="middle" font-family="Palatino,Georgia,serif" font-style="italic" font-size="7.5" fill="#5c3a1e">V1 cortex → thalamus</text>
+    <line x1="165" y1="93" x2="216" y2="95" stroke="#2c1a08" stroke-width=".55" stroke-dasharray="2,2" opacity=".35"/>
+
+    <!-- Observer position label -->
+    <text x="215" y="335" text-anchor="middle" font-family="Palatino,Georgia,serif" font-style="italic" font-size="8.5" fill="#5c3a1e">participant · standing or seated · faces disk column</text>
+  </svg>
+  <div class="panel-notes">
+    The participant stands roughly 100 cm in front of the column, with Disk 2 at eye level. Each disk face rotates in the vertical plane, visible directly. Three motors run at independent speeds, allowing simultaneous multi-band photic entrainment across the disk stack. The light cone of Disk 1 additionally reaches the observer's peripheral vision, widening the entrainment field beyond the central 45° arc.
+  </div>
+</div>
+
+</div><!-- /grid -->
+
+<!-- ═══════════ MARGINALIA ═══════════ -->
+<div class="marg-row">
+  <div class="marg">
+    On disk orientation: the disks stand vertical in the plane of the observer's face — each spinning like a clock, not like a record player. The observer does not look down at the mechanism but directly into it, as one looks into the face of a wheel or a window. This is the correct geometry for photic entrainment: the rotating arm sweeps across the retina at the computed effective frequency.
+  </div>
+  <div class="marg">
+    On the skeletal versus infilled disk: the skeletal arm frame produces the sharper entrainment geometry, its LED points tracing precise arcs across the visual field. The acrylic-infilled variant adds spectacle — the panels glow from within, and the moiré is visible as a physical interference between rotating etched surfaces. A festival demands both; perhaps the choice varies by preset.
+  </div>
+  <div class="marg">
+    On safety: the effective frequency formula applies to disk rotation, not to the strobe. The strobe is separately constrained by hardware interrupt to ≤ 4 Hz absolute, regardless of software state. At 12 RPM with 4 arms, effective frequency is 0.8 Hz — far below the photosensitive epilepsy danger zone of 3–30 Hz. Higher disk speeds with fewer arms keep the same safety margin.
+  </div>
+</div>
+
+<!-- ═══════════ FOOTER ═══════════ -->
 <footer class="codex-footer">
-  <svg class="ornament" width="320" height="22" viewBox="0 0 320 22" style="margin-bottom:12px;">
-    <line x1="0" y1="11" x2="128" y2="11" stroke="#5c3a1e" stroke-width="0.9"/>
-    <circle cx="160" cy="11" r="7" fill="none" stroke="#5c3a1e" stroke-width="0.9"/>
-    <circle cx="160" cy="11" r="3.5" fill="#5c3a1e" opacity="0.35"/>
-    <line x1="192" y1="11" x2="320" y2="11" stroke="#5c3a1e" stroke-width="0.9"/>
-    <line x1="135" y1="11" x2="150" y2="11" stroke="#5c3a1e" stroke-width="0.9"/>
-    <line x1="170" y1="11" x2="185" y2="11" stroke="#5c3a1e" stroke-width="0.9"/>
+  <svg class="orn" width="320" height="22" viewBox="0 0 320 22" style="margin-bottom:11px;">
+    <line x1="0" y1="11" x2="128" y2="11" stroke="#5c3a1e" stroke-width=".9"/>
+    <circle cx="160" cy="11" r="7" fill="none" stroke="#5c3a1e" stroke-width=".9"/>
+    <circle cx="160" cy="11" r="3.5" fill="#5c3a1e" opacity=".34"/>
+    <line x1="192" y1="11" x2="320" y2="11" stroke="#5c3a1e" stroke-width=".9"/>
+    <line x1="135" y1="11" x2="150" y2="11" stroke="#5c3a1e" stroke-width=".9"/>
+    <line x1="170" y1="11" x2="185" y2="11" stroke="#5c3a1e" stroke-width=".9"/>
   </svg>
   <em>Flashy Flesh · Open Apparatus Project · CERN-OHL-P Hardware · MIT Firmware · CC BY 4.0 Documentation</em><br>
-  <em style="font-size:0.68rem;opacity:0.65;">
-    Drawn for the benefit of all who would understand and reproduce this instrument · Folio I of an ongoing series ·
-    <a href="https://github.com/huximaxi/fleshy-flesh-machine" style="color:inherit;">github.com/huximaxi/fleshy-flesh-machine</a>
-  </em>
+  <em style="font-size:.67rem;opacity:.62;">Folio II — Corrected geometry: disks vertical, face-on to observer · <a href="https://github.com/huximaxi/fleshy-flesh-machine">github.com/huximaxi/fleshy-flesh-machine</a></em>
 </footer>
 
 </body>
