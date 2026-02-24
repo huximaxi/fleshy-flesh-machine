@@ -3,763 +3,1104 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Flashy Flesh — Open-Source State Engineering</title>
+  <title>FLASHY FLESH // Open-Source State Engineering</title>
   <meta name="description" content="An open-source audiovisual installation that facilitates non-ordinary states of consciousness. Built on neuroscience, psychedelic research, and open hardware."/>
-  <meta property="og:title" content="Flashy Flesh — Open-Source State Engineering"/>
-  <meta property="og:description" content="A rotating LED disk array that uses photic driving, Klüver geometry, and moiré interference to facilitate altered states. Festival-native. Open source. Honest science."/>
-  <meta property="og:type" content="website"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=VT323&family=Share+Tech+Mono&display=swap" rel="stylesheet"/>
   <style>
-    /* ── Reset & base ───────────────────────────────────────────── */
+    /* ── Reset ──────────────────────────────────────────────────── */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
     :root {
-      --bg:        #080810;
-      --bg2:       #0d0d1a;
-      --bg3:       #111122;
-      --border:    #1e2040;
-      --text:      #d0d4e8;
-      --muted:     #6670a0;
-      --blue:      #3b82f6;
-      --blue-dim:  #1e3a5f;
-      --purple:    #a855f7;
-      --purple-dim:#3b1a5f;
-      --teal:      #2dd4bf;
-      --teal-dim:  #0f3830;
-      --red:       #f87171;
-      --amber:     #fbbf24;
-      --green:     #4ade80;
-      --white:     #ffffff;
-      --font:      'Helvetica Neue', Helvetica, Arial, sans-serif;
-      --mono:      'Courier New', Courier, monospace;
-      --radius:    10px;
-      --glow-blue: 0 0 32px rgba(59,130,246,0.25);
-      --glow-purple: 0 0 32px rgba(168,85,247,0.25);
+      --bg:        #000000;
+      --bg2:       #050505;
+      --bg3:       #0a0a0a;
+      --green:     #00ff41;
+      --green-dim: #00aa2a;
+      --green-lo:  #003a0e;
+      --amber:     #ffb000;
+      --amber-dim: #cc8800;
+      --red:       #ff2222;
+      --cyan:      #00ffff;
+      --magenta:   #ff00ff;
+      --white:     #e8e8e8;
+      --muted:     #4a7a4a;
+      --border:    #1a3a1a;
+      --border2:   #2a5a2a;
+      --font-mono: 'Share Tech Mono', 'Courier New', monospace;
+      --font-vt:   'VT323', 'Courier New', monospace;
     }
+
     html { scroll-behavior: smooth; }
+
     body {
-      font-family: var(--font);
+      font-family: var(--font-mono);
       background: var(--bg);
-      color: var(--text);
-      line-height: 1.7;
+      color: var(--green);
+      line-height: 1.6;
       overflow-x: hidden;
     }
-    a { color: var(--blue); text-decoration: none; }
-    a:hover { color: var(--teal); }
-    img { max-width: 100%; height: auto; display: block; }
+
+    /* CRT scanline overlay */
+    body::before {
+      content: '';
+      position: fixed; inset: 0; z-index: 9999;
+      background: repeating-linear-gradient(
+        0deg,
+        rgba(0,0,0,0.06) 0px,
+        rgba(0,0,0,0.06) 1px,
+        transparent 1px,
+        transparent 2px
+      );
+      pointer-events: none;
+    }
+
+    /* CRT vignette */
+    body::after {
+      content: '';
+      position: fixed; inset: 0; z-index: 9998;
+      background: radial-gradient(ellipse 120% 120% at 50% 50%,
+        transparent 60%, rgba(0,0,0,0.7) 100%);
+      pointer-events: none;
+    }
+
+    a { color: var(--green); text-decoration: none; }
+    a:hover { color: var(--amber); text-shadow: 0 0 8px var(--amber); }
+
+    /* ── Blink ──────────────────────────────────────────────────── */
+    @keyframes blink {
+      0%,49% { opacity: 1; }
+      50%,100% { opacity: 0; }
+    }
+    @keyframes glow-pulse {
+      0%,100% { text-shadow: 0 0 4px var(--green), 0 0 12px var(--green-dim); }
+      50%      { text-shadow: 0 0 8px var(--green), 0 0 24px var(--green-dim), 0 0 48px rgba(0,255,65,0.2); }
+    }
+    @keyframes scanline {
+      0% { background-position: 0 0; }
+      100% { background-position: 0 100px; }
+    }
+    @keyframes flicker {
+      0%,100% { opacity: 1; }
+      92% { opacity: 1; }
+      93% { opacity: 0.7; }
+      94% { opacity: 1; }
+      96% { opacity: 0.85; }
+      97% { opacity: 1; }
+    }
+    @keyframes spin-slow { to { transform: rotate(360deg); } }
+    @keyframes glitch {
+      0%,90%,100% { clip-path: none; transform: none; }
+      91% { clip-path: inset(20% 0 30% 0); transform: translateX(-4px); }
+      93% { clip-path: inset(50% 0 20% 0); transform: translateX(4px); }
+      95% { clip-path: inset(10% 0 60% 0); transform: translateX(-2px); }
+    }
+    @keyframes type-cursor {
+      0%,100% { border-right-color: var(--green); }
+      50% { border-right-color: transparent; }
+    }
+
+    .blink { animation: blink 1s step-end infinite; }
+    .glow  { animation: glow-pulse 3s ease-in-out infinite; }
+    .flicker { animation: flicker 8s infinite; }
+
+    /* ── Top status bar ─────────────────────────────────────────── */
+    .statusbar {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+      height: 22px;
+      background: var(--green);
+      color: #000;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 12px;
+      letter-spacing: 0.08em;
+    }
+    .statusbar-right { display: flex; gap: 16px; }
 
     /* ── Nav ────────────────────────────────────────────────────── */
     nav {
-      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      position: fixed; top: 22px; left: 0; right: 0; z-index: 999;
+      border-bottom: 1px solid var(--border2);
+      background: rgba(0,0,0,0.95);
+      padding: 0 20px;
+      height: 38px;
       display: flex; align-items: center; justify-content: space-between;
-      padding: 0 2rem; height: 58px;
-      background: rgba(8,8,16,0.85);
-      backdrop-filter: blur(12px);
-      border-bottom: 1px solid var(--border);
     }
     .nav-logo {
-      font-size: 1rem; font-weight: 700; letter-spacing: 0.12em;
-      color: var(--white); text-transform: uppercase;
+      font-family: var(--font-vt);
+      font-size: 22px;
+      color: var(--green);
+      letter-spacing: 0.15em;
+      text-shadow: 0 0 10px var(--green);
     }
-    .nav-logo span { color: var(--purple); }
-    .nav-links { display: flex; gap: 1.8rem; }
+    .nav-logo .hi { color: var(--amber); }
+    .nav-links {
+      display: flex; gap: 0;
+    }
     .nav-links a {
-      font-size: 0.82rem; letter-spacing: 0.06em; text-transform: uppercase;
-      color: var(--muted); transition: color 0.2s;
+      font-size: 11px; letter-spacing: 0.1em;
+      color: var(--muted);
+      padding: 0 14px; height: 38px;
+      display: flex; align-items: center;
+      border-left: 1px solid var(--border);
+      transition: color 0.1s, background 0.1s;
     }
-    .nav-links a:hover { color: var(--white); }
+    .nav-links a:hover { color: var(--green); background: var(--green-lo); }
     .nav-cta {
-      font-size: 0.8rem; padding: 0.4rem 1rem;
-      border: 1px solid var(--blue); border-radius: 6px;
-      color: var(--blue); transition: all 0.2s;
+      font-size: 11px; letter-spacing: 0.1em;
+      color: #000; background: var(--green);
+      padding: 4px 12px;
+      border: none;
     }
-    .nav-cta:hover { background: var(--blue); color: var(--white); }
+    .nav-cta:hover { background: var(--amber); color: #000; text-shadow: none; }
 
     /* ── Hero ───────────────────────────────────────────────────── */
     #hero {
       min-height: 100vh;
+      padding: 100px 20px 60px;
       display: flex; flex-direction: column;
       align-items: center; justify-content: center;
       text-align: center;
-      padding: 8rem 2rem 4rem;
       position: relative; overflow: hidden;
+      border-bottom: 1px solid var(--border2);
     }
-    .hero-bg {
+
+    /* Animated grid background */
+    .hero-grid {
       position: absolute; inset: 0; pointer-events: none;
-      background:
-        radial-gradient(ellipse 70% 60% at 50% 40%, rgba(168,85,247,0.08) 0%, transparent 70%),
-        radial-gradient(ellipse 40% 40% at 20% 70%, rgba(59,130,246,0.06) 0%, transparent 60%),
-        radial-gradient(ellipse 40% 40% at 80% 20%, rgba(45,212,191,0.05) 0%, transparent 60%);
+      background-image:
+        linear-gradient(rgba(0,255,65,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,255,65,0.04) 1px, transparent 1px);
+      background-size: 40px 40px;
+      animation: scanline 6s linear infinite;
     }
-    /* Animated spinning ring */
+
+    /* Spinning disk rings */
     .hero-ring {
       position: absolute;
-      width: 520px; height: 520px;
       border-radius: 50%;
-      border: 1px solid rgba(168,85,247,0.15);
-      animation: spin-slow 40s linear infinite;
+      border: 1px solid rgba(0,255,65,0.12);
       pointer-events: none;
     }
-    .hero-ring::before {
-      content: '';
-      position: absolute; inset: 20px;
-      border-radius: 50%;
-      border: 1px solid rgba(59,130,246,0.1);
-      animation: spin-slow 25s linear infinite reverse;
-    }
-    .hero-ring::after {
-      content: '';
-      position: absolute; inset: 60px;
-      border-radius: 50%;
-      border: 1px dashed rgba(45,212,191,0.08);
-      animation: spin-slow 15s linear infinite;
-    }
-    @keyframes spin-slow { to { transform: rotate(360deg); } }
+    .ring1 { width: 600px; height: 600px; animation: spin-slow 60s linear infinite; }
+    .ring2 { width: 440px; height: 440px; animation: spin-slow 35s linear infinite reverse; border-style: dashed; }
+    .ring3 { width: 300px; height: 300px; animation: spin-slow 20s linear infinite; border-color: rgba(255,176,0,0.1); }
 
-    /* Spiral lines via SVG background */
-    .hero-spiral {
+    .hero-ascii {
       position: absolute;
-      width: 500px; height: 500px;
-      opacity: 0.06;
-      animation: spin-slow 60s linear infinite;
+      font-family: var(--font-vt);
+      font-size: 11px;
+      color: rgba(0,255,65,0.07);
+      white-space: pre;
+      letter-spacing: 0.05em;
+      user-select: none;
       pointer-events: none;
+      line-height: 1.2;
     }
+    .hero-ascii.left  { left: 0;  top: 120px; text-align: left; }
+    .hero-ascii.right { right: 0; top: 120px; text-align: right; }
 
-    .hero-badge {
-      display: inline-flex; align-items: center; gap: 0.5rem;
-      font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase;
-      color: var(--purple); border: 1px solid rgba(168,85,247,0.3);
-      padding: 0.3rem 0.9rem; border-radius: 20px;
-      margin-bottom: 1.8rem;
-      background: rgba(168,85,247,0.06);
+    .hero-eyebrow {
+      font-size: 11px; letter-spacing: 0.2em;
+      color: var(--muted);
+      margin-bottom: 20px;
     }
-    .hero-badge .dot {
-      width: 6px; height: 6px; border-radius: 50%;
-      background: var(--purple);
-      animation: pulse-dot 2s ease-in-out infinite;
+    .hero-eyebrow .tag {
+      border: 1px solid var(--border2);
+      padding: 3px 10px;
+      background: var(--green-lo);
     }
-    @keyframes pulse-dot {
-      0%,100% { opacity: 1; transform: scale(1); }
-      50% { opacity: 0.4; transform: scale(0.7); }
-    }
+    .hero-eyebrow .tag::before { content: '[ '; color: var(--green-dim); }
+    .hero-eyebrow .tag::after  { content: ' ]'; color: var(--green-dim); }
 
     h1 {
-      font-size: clamp(3rem, 8vw, 6.5rem);
-      font-weight: 800; letter-spacing: -0.02em; line-height: 1;
-      color: var(--white); margin-bottom: 0.2em;
+      font-family: var(--font-vt);
+      font-size: clamp(56px, 12vw, 108px);
+      line-height: 0.9;
+      letter-spacing: 0.06em;
+      color: var(--green);
+      text-shadow: 0 0 20px rgba(0,255,65,0.5), 0 0 60px rgba(0,255,65,0.2);
+      margin-bottom: 8px;
+      animation: glitch 12s infinite;
+      position: relative;
     }
-    h1 .accent { color: var(--purple); }
-    .hero-sub {
-      font-size: clamp(1rem, 2.5vw, 1.35rem);
-      color: var(--muted); max-width: 680px;
-      margin: 0.8rem auto 2.5rem;
-      line-height: 1.6;
+    h1 .alt { color: var(--amber); text-shadow: 0 0 20px rgba(255,176,0,0.5); }
+    .cursor-block {
+      display: inline-block;
+      width: 0.55em; height: 0.85em;
+      background: var(--green);
+      vertical-align: -0.05em;
+      animation: blink 1s step-end infinite;
+      box-shadow: 0 0 10px var(--green);
     }
-    .hero-sub strong { color: var(--text); }
+
+    .hero-tagline {
+      font-size: clamp(12px, 2vw, 16px);
+      color: var(--muted);
+      max-width: 660px;
+      margin: 20px auto 32px;
+      letter-spacing: 0.05em;
+      line-height: 1.7;
+    }
+    .hero-tagline .hi { color: var(--green); }
+
     .hero-buttons {
-      display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center;
+      display: flex; flex-wrap: wrap; gap: 8px; justify-content: center;
+      margin-bottom: 36px;
     }
     .btn {
-      display: inline-flex; align-items: center; gap: 0.5rem;
-      padding: 0.75rem 1.8rem; border-radius: 8px;
-      font-size: 0.9rem; font-weight: 600; letter-spacing: 0.03em;
-      transition: all 0.2s; cursor: pointer; border: none;
+      font-family: var(--font-mono);
+      font-size: 11px; letter-spacing: 0.12em;
+      padding: 8px 18px;
+      cursor: pointer; display: inline-flex; align-items: center; gap: 6px;
+      transition: all 0.1s;
+      border: none;
     }
     .btn-primary {
-      background: var(--purple); color: var(--white);
-      box-shadow: var(--glow-purple);
+      background: var(--green);
+      color: #000;
     }
-    .btn-primary:hover { background: #9333ea; color: var(--white); transform: translateY(-1px); }
-    .btn-secondary {
-      background: transparent; color: var(--text);
-      border: 1px solid var(--border);
+    .btn-primary:hover { background: var(--amber); color: #000; text-shadow: none; box-shadow: 0 0 20px rgba(255,176,0,0.4); }
+    .btn-outline {
+      background: transparent;
+      color: var(--green);
+      border: 1px solid var(--border2);
     }
-    .btn-secondary:hover { border-color: var(--blue); color: var(--blue); transform: translateY(-1px); }
+    .btn-outline:hover { border-color: var(--green); background: var(--green-lo); color: var(--green); text-shadow: 0 0 6px var(--green); }
     .btn-ghost {
-      background: transparent; color: var(--muted);
+      background: transparent;
+      color: var(--muted);
       border: 1px solid var(--border);
     }
-    .btn-ghost:hover { border-color: var(--muted); color: var(--text); }
+    .btn-ghost:hover { color: var(--green); border-color: var(--border2); }
 
-    .hero-meta {
-      margin-top: 3rem;
-      display: flex; gap: 2.5rem; flex-wrap: wrap; justify-content: center;
-      font-size: 0.78rem; color: var(--muted); letter-spacing: 0.05em;
+    .hero-stats {
+      display: flex; gap: 32px; flex-wrap: wrap; justify-content: center;
+      font-size: 11px; color: var(--muted); letter-spacing: 0.08em;
     }
-    .hero-meta span { display: flex; align-items: center; gap: 0.4rem; }
-    .hero-meta svg { opacity: 0.6; }
+    .hero-stats span { display: flex; align-items: center; gap: 6px; }
+    .hero-stats .dot {
+      width: 6px; height: 6px; border-radius: 50%;
+      background: var(--green);
+      box-shadow: 0 0 6px var(--green);
+      animation: glow-pulse 2s ease-in-out infinite;
+    }
 
-    /* ── Sections shared ─────────────────────────────────────────── */
-    section { padding: 6rem 2rem; }
+    /* ── Section shared ─────────────────────────────────────────── */
+    section { padding: 64px 20px; border-bottom: 1px solid var(--border); }
     .container { max-width: 1100px; margin: 0 auto; }
-    .section-label {
-      font-size: 0.72rem; letter-spacing: 0.15em; text-transform: uppercase;
-      color: var(--purple); margin-bottom: 0.8rem;
+
+    .section-header {
+      margin-bottom: 40px;
     }
+    .section-label {
+      font-size: 10px; letter-spacing: 0.25em; text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 8px;
+    }
+    .section-label::before { content: '//  '; color: var(--border2); }
     h2 {
-      font-size: clamp(1.8rem, 4vw, 2.8rem);
-      font-weight: 700; color: var(--white);
-      line-height: 1.2; margin-bottom: 1rem;
+      font-family: var(--font-vt);
+      font-size: clamp(32px, 5vw, 52px);
+      line-height: 1;
+      letter-spacing: 0.08em;
+      color: var(--green);
+      text-shadow: 0 0 12px rgba(0,255,65,0.3);
+      margin-bottom: 12px;
     }
     h2 .dim { color: var(--muted); }
+    h2 .amber { color: var(--amber); text-shadow: 0 0 12px rgba(255,176,0,0.3); }
     .lead {
-      font-size: 1.05rem; color: var(--muted);
-      max-width: 650px; margin-bottom: 3rem; line-height: 1.7;
+      font-size: 13px; color: var(--muted);
+      max-width: 640px; line-height: 1.8;
     }
-    .rule { border: none; border-top: 1px solid var(--border); margin: 0; }
     h3 {
-      font-size: 1.1rem; font-weight: 600;
-      color: var(--white); margin-bottom: 0.5rem;
+      font-size: 14px; letter-spacing: 0.08em;
+      color: var(--green); margin-bottom: 6px;
     }
-    p { color: var(--muted); font-size: 0.95rem; line-height: 1.75; }
+    h3::before { content: '> '; color: var(--green-dim); }
+    p { font-size: 12px; color: var(--muted); line-height: 1.8; }
 
-    /* ── Science grid ────────────────────────────────────────────── */
+    /* Box drawing borders */
+    .box {
+      border: 1px solid var(--border2);
+      background: var(--bg2);
+      position: relative;
+    }
+    .box::before {
+      content: attr(data-label);
+      position: absolute; top: -1px; left: 12px;
+      font-size: 9px; letter-spacing: 0.15em;
+      color: var(--green);
+      background: var(--bg2);
+      padding: 0 6px;
+    }
+
+    /* ── Science ─────────────────────────────────────────────────── */
     #science { background: var(--bg2); }
     .science-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 1.5rem;
+      gap: 1px;
+      border: 1px solid var(--border2);
+      background: var(--border);
     }
-    .science-card {
+    .sci-card {
       background: var(--bg3);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 1.8rem;
-      transition: border-color 0.2s, transform 0.2s;
-      position: relative; overflow: hidden;
+      padding: 22px;
+      position: relative;
+      transition: background 0.2s;
     }
-    .science-card:hover {
-      border-color: rgba(168,85,247,0.4);
-      transform: translateY(-2px);
-      box-shadow: var(--glow-purple);
+    .sci-card:hover { background: var(--green-lo); }
+    .sci-card-num {
+      font-family: var(--font-vt);
+      font-size: 36px;
+      color: var(--border2);
+      line-height: 1;
+      margin-bottom: 8px;
     }
-    .science-card::before {
-      content: '';
-      position: absolute; top: 0; left: 0; right: 0; height: 2px;
-      background: var(--card-accent, var(--purple));
+    .sci-card:hover .sci-card-num { color: var(--green-dim); }
+    .sci-card h3 { font-size: 13px; color: var(--green); margin-bottom: 8px; }
+    .sci-card h3::before { content: none; }
+    .sci-card p { font-size: 11px; margin-bottom: 10px; }
+    .badge {
+      font-size: 9px; letter-spacing: 0.12em;
+      padding: 2px 8px;
+      border: 1px solid;
+      display: inline-block;
     }
-    .card-icon {
-      width: 42px; height: 42px; border-radius: 10px;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 1.3rem; margin-bottom: 1rem;
-      background: var(--card-bg, rgba(168,85,247,0.1));
-    }
-    .science-card h3 { font-size: 1rem; margin-bottom: 0.4rem; }
-    .science-card p { font-size: 0.88rem; }
-    .tag {
-      display: inline-block; margin-top: 0.8rem;
-      font-size: 0.7rem; letter-spacing: 0.08em; text-transform: uppercase;
-      padding: 0.2rem 0.6rem; border-radius: 4px;
-      background: var(--tag-bg, rgba(168,85,247,0.1));
-      color: var(--tag-color, var(--purple));
-      border: 1px solid var(--tag-border, rgba(168,85,247,0.2));
-    }
+    .badge-green { border-color: var(--border2); color: var(--green-dim); }
+    .badge-amber { border-color: rgba(255,176,0,0.3); color: var(--amber-dim); }
 
-    /* ── Affect map ───────────────────────────────────────────────── */
-    #affect { background: var(--bg); }
-    .affect-img-wrap {
-      border-radius: var(--radius);
+    /* ── Terminal section ────────────────────────────────────────── */
+    .terminal {
+      background: #000;
+      border: 1px solid var(--border2);
+      font-family: var(--font-mono);
+      padding: 0;
       overflow: hidden;
-      border: 1px solid var(--border);
-      box-shadow: var(--glow-purple);
     }
-    .affect-img-wrap img { width: 100%; }
+    .terminal-bar {
+      background: var(--border2);
+      padding: 4px 10px;
+      font-size: 10px;
+      color: var(--muted);
+      display: flex; align-items: center; gap: 8px;
+    }
+    .t-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--border2); }
+    .t-dot.r { background: #ff3333; } .t-dot.y { background: #ffb800; } .t-dot.g { background: #33ff33; }
+    .terminal-body { padding: 16px; font-size: 11px; line-height: 1.8; }
+    .terminal-body .prompt { color: var(--green-dim); }
+    .terminal-body .cmd { color: var(--green); }
+    .terminal-body .out { color: var(--muted); }
+    .terminal-body .key { color: var(--amber); }
+    .terminal-body .val { color: var(--cyan); }
+    .terminal-body .comment { color: #2a4a2a; }
 
-    /* ── Architecture ─────────────────────────────────────────────── */
+    /* ── Affect / presets ────────────────────────────────────────── */
+    #affect { background: var(--bg); }
+    .presets-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 1px;
+      border: 1px solid var(--border2);
+      background: var(--border);
+    }
+    .preset {
+      background: var(--bg3);
+      padding: 18px;
+      transition: background 0.15s;
+    }
+    .preset:hover { background: var(--green-lo); }
+    .preset-name {
+      font-family: var(--font-vt);
+      font-size: 22px;
+      letter-spacing: 0.08em;
+      margin-bottom: 4px;
+    }
+    .preset-band {
+      font-size: 9px; letter-spacing: 0.15em;
+      color: var(--muted);
+      margin-bottom: 12px;
+    }
+    .preset-params { font-size: 10px; color: var(--muted); line-height: 1.9; }
+    .preset-params .v { color: var(--green); }
+    .preset-bar {
+      margin-top: 12px; height: 2px;
+      background: currentColor;
+      opacity: 0.5;
+    }
+
+    /* ── Machine spec ────────────────────────────────────────────── */
     #machine { background: var(--bg2); }
     .machine-layout {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 3rem; align-items: center;
+      gap: 32px; align-items: start;
     }
     @media (max-width: 768px) { .machine-layout { grid-template-columns: 1fr; } }
-    .spec-list { list-style: none; display: flex; flex-direction: column; gap: 0.9rem; }
-    .spec-list li {
-      display: flex; gap: 0.8rem; align-items: flex-start;
-      font-size: 0.9rem; color: var(--muted);
-    }
-    .spec-list li .spec-label {
-      min-width: 120px; color: var(--text); font-weight: 600;
-      font-size: 0.82rem; letter-spacing: 0.04em;
-    }
-    .spec-dot {
-      width: 8px; height: 8px; border-radius: 50%;
-      margin-top: 0.45rem; flex-shrink: 0;
-    }
-    .arch-img-wrap {
-      border-radius: var(--radius); overflow: hidden;
-      border: 1px solid var(--border);
-      box-shadow: var(--glow-blue);
-    }
 
-    /* ── Presets strip ────────────────────────────────────────────── */
-    #presets { background: var(--bg); }
-    .presets-strip {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
-      gap: 1rem;
-    }
-    .preset-card {
-      background: var(--bg3); border: 1px solid var(--border);
-      border-radius: var(--radius); padding: 1.4rem;
-      transition: all 0.2s; cursor: default;
-    }
-    .preset-card:hover { transform: translateY(-3px); }
-    .preset-name {
-      font-size: 0.95rem; font-weight: 700; margin-bottom: 0.3rem;
-    }
-    .preset-band {
-      font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase;
-      margin-bottom: 0.7rem; opacity: 0.7;
-    }
-    .preset-params { font-size: 0.78rem; color: var(--muted); line-height: 1.7; }
-    .preset-params code {
-      font-family: var(--mono); color: inherit;
-      background: rgba(255,255,255,0.05); padding: 0 3px; border-radius: 3px;
-    }
-    .preset-bar {
-      margin-top: 0.8rem; height: 3px; border-radius: 2px;
-      background: var(--bar-color, var(--purple)); opacity: 0.6;
-    }
+    .spec-table { width: 100%; border-collapse: collapse; font-size: 11px; }
+    .spec-table tr { border-bottom: 1px solid var(--border); }
+    .spec-table tr:hover td { color: var(--green); }
+    .spec-table td { padding: 7px 0; vertical-align: top; }
+    .spec-table .label { color: var(--green-dim); width: 120px; }
+    .spec-table .val { color: var(--muted); }
 
-    /* ── Safety ───────────────────────────────────────────────────── */
-    #safety { background: var(--bg2); }
+    /* Disk diagram */
+    .disk-viz {
+      border: 1px solid var(--border2);
+      background: var(--bg3);
+      padding: 24px;
+      display: flex; flex-direction: column; gap: 16px;
+    }
+    .disk-row {
+      display: flex; align-items: center; gap: 12px;
+    }
+    .disk-circle {
+      border-radius: 50%;
+      border: 2px solid;
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--font-vt);
+      font-size: 13px;
+      flex-shrink: 0;
+      position: relative;
+    }
+    .disk-circle::after {
+      content: '';
+      position: absolute;
+      width: 40%; height: 40%;
+      border-radius: 50%;
+      border: 1px solid;
+      border-color: inherit;
+      opacity: 0.4;
+    }
+    .disk-label { font-size: 11px; color: var(--muted); }
+    .disk-label .name { color: var(--green); font-size: 13px; display: block; margin-bottom: 2px; }
+
+    /* ── Safety ──────────────────────────────────────────────────── */
+    #safety { background: var(--bg); }
     .safety-grid {
-      display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 1.2rem;
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1px; border: 1px solid var(--border2); background: var(--border);
     }
     .safety-card {
-      background: var(--bg3); border: 1px solid var(--border);
-      border-radius: var(--radius); padding: 1.5rem;
+      background: var(--bg3); padding: 20px;
     }
-    .safety-card h3 { font-size: 0.95rem; margin-bottom: 0.4rem; }
-    .safety-card p { font-size: 0.85rem; }
+    .safety-card:hover { background: var(--green-lo); }
     .safety-icon {
-      font-size: 1.4rem; margin-bottom: 0.7rem;
+      font-family: var(--font-vt); font-size: 28px; color: var(--red);
+      margin-bottom: 8px; text-shadow: 0 0 10px rgba(255,34,34,0.4);
     }
+    .safety-card h3 { font-size: 12px; color: var(--amber); margin-bottom: 6px; }
+    .safety-card h3::before { content: '! '; color: var(--red); }
+    .safety-card p { font-size: 11px; }
 
-    /* ── Open source ──────────────────────────────────────────────── */
-    #opensource { background: var(--bg); }
+    /* ── OSS ─────────────────────────────────────────────────────── */
+    #opensource { background: var(--bg2); }
     .oss-grid {
-      display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 2px;
+      background: var(--border);
     }
     @media (max-width: 768px) { .oss-grid { grid-template-columns: 1fr; } }
-    .oss-block {
-      background: var(--bg3); border: 1px solid var(--border);
-      border-radius: var(--radius); padding: 2rem;
-    }
-    .oss-block h3 { font-size: 1rem; color: var(--white); margin-bottom: 0.6rem; }
-    .oss-block p { font-size: 0.88rem; margin-bottom: 1.2rem; }
-    .file-tree {
-      font-family: var(--mono); font-size: 0.78rem;
-      line-height: 1.9; color: var(--muted);
-    }
-    .file-tree .dir { color: var(--blue); }
+    .oss-block { background: var(--bg3); padding: 24px; }
+    .oss-block h3 { font-size: 13px; color: var(--amber); margin-bottom: 12px; }
+    .oss-block h3::before { content: none; }
+    .oss-block p { font-size: 11px; margin-bottom: 14px; }
+
+    .file-tree { font-size: 11px; line-height: 2.0; }
+    .file-tree .dir  { color: var(--amber); }
     .file-tree .file { color: var(--muted); }
-    .file-tree .comment { color: rgba(100,120,180,0.5); }
-    .license-badges { display: flex; gap: 0.7rem; flex-wrap: wrap; margin-top: 1rem; }
-    .license-badge {
-      font-size: 0.72rem; padding: 0.25rem 0.7rem; border-radius: 4px;
-      font-weight: 600; letter-spacing: 0.04em;
+    .file-tree .cmt  { color: var(--border2); font-style: italic; }
+    .file-tree .hi   { color: var(--green); }
+
+    .lic-badge {
+      display: inline-block; font-size: 9px; letter-spacing: 0.1em;
+      border: 1px solid; padding: 2px 8px; margin-right: 6px; margin-top: 8px;
     }
 
-    /* ── CTA ──────────────────────────────────────────────────────── */
+    /* ── CTA ─────────────────────────────────────────────────────── */
     #cta {
-      background: linear-gradient(135deg, #0d0d1a 0%, #130a2a 50%, #0a1a2a 100%);
-      text-align: center; padding: 7rem 2rem;
-      position: relative; overflow: hidden;
+      background: var(--bg);
+      text-align: center;
+      padding: 80px 20px;
+      position: relative;
     }
     #cta::before {
       content: '';
       position: absolute; inset: 0; pointer-events: none;
-      background: radial-gradient(ellipse 60% 50% at 50% 50%, rgba(168,85,247,0.12) 0%, transparent 70%);
+      background: radial-gradient(ellipse 50% 60% at 50% 50%,
+        rgba(0,255,65,0.04) 0%, transparent 70%);
     }
-    #cta h2 { font-size: clamp(2rem, 5vw, 3.5rem); margin-bottom: 1rem; }
-    #cta p { font-size: 1.05rem; max-width: 560px; margin: 0 auto 2.5rem; }
-    .cta-buttons { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+    #cta h2 { font-size: clamp(36px, 7vw, 72px); margin-bottom: 16px; }
+    #cta .lead { margin: 0 auto 32px; text-align: center; }
 
-    /* ── Footer ───────────────────────────────────────────────────── */
+    /* ── ASCII divider ───────────────────────────────────────────── */
+    .ascii-divider {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      color: var(--border2);
+      letter-spacing: 0.05em;
+      padding: 6px 0;
+      text-align: center;
+    }
+
+    /* ── Footer ──────────────────────────────────────────────────── */
     footer {
-      background: var(--bg2); border-top: 1px solid var(--border);
-      padding: 2.5rem 2rem; text-align: center;
+      background: var(--bg2);
+      border-top: 1px solid var(--border2);
+      padding: 28px 20px;
+      text-align: center;
     }
-    footer p { font-size: 0.82rem; color: var(--muted); }
-    footer a { color: var(--muted); }
-    footer a:hover { color: var(--text); }
-    .footer-links { display: flex; gap: 2rem; justify-content: center; flex-wrap: wrap; margin-bottom: 1rem; }
+    .footer-links {
+      display: flex; gap: 0; justify-content: center; flex-wrap: wrap;
+      margin-bottom: 14px;
+    }
+    .footer-links a {
+      font-size: 11px; letter-spacing: 0.1em;
+      color: var(--muted);
+      padding: 4px 14px;
+      border-right: 1px solid var(--border);
+    }
+    .footer-links a:first-child { border-left: 1px solid var(--border); }
+    .footer-links a:hover { color: var(--green); }
+    footer p { font-size: 10px; color: var(--border2); letter-spacing: 0.06em; }
+    footer p + p { margin-top: 4px; }
 
-    /* ── Divider ───────────────────────────────────────────────────── */
-    .section-divider {
-      width: 100%; height: 1px; background: var(--border);
+    /* ── Marquee bar ─────────────────────────────────────────────── */
+    .marquee-bar {
+      background: var(--green-lo);
+      border-top: 1px solid var(--border2);
+      border-bottom: 1px solid var(--border2);
+      padding: 6px 0;
+      overflow: hidden;
+      white-space: nowrap;
+    }
+    .marquee-inner {
+      display: inline-block;
+      animation: marquee 30s linear infinite;
+      font-size: 10px; letter-spacing: 0.12em; color: var(--green-dim);
+    }
+    @keyframes marquee {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
     }
 
-    /* ── Scroll indicator ─────────────────────────────────────────── */
-    .scroll-indicator {
-      position: absolute; bottom: 2rem; left: 50%;
-      transform: translateX(-50%);
-      display: flex; flex-direction: column; align-items: center; gap: 0.4rem;
-      color: var(--muted); font-size: 0.72rem; letter-spacing: 0.1em;
-      text-transform: uppercase; animation: bob 2.5s ease-in-out infinite;
+    /* ── Scrollbar ───────────────────────────────────────────────── */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: #000; }
+    ::-webkit-scrollbar-thumb { background: var(--border2); }
+    ::-webkit-scrollbar-thumb:hover { background: var(--green-dim); }
+
+    /* ── Responsive ──────────────────────────────────────────────── */
+    @media (max-width: 640px) {
+      .nav-links { display: none; }
+      .hero-ascii { display: none; }
+      .machine-layout { grid-template-columns: 1fr; }
     }
-    @keyframes bob {
-      0%,100% { transform: translateX(-50%) translateY(0); }
-      50% { transform: translateX(-50%) translateY(6px); }
-    }
-    .scroll-arrow { font-size: 1rem; }
   </style>
 </head>
 <body>
 
-<!-- ── Nav ────────────────────────────────────────────────────────── -->
-<nav>
-  <div class="nav-logo">Flashy <span>Flesh</span></div>
-  <div class="nav-links">
-    <a href="#science">Science</a>
-    <a href="#affect">States</a>
-    <a href="#machine">Machine</a>
-    <a href="#safety">Safety</a>
-    <a href="#opensource">Open Source</a>
+<!-- ── Status bar ────────────────────────────────────────────────────────── -->
+<div class="statusbar">
+  <span>FLASHY-FLESH-MACHINE // SYSTEM ONLINE <span class="blink">█</span></span>
+  <div class="statusbar-right">
+    <span>MIT · CERN-OHL-P</span>
+    <span>MODEM 2026</span>
+    <span id="ts">FEB 2026</span>
   </div>
-  <a href="https://github.com/huximaxi/fleshy-flesh-machine" class="btn nav-cta" target="_blank">GitHub ↗</a>
+</div>
+
+<!-- ── Nav ──────────────────────────────────────────────────────────────── -->
+<nav>
+  <div class="nav-logo">FLASHY <span class="hi">FLESH</span></div>
+  <div class="nav-links">
+    <a href="#science">SCIENCE</a>
+    <a href="#affect">STATES</a>
+    <a href="#machine">MACHINE</a>
+    <a href="#safety">SAFETY</a>
+    <a href="#opensource">OSS</a>
+  </div>
+  <a href="https://github.com/huximaxi/fleshy-flesh-machine" class="btn nav-cta" target="_blank">GITHUB ↗</a>
 </nav>
 
-<!-- ── Hero ───────────────────────────────────────────────────────── -->
+<!-- ── Marquee ───────────────────────────────────────────────────────────── -->
+<div class="marquee-bar" style="margin-top:60px;">
+  <div class="marquee-inner">
+    &nbsp;&nbsp;// PHOTIC DRIVING &nbsp;·&nbsp; KLÜVER FORM CONSTANTS &nbsp;·&nbsp; DMN SUPPRESSION &nbsp;·&nbsp; MOIRÉ INTERFERENCE &nbsp;·&nbsp; RGB ADDITIVE MIXING &nbsp;·&nbsp; NEURAL ANNEALING &nbsp;·&nbsp; 40 Hz GAMMA ENTRAINMENT &nbsp;·&nbsp; LISSAJOUS LOCK &nbsp;·&nbsp; EXTENDABLE ARMS &nbsp;·&nbsp; STAGGERED DEPTH PLANES &nbsp;·&nbsp; OPEN SOURCE HARDWARE &nbsp;·&nbsp; ESP32 + FREERTOS &nbsp;·&nbsp; SK6812 RGBW &nbsp;·&nbsp; MODEM FESTIVAL 2026 &nbsp;·&nbsp; CROATIA &nbsp;·&nbsp;&nbsp;&nbsp;// PHOTIC DRIVING &nbsp;·&nbsp; KLÜVER FORM CONSTANTS &nbsp;·&nbsp; DMN SUPPRESSION &nbsp;·&nbsp; MOIRÉ INTERFERENCE &nbsp;·&nbsp; RGB ADDITIVE MIXING &nbsp;·&nbsp; NEURAL ANNEALING &nbsp;·&nbsp; 40 Hz GAMMA ENTRAINMENT &nbsp;·&nbsp; LISSAJOUS LOCK &nbsp;·&nbsp; EXTENDABLE ARMS &nbsp;·&nbsp; STAGGERED DEPTH PLANES &nbsp;·&nbsp; OPEN SOURCE HARDWARE &nbsp;·&nbsp; ESP32 + FREERTOS &nbsp;·&nbsp; SK6812 RGBW &nbsp;·&nbsp; MODEM FESTIVAL 2026 &nbsp;·&nbsp; CROATIA &nbsp;·&nbsp;
+  </div>
+</div>
+
+<!-- ── Hero ─────────────────────────────────────────────────────────────── -->
 <section id="hero">
-  <div class="hero-bg"></div>
-  <div class="hero-ring"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-ring ring1"></div>
+  <div class="hero-ring ring2"></div>
+  <div class="hero-ring ring3"></div>
 
-  <!-- Animated spiral SVG -->
-  <svg class="hero-spiral" viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg">
-    <g transform="translate(250,250)" fill="none" stroke="#8855ff" stroke-width="1">
-      <path d="M0,0 C0,-18 12,-26 20,-17 C28,-8 26,12 14,22 C2,32 -18,28 -26,14 C-36,-4 -26,-34 -6,-46 C16,-60 52,-48 64,-20 C78,12 64,54 32,70 C-2,88 -48,74 -66,38 C-86,-4 -70,-56 -28,-74 C16,-94 72,-76 90,-30 C110,20 90,80 44,100 C-4,122 -72,100 -94,50 C-118,-6 -92,-78 -36,-100"/>
-      <path d="M0,0 C18,0 26,12 17,20 C8,28 -12,26 -22,14 C-32,2 -28,-18 -14,-26 C4,-36 34,-26 46,-6 C60,16 48,52 20,64 C-12,78 -54,64 -70,32 C-88,-2 -74,-48 -38,-66 C6,-86 76,-70 100,-28 C126,18 108,80 60,104"/>
-    </g>
-  </svg>
+  <!-- Side ASCII art (decorative) -->
+  <div class="hero-ascii left">
+  ┌──────────────┐
+  │  DISK 1  60Ø │
+  │  D=1.4   RED │
+  │  6 RPM   CW  │
+  ├──────────────┤
+  │  DISK 2  45Ø │
+  │  D=1.4   GRN │
+  │  5.35RPM CCW │
+  ├──────────────┤
+  │  DISK 3  30Ø │
+  │  D=1.3   BLU │
+  │  2 RPM   CW  │
+  └──────────────┘
+  f_eff = RPM/60 × N
+  4Hz strobe cap
+  hardware enforced
+  </div>
 
-  <div class="hero-badge"><div class="dot"></div>Open Source Hardware · MIT Licence</div>
-  <h1>FLASHY <span class="accent">FLESH</span></h1>
-  <p class="hero-sub">
-    An audiovisual installation that uses <strong>rotating LED geometry, moiré interference, and photic driving</strong>
-    to facilitate non-ordinary states of consciousness.
-    Built on current neuroscience. Festival-native. Fully open source.
+  <div class="hero-ascii right">
+  ┌───────────────┐
+  │ ESP32  WIFI   │
+  │ FreeRTOS      │
+  │ 192.168.4.1   │
+  ├───────────────┤
+  │ PCA9685 ×3    │
+  │ I²C slip ring │
+  │ SG90 servos   │
+  ├───────────────┤
+  │ SK6812 RGBW   │
+  │ FastLED       │
+  │ BPM detect    │
+  └───────────────┘
+  MIT firmware
+  CERN-OHL-P hw
+  ~€2,400 build
+  </div>
+
+  <div class="hero-eyebrow">
+    <span class="tag">OPEN-SOURCE STATE ENGINEERING</span>
+  </div>
+
+  <h1 class="flicker">FLASHY<br/><span class="alt">FLESH</span></h1>
+  <div class="cursor-block"></div>
+
+  <p class="hero-tagline">
+    An IRL analog audiovisual machine for <span class="hi">psytrance &amp; tribal festivals.</span><br/>
+    Rotating LED disks. Staggered depth. RGB mixing. Moiré interference.<br/>
+    <span class="hi">Photic driving. Honest neuroscience. Fully open source.</span>
   </p>
+
   <div class="hero-buttons">
     <a href="https://github.com/huximaxi/fleshy-flesh-machine" class="btn btn-primary" target="_blank">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
-      View on GitHub
+      &gt; CLONE REPO
     </a>
-    <a href="docs/flashy-flesh-whitepaper.pdf" class="btn btn-secondary" target="_blank">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-      Download Whitepaper
+    <a href="docs/flashy-flesh-whitepaper.pdf" class="btn btn-outline" target="_blank">
+      &gt; WHITEPAPER v0.2
     </a>
-    <a href="codex-mechanicus.html" class="btn btn-secondary" target="_blank">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>
-      Codex I–II
+    <a href="codex-mechanicus.html" class="btn btn-outline" target="_blank">
+      &gt; CODEX I–II
     </a>
-    <a href="codex-folio-3.html" class="btn btn-secondary" target="_blank">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><circle cx="12" cy="12" r="8"/><line x1="12" y1="4" x2="12" y2="2"/><line x1="12" y1="22" x2="12" y2="20"/><line x1="4" y1="12" x2="2" y2="12"/><line x1="22" y1="12" x2="20" y2="12"/></svg>
-      Codex III — Volumetric
+    <a href="codex-folio-3.html" class="btn btn-outline" target="_blank">
+      &gt; CODEX III VOLUMETRIC
     </a>
-    <a href="#science" class="btn btn-ghost">Explore the science ↓</a>
+    <a href="#science" class="btn btn-ghost">
+      &gt; EXPLORE SCIENCE ↓
+    </a>
   </div>
-  <div class="hero-meta">
-    <span>
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
-      Modem Festival 2026, Croatia
-    </span>
-    <span>
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
-      Neuroscience-grounded
-    </span>
-    <span>
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-      Safety-first design
-    </span>
-    <span>
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/><path d="M4.93 4.93a10 10 0 0 0 0 14.14"/></svg>
-      ~€2,400 to build
-    </span>
+
+  <div class="hero-stats">
+    <span><div class="dot"></div>MODEM FESTIVAL 2026, CROATIA</span>
+    <span><div class="dot" style="background:var(--amber);box-shadow:0 0 6px var(--amber);"></div>NEUROSCIENCE-GROUNDED</span>
+    <span><div class="dot" style="background:var(--red);box-shadow:0 0 6px var(--red);"></div>4 Hz HARDWARE STROBE CAP</span>
+    <span><div class="dot" style="background:var(--cyan);box-shadow:0 0 6px var(--cyan);"></div>~€2,400 TO BUILD</span>
   </div>
-  <div class="scroll-indicator"><span class="scroll-arrow">↓</span>Science</div>
 </section>
 
-<!-- ── Science ─────────────────────────────────────────────────────── -->
+<!-- ── Science ────────────────────────────────────────────────────────────── -->
 <section id="science">
   <div class="container">
-    <div class="section-label">Scientific Foundations</div>
-    <h2>Five mechanisms.<br/><span class="dim">Honest about all of them.</span></h2>
-    <p class="lead">The machine targets well-characterised neural mechanisms — each with honest evidence ratings, no overclaiming.</p>
+    <div class="section-header">
+      <div class="section-label">SCIENTIFIC FOUNDATIONS</div>
+      <h2>SIX MECHANISMS.<br/><span class="dim">HONEST ABOUT ALL OF THEM.</span></h2>
+      <p class="lead">Each mechanism is rated by evidence quality. No overclaiming. The machine targets well-characterised neural dynamics — and is honest where evidence is limited.</p>
+    </div>
 
     <div class="science-grid">
       <!-- 1 -->
-      <div class="science-card" style="--card-accent:#3b82f6; --card-bg:rgba(59,130,246,0.1);">
-        <div class="card-icon" style="--card-bg:rgba(59,130,246,0.1);">🧠</div>
-        <h3>Photic Driving & FFR</h3>
-        <p>Visual cortex frequency-following responses entrain to the disk's effective flicker frequency — not the raw strobe rate. A 4-arm disk at 10 RPM produces 40 Hz entrainment. Zheng et al. (2022) showed 40 Hz AV stimulation entrains gamma in the amygdala, hippocampus, and insula.</p>
-        <div class="tag" style="--tag-bg:rgba(59,130,246,0.08);--tag-color:#3b82f6;--tag-border:rgba(59,130,246,0.2);">Evidence: Robust at 40 Hz</div>
+      <div class="sci-card">
+        <div class="sci-card-num">01</div>
+        <h3>PHOTIC DRIVING &amp; FFR</h3>
+        <p>Visual cortex frequency-following responses entrain to disk geometry, not raw strobe. f_eff = (RPM/60) × N_arms. A 4-arm disk at 10 RPM produces 40 Hz gamma — Zheng et al. (2022) showed this entrains the amygdala, hippocampus, and insula.</p>
+        <span class="badge badge-green">EVIDENCE: ROBUST AT 40 Hz</span>
       </div>
       <!-- 2 -->
-      <div class="science-card" style="--card-accent:#a855f7; --card-bg:rgba(168,85,247,0.1);">
-        <div class="card-icon">🌀</div>
-        <h3>Klüver Form Constants</h3>
-        <p>Heinrich Klüver (1928) documented four universal geometric hallucination forms: the tunnel, spiral, lattice, and filigree. These arise from visual cortex architecture itself — endogenous to human neural geometry. The disk design targets all four directly.</p>
-        <div class="tag">Evidence: Well-established</div>
+      <div class="sci-card">
+        <div class="sci-card-num">02</div>
+        <h3>KLÜVER FORM CONSTANTS</h3>
+        <p>Klüver (1928): visual cortex generates four universal geometric forms under hyperactivation — tunnel, spiral, lattice, filigree. These are endogenous to neural architecture. The disk geometry directly targets all four.</p>
+        <span class="badge badge-green">EVIDENCE: WELL-ESTABLISHED</span>
       </div>
       <!-- 3 -->
-      <div class="science-card" style="--card-accent:#2dd4bf; --card-bg:rgba(45,212,191,0.1);">
-        <div class="card-icon" style="background:rgba(45,212,191,0.1);">🔵</div>
-        <h3>DMN Suppression</h3>
-        <p>The Default Mode Network (self-referential thought, rumination) is suppressed during intense sensory entrainment — opening a brief neuroplasticity window. The REBUS model (Carhart-Harris & Friston 2019): relaxed priors make environmental content maximally influential.</p>
-        <div class="tag" style="--tag-bg:rgba(45,212,191,0.08);--tag-color:#2dd4bf;--tag-border:rgba(45,212,191,0.2);">Evidence: Strong (psilocybin); Mild (AV only)</div>
+      <div class="sci-card">
+        <div class="sci-card-num">03</div>
+        <h3>DMN SUPPRESSION</h3>
+        <p>Default Mode Network suppression during intense sensory entrainment opens a brief neuroplasticity window. REBUS model (Carhart-Harris &amp; Friston 2019): relaxed priors make environmental content maximally influential on neural consolidation.</p>
+        <span class="badge badge-amber">EVIDENCE: STRONG (PSI); MILD (AV ONLY)</span>
       </div>
       <!-- 4 -->
-      <div class="science-card" style="--card-accent:#f59e0b; --card-bg:rgba(245,158,11,0.1);">
-        <div class="card-icon" style="background:rgba(245,158,11,0.1);">✦</div>
-        <h3>QRI Symmetry Theory</h3>
-        <p>Gómez Emilsson (QRI): mathematical symmetry in neural activation patterns determines hedonic valence. High-symmetry visual patterns (the spirals, lattice, moiré) should theoretically maximise positive valence during entrainment.</p>
-        <div class="tag" style="--tag-bg:rgba(245,158,11,0.08);--tag-color:#f59e0b;--tag-border:rgba(245,158,11,0.2);">Evidence: Theoretical, under validation</div>
+      <div class="sci-card">
+        <div class="sci-card-num">04</div>
+        <h3>QRI SYMMETRY THEORY</h3>
+        <p>Gómez Emilsson (QRI): mathematical symmetry of conscious experience determines hedonic valence. High-symmetry patterns — spirals, lattice, moiré, Lissajous figures — should theoretically maximise positive valence during entrainment.</p>
+        <span class="badge badge-amber">EVIDENCE: THEORETICAL, UNDER VALIDATION</span>
       </div>
       <!-- 5 -->
-      <div class="science-card" style="--card-accent:#4ade80; --card-bg:rgba(74,222,128,0.1);">
-        <div class="card-icon" style="background:rgba(74,222,128,0.1);">⚡</div>
-        <h3>Neural Annealing</h3>
-        <p>Johnson (QRI, 2019): high-energy brain states flatten the neural energy landscape, creating a window for reconsolidation shaped by environmental input. This reframes Leary's set/setting thesis mechanistically. Environment during peak states shapes what consolidates.</p>
-        <div class="tag" style="--tag-bg:rgba(74,222,128,0.08);--tag-color:#4ade80;--tag-border:rgba(74,222,128,0.2);">Evidence: Theoretical + empirical support</div>
+      <div class="sci-card">
+        <div class="sci-card-num">05</div>
+        <h3>NEURAL ANNEALING</h3>
+        <p>Johnson (QRI 2019): high-energy brain states flatten the neural energy landscape — creating a reconsolidation window shaped by environmental input. Beautiful geometry during peak states mechanistically shapes what consolidates.</p>
+        <span class="badge badge-green">EVIDENCE: THEORETICAL + EMPIRICAL SUPPORT</span>
       </div>
       <!-- 6 -->
-      <div class="science-card" style="--card-accent:#e879f9; --card-bg:rgba(232,121,249,0.1);">
-        <div class="card-icon" style="background:rgba(232,121,249,0.1);">〰️</div>
-        <h3>Moiré & Emergent Complexity</h3>
-        <p>Richard Taylor's fractal preference research: D = 1.4–1.5 is the human visual preference sweet spot. Counter-rotating disks produce moiré interference — emergent complexity (D ≈ 1.6) exceeds either disk alone without exceeding the aversion threshold (D > 1.7).</p>
-        <div class="tag" style="--tag-bg:rgba(232,121,249,0.08);--tag-color:#e879f9;--tag-border:rgba(232,121,249,0.2);">Evidence: Established (fractal aesthetics)</div>
+      <div class="sci-card">
+        <div class="sci-card-num">06</div>
+        <h3>MOIRÉ &amp; 3D EMERGENCE</h3>
+        <p>Taylor's fractal preference research: D = 1.4–1.5 is the human visual preference sweet spot. Counter-rotating staggered disks produce both 2D moiré interference and physical 3D parallax depth cues — emergent complexity D ≈ 1.6.</p>
+        <span class="badge badge-green">EVIDENCE: ESTABLISHED (FRACTAL AESTHETICS)</span>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ── Affect map ──────────────────────────────────────────────────── -->
+<!-- ── States / Affect map ────────────────────────────────────────────────── -->
 <section id="affect">
   <div class="container">
-    <div class="section-label">Affect Map</div>
-    <h2>Parameters → <span class="dim">Neural States</span></h2>
-    <p class="lead">Five built-in presets. Each is a coordinated combination of disk speed, strobe intensity, spot colour, and audio BPM — targeting a specific neural/phenomenological state. All presets are open-source JSON, uploadable via the device's WiFi access point.</p>
-    <div class="affect-img-wrap">
-      <img src="illustrations/05_affect_map.png" alt="Flashy Flesh Affect Map — machine parameters mapped to target states" loading="lazy"/>
+    <div class="section-header">
+      <div class="section-label">AFFECT MAP</div>
+      <h2>PARAMETERS <span class="amber">→</span> <span class="dim">NEURAL STATES</span></h2>
+      <p class="lead">Five built-in presets, each a coordinated configuration of disk RPM, arm extension, strobe, colour, and audio BPM. All are open-source JSON — uploadable via WiFi AP at 192.168.4.1.</p>
     </div>
-  </div>
-</section>
-
-<!-- ── Presets ─────────────────────────────────────────────────────── -->
-<section id="presets" style="padding-top:2rem; padding-bottom:5rem;">
-  <div class="container">
-    <div class="presets-strip">
-      <div class="preset-card" style="border-color:rgba(74,222,128,0.25);">
-        <div class="preset-name" style="color:#4ade80;">Alpha Bloom</div>
-        <div class="preset-band" style="color:#4ade80;">α Alpha · 8–13 Hz</div>
+    <div class="presets-grid">
+      <div class="preset" style="color:#4ade80;">
+        <div class="preset-name">ALPHA<br/>BLOOM</div>
+        <div class="preset-band">α ALPHA &nbsp;·&nbsp; 8–13 Hz</div>
         <div class="preset-params">
-          <code>8–12 RPM</code> · soft teal<br/>
-          <code>0.5 Hz</code> strobe · 80–100 BPM<br/>
-          Flow state · open awareness
+          RPM &nbsp;&nbsp;<span class="v">8–12</span><br/>
+          Strobe <span class="v">0.5 Hz</span><br/>
+          BPM &nbsp;&nbsp;<span class="v">80–100</span><br/>
+          Arms &nbsp;<span class="v">STANDARD CROSS</span><br/>
+          Flow · open awareness
         </div>
-        <div class="preset-bar" style="--bar-color:#4ade80;"></div>
+        <div class="preset-bar"></div>
       </div>
-      <div class="preset-card" style="border-color:rgba(168,85,247,0.25);">
-        <div class="preset-name" style="color:#a855f7;">Theta Dive</div>
-        <div class="preset-band" style="color:#a855f7;">θ Theta · 4–8 Hz</div>
+      <div class="preset" style="color:#a855f7;">
+        <div class="preset-name">THETA<br/>DIVE</div>
+        <div class="preset-band">θ THETA &nbsp;·&nbsp; 4–8 Hz</div>
         <div class="preset-params">
-          <code>5–7 RPM</code> · deep violet<br/>
-          <code>0.3 Hz</code> strobe · 60–75 BPM<br/>
+          RPM &nbsp;&nbsp;<span class="v">5–7</span><br/>
+          Strobe <span class="v">0.3 Hz</span><br/>
+          BPM &nbsp;&nbsp;<span class="v">60–75</span><br/>
+          Arms &nbsp;<span class="v">BREATHING PULSE</span><br/>
           Hypnagogic · creative depth
         </div>
-        <div class="preset-bar" style="--bar-color:#a855f7;"></div>
+        <div class="preset-bar"></div>
       </div>
-      <div class="preset-card" style="border-color:rgba(59,130,246,0.25);">
-        <div class="preset-name" style="color:#3b82f6;">Oceanic</div>
-        <div class="preset-band" style="color:#3b82f6;">θ/δ Border</div>
+      <div class="preset" style="color:#3b82f6;">
+        <div class="preset-name">OCEANIC</div>
+        <div class="preset-band" style="margin-top:24px;">θ/δ BORDER</div>
         <div class="preset-params">
-          <code>3–5 RPM</code> · deep blue<br/>
-          <code>0.1 Hz</code> strobe · 50–65 BPM<br/>
+          RPM &nbsp;&nbsp;<span class="v">3–5</span><br/>
+          Strobe <span class="v">0.1 Hz</span><br/>
+          BPM &nbsp;&nbsp;<span class="v">50–65</span><br/>
+          Arms &nbsp;<span class="v">DIAMOND STAR</span><br/>
           Boundary softening
         </div>
-        <div class="preset-bar" style="--bar-color:#3b82f6;"></div>
+        <div class="preset-bar"></div>
       </div>
-      <div class="preset-card" style="border-color:rgba(248,113,113,0.25);">
-        <div class="preset-name" style="color:#f87171;">Gamma Flash</div>
-        <div class="preset-band" style="color:#f87171;">γ Gamma · 30–100 Hz</div>
+      <div class="preset" style="color:#f87171;">
+        <div class="preset-name">GAMMA<br/>FLASH</div>
+        <div class="preset-band">γ GAMMA &nbsp;·&nbsp; 30–100 Hz</div>
         <div class="preset-params">
-          <code>10–14 RPM</code> · white/red<br/>
-          <code>2–4 Hz</code> strobe · 130–150 BPM<br/>
+          RPM &nbsp;&nbsp;<span class="v">10–14</span><br/>
+          Strobe <span class="v">2–4 Hz</span><br/>
+          BPM &nbsp;&nbsp;<span class="v">130–150</span><br/>
+          Arms &nbsp;<span class="v">LISSAJOUS LOCK</span><br/>
           Insight · peak presence
         </div>
-        <div class="preset-bar" style="--bar-color:#f87171;"></div>
+        <div class="preset-bar"></div>
       </div>
-      <div class="preset-card" style="border-color:rgba(251,191,36,0.25);">
-        <div class="preset-name" style="color:#fbbf24;">Integration</div>
-        <div class="preset-band" style="color:#fbbf24;">α + θ + γ</div>
+      <div class="preset" style="color:#fbbf24;">
+        <div class="preset-name">INTEGRA<br/>TION</div>
+        <div class="preset-band">α + θ + γ</div>
         <div class="preset-params">
-          <code>6–9 RPM</code> · warm amber<br/>
-          strobe <code>off</code> · 70–90 BPM<br/>
+          RPM &nbsp;&nbsp;<span class="v">6–9</span><br/>
+          Strobe <span class="v">OFF</span><br/>
+          BPM &nbsp;&nbsp;<span class="v">70–90</span><br/>
+          Arms &nbsp;<span class="v">IRIS SLOW</span><br/>
           Memory consolidation
         </div>
-        <div class="preset-bar" style="--bar-color:#fbbf24;"></div>
+        <div class="preset-bar"></div>
       </div>
     </div>
-    <p style="margin-top:1.5rem; font-size:0.8rem; text-align:center; color:var(--muted);">
-      All presets are starting points, not guarantees. Individual neurology, mindset, and context modulate all outcomes.
-      DJs &amp; VJs can upload custom JSON sequences via the device's WiFi AP (192.168.4.1).
+    <p style="margin-top:14px; font-size:10px; letter-spacing:0.06em; color:var(--muted);">
+      // All presets are starting points, not guarantees. Individual neurology, mindset, and context modulate all outcomes.
     </p>
   </div>
 </section>
 
-<!-- ── Machine ─────────────────────────────────────────────────────── -->
+<!-- ── Machine ────────────────────────────────────────────────────────────── -->
 <section id="machine">
   <div class="container">
-    <div class="section-label">The Machine</div>
-    <h2>Three disks. One <span class="dim">ESP32</span>.</h2>
+    <div class="section-header">
+      <div class="section-label">THE MACHINE</div>
+      <h2>THREE DISKS.<br/><span class="amber">ONE ESP32.</span></h2>
+    </div>
     <div class="machine-layout">
       <div>
-        <p style="margin-bottom:1.5rem;">A standing installation comprising three counter-rotating spiral/lattice disks with embedded SK6812 LEDs, synchronized strobe and spot lighting, directed audio, and a WiFi-enabled controller. Buildable by any maker with a laser cutter and 3D printer.</p>
-        <ul class="spec-list">
-          <li><div class="spec-dot" style="background:#a855f7;"></div><span class="spec-label">Disk 1 — 60 cm</span>4-arm Archimedean spiral · CW · 5–12 RPM</li>
-          <li><div class="spec-dot" style="background:#3b82f6;"></div><span class="spec-label">Disk 2 — 45 cm</span>3-arm spiral · CCW · 5.35 RPM (moiré)</li>
-          <li><div class="spec-dot" style="background:#2dd4bf;"></div><span class="spec-label">Disk 3 — 30 cm</span>Hexagonal lattice · slow 1–3 RPM</li>
-          <li><div class="spec-dot" style="background:#f87171;"></div><span class="spec-label">LEDs</span>SK6812 addressable RGB · 6-wire slip ring</li>
-          <li><div class="spec-dot" style="background:#fbbf24;"></div><span class="spec-label">Controller</span>ESP32 · FastLED · WiFi AP · FreeRTOS</li>
-          <li><div class="spec-dot" style="background:#4ade80;"></div><span class="spec-label">Strobe</span>50W RGBW · PWM 0.1–4 Hz · hardware cap</li>
-          <li><div class="spec-dot" style="background:#e879f9;"></div><span class="spec-label">Audio</span>I2S BPM sync · 2× directed PA + 3.5mm jack</li>
-          <li><div class="spec-dot" style="background:#ffffff; opacity:0.5;"></div><span class="spec-label">Power</span>230V generator → 24V → 5V/12V · ~155W avg</li>
-          <li><div class="spec-dot" style="background:#fbbf24;"></div><span class="spec-label">Build cost</span>~€2,400 total (components + fabrication)</li>
-        </ul>
+        <p style="margin-bottom:18px; font-size:12px; color:var(--muted);">
+          A standing installation: three vertical LED disk arrays at staggered depths (Z=0/−18/−36 cm),
+          each on its own horizontal axle with motor behind. Face-on to the observer. RGB colour-assigned.
+          Extendable skeletal arms with rack-and-pinion SG90 servos — 10→35 cm per arm.
+          WiFi VJ JSON control. Built for festival scale.
+        </p>
+        <table class="spec-table">
+          <tr><td class="label">DISK 1</td><td class="val">60 cm · 4-arm spiral · CW · <span style="color:#ef4444;">RED</span> · 5–12 RPM</td></tr>
+          <tr><td class="label">DISK 2</td><td class="val">45 cm · 3-arm spiral · CCW · <span style="color:#22c55e;">GREEN</span> · 5.35 RPM (moiré)</td></tr>
+          <tr><td class="label">DISK 3</td><td class="val">30 cm · hex lattice · CW · <span style="color:#3b82f6;">BLUE</span> · 1–3 RPM</td></tr>
+          <tr><td class="label">DEPTH</td><td class="val">D1 Z=0  D2 Z=−18 cm  D3 Z=−36 cm</td></tr>
+          <tr><td class="label">ARMS</td><td class="val">Aluminium extrusion · SG90 rack-and-pinion · 10→35 cm</td></tr>
+          <tr><td class="label">LEDS</td><td class="val">SK6812 RGBW · 6-wire gold slip ring · FastLED</td></tr>
+          <tr><td class="label">SERVOS</td><td class="val">PCA9685 I²C per hub (0x40/41/42) · I²C via slip ring</td></tr>
+          <tr><td class="label">CONTROLLER</td><td class="val">ESP32 · FreeRTOS · WiFi AP 192.168.4.1</td></tr>
+          <tr><td class="label">STROBE</td><td class="val">50W RGBW · PWM · 0.1–4 Hz hardware cap</td></tr>
+          <tr><td class="label">AUDIO</td><td class="val">I²S BPM sync · 2× directed PA + 3.5 mm</td></tr>
+          <tr><td class="label">POWER</td><td class="val">230V → 24V → 5V/12V · ~155W avg</td></tr>
+          <tr><td class="label">BUILD COST</td><td class="val" style="color:var(--amber);">~€2,400–2,700 components + fabrication</td></tr>
+        </table>
       </div>
-      <div class="arch-img-wrap">
-        <img src="illustrations/06_system_architecture.png" alt="Flashy Flesh system architecture diagram" loading="lazy"/>
+
+      <!-- Disk visualisation -->
+      <div class="disk-viz box" data-label="DISK ARRAY // FRONT VIEW">
+        <div class="disk-row">
+          <div class="disk-circle" style="width:90px;height:90px;border-color:#ef4444;color:#ef4444;font-size:11px;">D1</div>
+          <div class="disk-label">
+            <span class="name" style="color:#ef4444;">DISK 1 — 60 cm</span>
+            4-arm Archimedean spiral<br/>
+            CW · 5–12 RPM<br/>
+            f_eff = 40 Hz @ 10 RPM<br/>
+            Z=0  Y=low (80 cm)
+          </div>
+        </div>
+        <div class="disk-row">
+          <div class="disk-circle" style="width:68px;height:68px;border-color:#22c55e;color:#22c55e;font-size:11px;">D2</div>
+          <div class="disk-label">
+            <span class="name" style="color:#22c55e;">DISK 2 — 45 cm</span>
+            3-arm spiral · CCW<br/>
+            5.35 RPM (0.35 Hz moiré beat)<br/>
+            Z=−18 cm  Y=mid (135 cm)
+          </div>
+        </div>
+        <div class="disk-row">
+          <div class="disk-circle" style="width:48px;height:48px;border-color:#3b82f6;color:#3b82f6;font-size:11px;">D3</div>
+          <div class="disk-label">
+            <span class="name" style="color:#3b82f6;">DISK 3 — 30 cm</span>
+            Hexagonal lattice + spokes<br/>
+            CW · 1–3 RPM<br/>
+            Z=−36 cm  Y=high (185 cm)
+          </div>
+        </div>
+        <div style="margin-top:8px; font-size:10px; color:var(--muted); border-top:1px solid var(--border); padding-top:8px;">
+          ◎ Optimal viewing distance: 80–150 cm<br/>
+          RGB additive overlap: R+G=yellow · G+B=cyan · R+B=magenta
+        </div>
+      </div>
+    </div>
+
+    <!-- VJ terminal -->
+    <div style="margin-top:32px;">
+      <div class="section-label">VJ / DJ CONTROL — EXTENDED JSON API v0.2</div>
+      <div class="terminal">
+        <div class="terminal-bar">
+          <div class="t-dot r"></div><div class="t-dot y"></div><div class="t-dot g"></div>
+          <span>POST http://192.168.4.1/preset — Content-Type: application/json</span>
+        </div>
+        <div class="terminal-body">
+<pre><span class="prompt">$&gt; </span><span class="cmd">curl -X POST http://192.168.4.1/preset -d @rgb_bloom.json</span>
+<span class="comment">// ── rgb_bloom.json ─────────────────────────────────────────────────────</span>
+{
+  <span class="key">"name"</span>: <span class="val">"rgb_bloom"</span>,  <span class="comment">// preset identifier</span>
+  <span class="key">"duration_s"</span>: <span class="val">600</span>,
+  <span class="key">"keyframes"</span>: [{
+    <span class="key">"t"</span>: <span class="val">0</span>,
+    <span class="key">"disk1_rpm"</span>: <span class="val">12</span>,      <span class="key">"disk1_color"</span>: <span class="val">"#FF2200"</span>,
+    <span class="key">"disk1_arm_ext"</span>: <span class="val">[1.0, 0.4, 1.0, 0.4]</span>,    <span class="comment">// per-arm 0.0–1.0</span>
+    <span class="key">"disk2_rpm"</span>: <span class="val">-9</span>,       <span class="key">"disk2_color"</span>: <span class="val">"#00FF44"</span>,
+    <span class="key">"disk2_arm_ext"</span>: <span class="val">[0.8, 0.8, 0.8]</span>,
+    <span class="key">"disk3_rpm"</span>: <span class="val">15</span>,      <span class="key">"disk3_color"</span>: <span class="val">"#0044FF"</span>,
+    <span class="key">"disk3_arm_ext"</span>: <span class="val">[0.3, 1.0, 0.3, 1.0, 0.3, 1.0]</span>,
+    <span class="key">"strobe_hz"</span>: <span class="val">0.5</span>,    <span class="key">"spot_rgb"</span>: <span class="val">[80, 20, 120]</span>,
+    <span class="key">"transition_s"</span>: <span class="val">4.0</span>, <span class="key">"curve"</span>: <span class="val">"ease_in_out"</span>
+  }]
+}
+<span class="out">200 OK &gt; preset loaded · interpolating · 4.0s transition</span></pre>
+        </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ── Safety ─────────────────────────────────────────────────────── -->
+<!-- ── Safety ─────────────────────────────────────────────────────────────── -->
 <section id="safety">
   <div class="container">
-    <div class="section-label">Safety Framework</div>
-    <h2>Hardware-enforced.<br/><span class="dim">No software overrides.</span></h2>
-    <p class="lead">Photosensitive epilepsy affects 3–5% of the population. Every safety limit is implemented at the hardware timer interrupt level and cannot be bypassed by UI or WiFi commands.</p>
+    <div class="section-header">
+      <div class="section-label">SAFETY FRAMEWORK</div>
+      <h2>HARDWARE-ENFORCED.<br/><span class="dim">NO SOFTWARE OVERRIDES.</span></h2>
+      <p class="lead">Photosensitive epilepsy affects 3–5% of the population. Every safety limit is implemented at the hardware timer interrupt level and cannot be bypassed by UI or WiFi commands.</p>
+    </div>
     <div class="safety-grid">
       <div class="safety-card">
-        <div class="safety-icon">⚡</div>
-        <h3>Strobe Hard Cap — 4 Hz</h3>
-        <p>The danger zone for photosensitive epilepsy is 3–30 Hz. Firmware imposes an absolute 4 Hz maximum on raw strobe — hardware interrupt enforced. The machine achieves effective 40 Hz neural entrainment via disk geometry (arm count × RPM / 60), not strobe rate.</p>
+        <div class="safety-icon">▲ 4 Hz</div>
+        <h3>STROBE HARD CAP</h3>
+        <p>Danger zone for PSE: 3–30 Hz. Firmware imposes an absolute 4 Hz maximum on raw strobe via hardware interrupt. Neural entrainment at 40 Hz is achieved through disk geometry — (N × RPM / 60) — not raw strobe rate.</p>
       </div>
       <div class="safety-card">
-        <div class="safety-icon">🔘</div>
-        <h3>3-Second Consent Gate</h3>
-        <p>An illuminated physical button requires a 3-second hold to activate. This creates an intentional moment of choice. Laminated signage lists exclusion criteria: epilepsy history, photosensitive conditions, pregnancy, current psychiatric medication.</p>
+        <div class="safety-icon">○ 3s</div>
+        <h3>CONSENT GATE</h3>
+        <p>An illuminated physical button requires a 3-second intentional hold to activate. Laminated A4 signage lists exclusion criteria: epilepsy history, photosensitive conditions, pregnancy, psychiatric medication, recent head injury.</p>
       </div>
       <div class="safety-card">
-        <div class="safety-icon">🛑</div>
-        <h3>Emergency Stop</h3>
-        <p>Simultaneous depression of both rotary encoders triggers immediate motor and LED cutoff — full blackout in under 50 ms. Operators carry a wireless key fob with the same function. Post-session integration mode (amber, slow disk, no strobe) available for grounding.</p>
+        <div class="safety-icon">■ STOP</div>
+        <h3>EMERGENCY STOP</h3>
+        <p>Simultaneous press of both rotary encoders triggers immediate motor + LED cutoff — full blackout in under 50 ms. Operators carry a wireless key fob with the same function. Post-session integration mode available.</p>
       </div>
       <div class="safety-card">
-        <div class="safety-icon">👁</div>
-        <h3>Standing Format</h3>
-        <p>The standing installation is intentionally lower-immersion than supine devices (Lucia No.03). Users can step away, close their eyes, or walk out at any moment. Default session: 10 minutes with automated 2-minute fade-out. A trained operator is required for festival deployment.</p>
+        <div class="safety-icon">↕ STAND</div>
+        <h3>STANDING FORMAT</h3>
+        <p>Intentionally lower-immersion than supine devices (Lucia No.03). Users step away, close eyes, or walk out at any moment. Default session: 10 min with automated 2-min fade-out. Trained operator required for festival deployment.</p>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ── Open source ────────────────────────────────────────────────── -->
+<!-- ── Open source ────────────────────────────────────────────────────────── -->
 <section id="opensource">
   <div class="container">
-    <div class="section-label">Open Source</div>
-    <h2>Everything included.<br/><span class="dim">Build your own.</span></h2>
-    <p class="lead">MIT firmware · CERN-OHL-P hardware · Community preset library. Buildable by any maker with a laser cutter and 3D printer.</p>
+    <div class="section-header">
+      <div class="section-label">OPEN SOURCE</div>
+      <h2>EVERYTHING INCLUDED.<br/><span class="amber">BUILD YOUR OWN.</span></h2>
+      <p class="lead">MIT firmware · CERN-OHL-P hardware · Community preset library. Buildable by any maker with a laser cutter and 3D printer.</p>
+    </div>
     <div class="oss-grid">
       <div class="oss-block">
-        <h3>Repository Structure</h3>
-        <p>Clone, build, contribute.</p>
+        <h3>// REPOSITORY STRUCTURE</h3>
+        <p style="font-size:10px; color:var(--muted);">Clone, build, contribute. All hardware and firmware included.</p>
         <div class="file-tree">
           <div><span class="dir">flashy-flesh-machine/</span></div>
-          <div>&nbsp;&nbsp;<span class="dir">firmware/</span> <span class="comment"># ESP32 Arduino</span></div>
-          <div>&nbsp;&nbsp;&nbsp;&nbsp;<span class="file">main.ino</span></div>
-          <div>&nbsp;&nbsp;&nbsp;&nbsp;<span class="file">presets.json</span> <span class="comment"># preset engine</span></div>
-          <div>&nbsp;&nbsp;&nbsp;&nbsp;<span class="file">webui/</span> <span class="comment"># WiFi AP interface</span></div>
+          <div>&nbsp;&nbsp;<span class="dir">firmware/</span> <span class="cmt"># ESP32 Arduino</span></div>
+          <div>&nbsp;&nbsp;&nbsp;&nbsp;<span class="hi">main.ino</span> <span class="cmt"># motor + arm + LED + BPM</span></div>
+          <div>&nbsp;&nbsp;&nbsp;&nbsp;<span class="file">presets.json</span></div>
+          <div>&nbsp;&nbsp;&nbsp;&nbsp;<span class="file">webui/</span> <span class="cmt"># WiFi AP interface</span></div>
           <div>&nbsp;&nbsp;<span class="dir">hardware/</span></div>
           <div>&nbsp;&nbsp;&nbsp;&nbsp;<span class="file">schematics.kicad</span></div>
-          <div>&nbsp;&nbsp;&nbsp;&nbsp;<span class="file">disk-1-4arm.svg</span> <span class="comment"># laser cut</span></div>
+          <div>&nbsp;&nbsp;&nbsp;&nbsp;<span class="file">disk-1-4arm.svg</span> <span class="cmt"># laser cut</span></div>
           <div>&nbsp;&nbsp;&nbsp;&nbsp;<span class="file">disk-2-3arm.svg</span></div>
-          <div>&nbsp;&nbsp;&nbsp;&nbsp;<span class="file">motor-mount.stl</span> <span class="comment"># 3D print</span></div>
+          <div>&nbsp;&nbsp;&nbsp;&nbsp;<span class="file">motor-mount.stl</span> <span class="cmt"># 3D print</span></div>
+          <div>&nbsp;&nbsp;&nbsp;&nbsp;<span class="file">arm-rack.stl</span> <span class="cmt"># extendable arm</span></div>
           <div>&nbsp;&nbsp;<span class="dir">docs/</span></div>
-          <div>&nbsp;&nbsp;&nbsp;&nbsp;<span class="file">flashy-flesh-whitepaper.pdf</span></div>
-          <div>&nbsp;&nbsp;&nbsp;&nbsp;<span class="file">BOM.csv</span> <span class="comment"># full parts list</span></div>
+          <div>&nbsp;&nbsp;&nbsp;&nbsp;<span class="hi">flashy-flesh-whitepaper.pdf</span> <span class="cmt"># v0.2</span></div>
+          <div>&nbsp;&nbsp;&nbsp;&nbsp;<span class="file">BOM.csv</span></div>
           <div>&nbsp;&nbsp;&nbsp;&nbsp;<span class="file">assembly-guide.md</span></div>
-          <div>&nbsp;&nbsp;&nbsp;&nbsp;<span class="file">safety-signage.pdf</span></div>
-          <div>&nbsp;&nbsp;<span class="dir">community-presets/</span> <span class="comment"># DJ/VJ scripts</span></div>
+          <div>&nbsp;&nbsp;<span class="dir">codex-mechanicus.html</span> <span class="cmt"># Folio I–II</span></div>
+          <div>&nbsp;&nbsp;<span class="dir">codex-folio-3.html</span> <span class="cmt"># Folio III volumetric</span></div>
+          <div>&nbsp;&nbsp;<span class="dir">community-presets/</span> <span class="cmt"># VJ scripts</span></div>
         </div>
-        <div class="license-badges">
-          <span class="license-badge" style="background:rgba(59,130,246,0.15); color:#3b82f6; border:1px solid rgba(59,130,246,0.3);">MIT Firmware</span>
-          <span class="license-badge" style="background:rgba(74,222,128,0.1); color:#4ade80; border:1px solid rgba(74,222,128,0.2);">CERN-OHL-P Hardware</span>
+        <div style="margin-top:12px;">
+          <span class="lic-badge" style="border-color:rgba(0,255,65,0.3);color:var(--green-dim);">MIT FIRMWARE</span>
+          <span class="lic-badge" style="border-color:rgba(255,176,0,0.3);color:var(--amber-dim);">CERN-OHL-P HARDWARE</span>
         </div>
       </div>
+
       <div class="oss-block">
-        <h3>VJ / DJ Scripting</h3>
-        <p>Upload custom JSON preset sequences to the device's WiFi AP during live performance. Full parameter control — disk speeds, strobe frequency, LED colour patterns, audio BPM coupling, transition curves.</p>
-        <div class="file-tree">
-<pre style="font-size:0.75rem; line-height:1.7; color:#6670a0; background:transparent; border:none;">{
-  <span style="color:#3b82f6;">"name"</span>: <span style="color:#4ade80;">"my_set_opener"</span>,
-  <span style="color:#3b82f6;">"duration_s"</span>: 600,
-  <span style="color:#3b82f6;">"keyframes"</span>: [
-    {
-      <span style="color:#3b82f6;">"t"</span>: 0,
-      <span style="color:#3b82f6;">"disk1_rpm"</span>: 3,
-      <span style="color:#3b82f6;">"disk2_rpm"</span>: -3.2,
-      <span style="color:#3b82f6;">"strobe_hz"</span>: 0.2,
-      <span style="color:#3b82f6;">"spot_rgb"</span>: [20, 0, 80]
-    },
-    {
-      <span style="color:#3b82f6;">"t"</span>: 120,
-      <span style="color:#3b82f6;">"disk1_rpm"</span>: 8,
-      <span style="color:#3b82f6;">"strobe_hz"</span>: 1.5,
-      <span style="color:#3b82f6;">"spot_rgb"</span>: [0, 60, 120]
-    }
-  ]
-}</pre>
+        <h3>// CODEX MECHANICUS</h3>
+        <p style="font-size:11px; color:var(--muted); margin-bottom:18px;">
+          Three da-vinci style illustration folios documenting the machine — hosted alongside the code as live HTML.
+        </p>
+        <div style="display:flex; flex-direction:column; gap:12px;">
+          <a href="codex-mechanicus.html" class="btn btn-outline" style="justify-content:flex-start;" target="_blank">
+            &gt; FOLIO I–II &nbsp;<span style="color:var(--muted); font-size:10px;">Geometry · Materials · Architecture</span>
+          </a>
+          <a href="codex-folio-3.html" class="btn btn-outline" style="justify-content:flex-start;" target="_blank">
+            &gt; FOLIO III &nbsp;<span style="color:var(--muted); font-size:10px;">Staggered Planes · Extendable Arms · RGB</span>
+          </a>
+          <a href="docs/flashy-flesh-whitepaper.pdf" class="btn btn-outline" style="justify-content:flex-start;" target="_blank">
+            &gt; WHITEPAPER v0.2 &nbsp;<span style="color:var(--muted); font-size:10px;">Full technical documentation</span>
+          </a>
+          <a href="https://github.com/huximaxi/fleshy-flesh-machine" class="btn btn-primary" style="justify-content:flex-start;" target="_blank">
+            &gt; GITHUB REPO ↗
+          </a>
+        </div>
+        <div style="margin-top:24px; font-size:10px; color:var(--muted); border-top:1px solid var(--border); padding-top:14px; line-height:2.0;">
+          <span style="color:var(--green-dim);">AUTHORS:</span> Dan N. + Claude (Chief Engineer)<br/>
+          <span style="color:var(--green-dim);">TARGET:</span> Modem Festival, Croatia, July 2026<br/>
+          <span style="color:var(--green-dim);">BUILD COST:</span> €2,400–2,700<br/>
+          <span style="color:var(--green-dim);">CONTACT:</span> nemet.g.daniel@gmail.com
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ── CTA ─────────────────────────────────────────────────────────── -->
+<!-- ── CTA ────────────────────────────────────────────────────────────────── -->
 <section id="cta">
   <div class="container">
-    <div class="section-label" style="justify-content:center; display:flex;">Get involved</div>
-    <h2>Build it.<br/>Deploy it.<br/><span class="dim">Share what you find.</span></h2>
-    <p>Open source, open science, open community. Every festival deployment is a data point. Every new preset is a contribution.</p>
-    <div class="cta-buttons">
+    <div class="section-label" style="text-align:center;">GET INVOLVED</div>
+    <h2>BUILD IT.<br/>DEPLOY IT.<br/><span class="dim">SHARE WHAT YOU FIND.</span></h2>
+    <p class="lead">Open source, open science, open community.<br/>Every festival deployment is a data point. Every new preset is a contribution.</p>
+    <div class="hero-buttons" style="justify-content:center; margin-top:28px;">
       <a href="https://github.com/huximaxi/fleshy-flesh-machine" class="btn btn-primary" target="_blank">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
-        Clone the repo
+        &gt; CLONE THE REPO
       </a>
-      <a href="docs/flashy-flesh-whitepaper.pdf" class="btn btn-secondary" target="_blank">Read the whitepaper</a>
+      <a href="docs/flashy-flesh-whitepaper.pdf" class="btn btn-outline" target="_blank">
+        &gt; READ WHITEPAPER v0.2
+      </a>
     </div>
+    <div class="ascii-divider" style="margin-top:48px;">
+      ════════════════════════════════════════════════════════════════════
+    </div>
+    <p style="margin-top:12px; font-size:10px; color:var(--border2); letter-spacing:0.06em; text-align:center;">
+      NOT A MEDICAL DEVICE &nbsp;·&nbsp; DOES NOT GUARANTEE ALTERED STATES &nbsp;·&nbsp; ALWAYS DEPLOY WITH A TRAINED OPERATOR &nbsp;·&nbsp; READ THE SAFETY DOCUMENTATION
+    </p>
   </div>
 </section>
 
-<!-- ── Footer ─────────────────────────────────────────────────────── -->
+<!-- ── Footer ─────────────────────────────────────────────────────────────── -->
 <footer>
   <div class="footer-links">
-    <a href="https://github.com/huximaxi/fleshy-flesh-machine" target="_blank">GitHub</a>
-    <a href="docs/flashy-flesh-whitepaper.pdf" target="_blank">Whitepaper</a>
-    <a href="#science">Science</a>
-    <a href="#safety">Safety</a>
-    <a href="mailto:nemet.g.daniel@gmail.com">Contact</a>
+    <a href="https://github.com/huximaxi/fleshy-flesh-machine" target="_blank">GITHUB</a>
+    <a href="docs/flashy-flesh-whitepaper.pdf" target="_blank">WHITEPAPER</a>
+    <a href="codex-mechanicus.html" target="_blank">CODEX I–II</a>
+    <a href="codex-folio-3.html" target="_blank">CODEX III</a>
+    <a href="#science">SCIENCE</a>
+    <a href="#safety">SAFETY</a>
+    <a href="mailto:nemet.g.daniel@gmail.com">CONTACT</a>
   </div>
-  <p>Flashy Flesh — Open-Source Audiovisual State Engineering · MIT Licence · February 2026</p>
-  <p style="margin-top:0.4rem; font-size:0.75rem; opacity:0.5;">
-    Not a medical device. Does not guarantee altered states.
-    Always deploy with a trained operator. Read the safety documentation.
-  </p>
+  <p>FLASHY FLESH // OPEN-SOURCE AUDIOVISUAL STATE ENGINEERING // MIT LICENCE // FEBRUARY 2026</p>
+  <p style="margin-top:6px;">github.com/huximaxi/fleshy-flesh-machine</p>
 </footer>
+
+<script>
+  // Live clock
+  (function tick() {
+    const d = new Date();
+    const el = document.getElementById('ts');
+    if (el) {
+      el.textContent = d.toISOString().replace('T', ' ').slice(0,19) + ' UTC';
+    }
+    setTimeout(tick, 1000);
+  })();
+</script>
 
 </body>
 </html>
